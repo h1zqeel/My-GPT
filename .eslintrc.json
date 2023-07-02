@@ -1,3 +1,42 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+		"linebreak-style": 0,
+		"quotes": [
+			"error",
+			"single"
+		],
+		"semi": [
+			"error",
+			"always"
+		],
+		"object-curly-spacing": [
+			"error",
+			"always"
+		],
+		"space-before-blocks": [
+			"error",
+			"always"
+		],
+		"new-cap":[2, {"capIsNew":false, "newIsCap":false}],
+		"comma-dangle":[2, "never"],
+		"brace-style": [2, "1tbs"],
+		"func-names":0,
+		"no-multi-spaces":0,
+		"no-console":1,
+		"eol-last":0,
+		"curly":[1, "multi-line"],
+		"vars-on-top":1,
+		"camelcase" : 1,
+		"indent":["error", "tab"],
+		"no-tabs": 0,
+		"global-require": "error",
+		"no-param-reassign": 1,
+		"no-unused-expressions":[0],
+		"no-multi-str":0,
+		"newline-per-chained-call": 1,
+		"space-before-function-paren": ["error", "never"],
+		"no-underscore-dangle": 0,
+		"react-hooks/exhaustive-deps": 0
+	}
 }
