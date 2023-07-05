@@ -5,6 +5,7 @@ import { Button, CircularProgress, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import axios, { AxiosError } from 'axios';
 import { ResData } from '@/types/axios';
+import { LoginButton } from '@/components/buttons';
 
 export default function Login()	{
 	const router = useRouter();
@@ -84,6 +85,7 @@ export default function Login()	{
 				/>
 			</div>
 			<div>
+				<LoginButton />
 				<Button
 					className="bg-primary hover:bg-secondary hover:text-white"
 					variant="contained"

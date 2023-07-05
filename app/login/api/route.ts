@@ -18,6 +18,6 @@ export async function POST(request: Request) {
 	if (!match) {
 		return NextResponse.json({ error: 'Username or Password is incorrect' }, { status: 400 });
 	}
-
+	if(!user.name) user.name = user.username;
 	return NextResponse.json(user);
 }

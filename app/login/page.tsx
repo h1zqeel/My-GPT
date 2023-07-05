@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Button, CircularProgress, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { RegisterButton } from '@/components/buttons';
 
 export default function Login()	{
 	const router = useRouter();
@@ -12,7 +13,7 @@ export default function Login()	{
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
-	const callbackUrl = '/home';
+	const callbackUrl = '/';
 
 	const handleSignIn = async() => {
 		setLoading(true);
@@ -54,6 +55,7 @@ export default function Login()	{
 				/>
 			</div>
 			<div>
+				<RegisterButton />
 				<Button
 					className="bg-primary hover:bg-secondary hover:text-white"
 					variant="contained"
