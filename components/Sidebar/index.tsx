@@ -1,0 +1,34 @@
+'use client';
+
+import React, { MouseEventHandler } from 'react';
+
+import SidebarElement from './subcomponents/SidebarElement';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+
+export default function Sidebar({ elements, closeSidebar, close }: {elements: any[], closeSidebar: MouseEventHandler, close: Boolean})	{
+
+	return <> <div className={`h-screen transition-[width] duration-200 ease-in-out absolute lg:static ${close? 'w-0' : 'w-4/5 lg:w-1/5 md:w-2/5'}`}>
+		<div className='flex flex-col bg-slate-800 h-screen overflow-hidden ease-in-out'>
+			<div className='p-5 m-2 text-right' onClick={closeSidebar}>
+				<FontAwesomeIcon icon={faCircleXmark} />
+			</div>
+			{elements.map((element: any) => {
+				return <SidebarElement text={element.text} key =''/>;
+			})}
+		</div>
+	</div>
+	{<div style={{
+		opacity: !close ? '0' : '1',
+		transitionProperty: 'opacity',
+		transitionDuration: '200ms'
+	}}>
+		<div className='p-5 m-2 text-right' onClick={closeSidebar}>
+
+			<FontAwesomeIcon icon={faBars} />
+		</div>
+
+	</div>}
+
+	</>;
+}
