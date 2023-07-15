@@ -1,9 +1,8 @@
 'use client';
 
-import { TSidebarElement } from '@/types/components/Sidebar';
+import { TSidebarElement } from '@/types/Sidebar';
 import { useRouter } from 'next/navigation';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { setSelectedChat } from '@/redux/features/selectedChatSlice';
+import { useAppSelector } from '@/redux/hooks';
 
 const SidebarElement = ({ icon = '', text = '', page = 'chats', id }: TSidebarElement) => {
 	const selectedChatId = useAppSelector(({ selectedChatReducer }) => selectedChatReducer.chatId);
