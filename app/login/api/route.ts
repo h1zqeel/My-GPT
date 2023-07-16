@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import * as bcrypt from 'bcrypt';
-import db from '../../../prisma/db';
-import { signToken } from '@/utils/token';
+import db from '@/prisma/db';
 import { generateSession } from '@/utils/session';
 import { TUser } from '@/types/User';
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import db from '../../../../prisma/db';
+import db from '@/prisma/db';
 import { verifyToken } from '@/utils/token';
 import { generateSession } from '@/utils/session';
 import { TUser } from '@/types/User';

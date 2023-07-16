@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import * as bcrypt from 'bcrypt';
-import db from '../../../prisma/db';
-import { PrismaClientValidationError } from '@prisma/client/runtime';
+import db from '@/prisma/db';
 const saltRounds = process.env.SALT_ROUNDS || 10;
 
 export async function POST(request: Request) {

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import db from '../../../prisma/db';
+import db from '@/prisma/db';
 
 export async function PUT(request: Request) {
 	const { userId, name, openAIKey } = await request.json();
