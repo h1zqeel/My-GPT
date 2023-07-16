@@ -14,7 +14,7 @@ const initialState = {
 export const getSession = createAsyncThunk(
 	'session/getSession',
 	async(thunkAPI) => {
-		const response = await axios.get('auth/api');
+		const response = await axios.get('api/auth');
 		return response.data;
 	});
 export const session = createSlice({
