@@ -5,14 +5,14 @@ import { chatBelongsToUser } from '@/utils/customMiddlewares';
 
 interface RequestContext {
 	params: {
-		id: number;
+		id: number | string;
 	};
 }
 const router = createEdgeRouter<NextRequest, RequestContext>();
 
 router
 	.use(chatBelongsToUser)
-	.get(async(req: NextRequest, { params } : {params: {id: number | string}})=>{
+	.get(async(req: NextRequest, { params } : RequestContext)=>{
 		const { id: chatId } = params;
 		const messages = await db.message.findMany({
 			where: {
@@ -28,7 +28,7 @@ router
 			{ status: 200 }
 		);
 	})
-	.post(async(req: NextRequest, { params } : {params: {id: number | string}}) => {
+	.post(async(req: NextRequest, { params } : RequestContext) => {
 		const { id: chatId } = params;
 		const { text } = await req.json();
 

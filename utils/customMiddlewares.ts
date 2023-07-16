@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getUserSession } from './session';
 import db from '@/prisma/db';
 
-export const chatBelongsToUser = async(req : NextRequest, { params } : {params: {id: number}}, next : Function) => {
+export const chatBelongsToUser = async(req : NextRequest, { params } : {params: {id: number | string}}, next : Function) => {
 	const { id: userId } = await getUserSession(req);
 	const { id: chatId } = params;
 	const chat = await db.chat.findUnique({
