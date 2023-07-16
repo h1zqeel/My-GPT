@@ -7,7 +7,7 @@ export const middleware = async(req: NextRequest) => {
 		const tokenClaims = await verifyToken(token);
 		if(tokenClaims) {
 			if(!tokenClaims?.payload?.username) {
-				await axios.get('api/auth/logout');
+				await axios.get('auth/api/logout');
 
 				return NextResponse.redirect(new URL('/login', req.url));
 			} else {

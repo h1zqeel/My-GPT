@@ -28,7 +28,7 @@ export const RegisterButton = () => {
 export const LogoutButton = () => {
 	const router = useRouter();
 	const signOut = async() => {
-		await axios.get('/api/auth/logout');
+		await axios.get('/logout/api');
 		router.push('/login');
 	};
 	return (
