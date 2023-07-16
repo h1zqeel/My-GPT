@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import selectedChatReducer from './features/selectedChatSlice';
 import messagesReducer from './features/messagesSlice';
+import sessionReducer from './features/sessionSlice';
 
 export const store = configureStore({
 	reducer: {
 		selectedChatReducer,
-		messagesReducer
+		messagesReducer,
+		sessionReducer
 	},
 	devTools: process.env.NODE_ENV !== 'production'
 });

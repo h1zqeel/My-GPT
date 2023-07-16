@@ -1,6 +1,5 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { NextAuthProvider } from './providers';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { ReduxProvider } from '@/redux/provider';
@@ -21,11 +20,9 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<NextAuthProvider>
-					<ReduxProvider>
-						{children}
-					</ReduxProvider>
-				</NextAuthProvider>
+				<ReduxProvider>
+					{children}
+				</ReduxProvider>
 			</body>
 		</html>
 	);
