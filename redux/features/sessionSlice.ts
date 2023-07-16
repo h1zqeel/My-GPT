@@ -1,8 +1,9 @@
+import { TUser } from '@/types/User';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 type sessionState = {
-	user: any;
+	user: TUser | null;
 	loading: boolean;
 };
 
@@ -22,7 +23,7 @@ export const session = createSlice({
 	initialState,
 	reducers: {
 		reset: () => initialState,
-		setSession: (state, action: PayloadAction<any>) => {
+		setSession: (state, action: PayloadAction<TUser>) => {
 			state.user = action.payload;
 			state.loading = false;
 		}
