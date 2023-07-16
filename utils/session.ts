@@ -1,6 +1,6 @@
 import { TUser } from '@/types/User';
-import { NextResponse } from 'next/server';
-import { signToken } from './token';
+import { NextRequest, NextResponse } from 'next/server';
+import { signToken, verifyToken } from './token';
 
 export const generateSession = async(user: TUser) => {
 	const response = NextResponse.json(
@@ -32,4 +32,10 @@ export const generateSession = async(user: TUser) => {
 	});
 
 	return response;
+};
+
+export const getUserSession =async(req: NextRequest) => {
+	const token = req.cookies.get(process.env.TOKEN_NAME)?.value;
+	const claims = await verifyToken(token as string);
+	return claims?.payload as TUser;
 };
