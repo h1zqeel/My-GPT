@@ -30,7 +30,7 @@ export default function Login()	{
 		setOpenAIKey(user?.openAIKey || '');
 	}, [user]);
 
-	const handleSignUp = async() => {
+	const updateProfile = async() => {
 		setError('');
 		setLoading(true);
 
@@ -104,7 +104,7 @@ export default function Login()	{
 					className="bg-primary hover:bg-secondary hover:text-white"
 					variant="contained"
 					size="small"
-					onClick={handleSignUp}
+					onClick={updateProfile}
 				>
 					{loading ? <CircularProgress /> : 'Update Profile'}
 				</Button>
