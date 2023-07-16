@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { ReduxProvider } from '@/redux/provider';
+import { SessionProvider } from './provider';
 config.autoAddCss = false;
 
 const inter = Inter({ subsets: ['latin'] });
@@ -21,7 +22,9 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={inter.className}>
 				<ReduxProvider>
-					{children}
+					<SessionProvider>
+						{children}
+					</SessionProvider>
 				</ReduxProvider>
 			</body>
 		</html>

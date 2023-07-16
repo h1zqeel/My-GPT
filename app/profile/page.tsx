@@ -10,9 +10,6 @@ import { getSession } from '@/redux/features/sessionSlice';
 export default function Login()	{
 	const { user, loading:userLoading } = useAppSelector(({ sessionReducer }) => sessionReducer);
 	const dispatch = useAppDispatch();
-	useEffect(()=>{
-		dispatch(getSession());
-	}, []);
 
 	const [username, setUsername] = useState('');
 	const [name, setName] = useState('');
