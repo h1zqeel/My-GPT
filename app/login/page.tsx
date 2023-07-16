@@ -3,12 +3,15 @@
 import React, { useState } from 'react';
 import { Button, CircularProgress, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
 import { RegisterButton } from '@/components/buttons';
+import axios, { AxiosError } from 'axios';
+import { ResData } from '@/types/axios';
+import { useAppDispatch } from '@/redux/hooks';
+import { setSession } from '@/redux/features/sessionSlice';
 
 export default function Login()	{
 	const router = useRouter();
-
+	const dispatch = useAppDispatch();
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
@@ -17,16 +20,21 @@ export default function Login()	{
 
 	const handleSignIn = async() => {
 		setLoading(true);
-		const res = await signIn('credentials', {
-			redirect: false,
-			username,
-			password,
-			callbackUrl
-		});
-		if (!res?.error) {
-			router.push(callbackUrl);
-		} else {
-			setError('Invalid email or password');
+		try {
+			const res = await axios.post('/login/api', {
+				username,
+				password
+			});
+
+			if(res.status === 200 && res.data.ok) {
+				dispatch(setSession(res.data.user));
+				router.push(callbackUrl);
+			}
+		} catch (err) {
+			const error = err as AxiosError;
+			const data = error.response?.data as ResData;
+			setError(data.error || 'An error occurred');
+			setLoading(false);
 		}
 		setLoading(false);
 	};

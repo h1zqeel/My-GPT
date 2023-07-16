@@ -1,5 +1,23 @@
-export { default } from 'next-auth/middleware';
+import { NextRequest, NextResponse } from 'next/server';
+import { verifyToken } from '@/utils/token';
+import axios from 'axios';
+export const middleware = async(req: NextRequest) => {
+	const token = req.cookies.get(process.env.TOKEN_NAME)?.value;
+	if(token) {
+		const tokenClaims = await verifyToken(token);
+		if(tokenClaims) {
+			if(!tokenClaims?.payload?.username) {
+				await axios.get('api/auth/logout');
 
+				return NextResponse.redirect(new URL('/login', req.url));
+			} else {
+				return NextResponse.next();
+			}
+		}
+	} else {
+		return NextResponse.redirect(new URL('/login', req.url));
+	}
+};
 export const config = {
 	matcher: [
 		/*
