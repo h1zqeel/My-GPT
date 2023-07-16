@@ -12,5 +12,31 @@ model User {
   name          String?
   username      String     @unique
   password      String
-  openAIKey    String?
+  openAIKey     String?
+  chats         Chat[]
+}
+
+model Chat {
+  id            Int        @id @default(autoincrement())
+  name          String?
+  creator       User       @relation(fields: [creatorId], references: [id])
+  creatorId     Int
+  messages      Message[]
+  createdAt     DateTime   @default(now())
+  archived      Boolean    @default(false)
+}
+
+model Message {
+  id            Int        @id @default(autoincrement())
+  text          String
+  chat          Chat       @relation(fields: [chatId], references: [id])
+  chatId        Int
+  sender        Role
+  createdAt     DateTime   @default(now())
+  archived      Boolean    @default(false)
+}
+
+enum Role {
+  User
+  Ai
 }
