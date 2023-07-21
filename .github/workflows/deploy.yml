@@ -1,0 +1,49 @@
+name: 2 - Deployment to EC2
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deployment:
+
+    runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/main'
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+    
+    environment:
+      name: Production
+      url: http://ec2-18-159-114-201.eu-central-1.compute.amazonaws.com
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: yarn
+      - name: Syncing Files
+        uses: burnett01/rsync-deployments@5.1
+        with:
+          switches: -avzr --delete
+          path: ./*
+          remote_path: ${{secrets.EC2_MY_GPT_PATH}}
+          remote_host:  ${{ secrets.EC2_ELASTIC_IP }}
+          remote_user: ec2-user
+          remote_key: "${{ secrets.EC2_SSH_KEY }}"
+      - name: Running Migrations
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_ELASTIC_IP }}
+          username: ec2-user
+          key: "${{ secrets.EC2_SSH_KEY }}"
+          script: cd ${{secrets.EC2_MY_GPT_PATH}} && npx prisma generate && npx prisma migrate deploy && pm2 restart ${{secrets.EC2_PM2_APP_NAME}}
