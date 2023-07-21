@@ -1,9 +1,7 @@
-name: 2 - Deployment to EC2
+name: Deployment to EC2
 
 on:
   push:
-    branches: [main]
-  pull_request:
     branches: [main]
   workflow_dispatch:
 
