@@ -34,9 +34,9 @@ jobs:
         with:
           switches: -avzr --delete
           path: ./*
-          remote_path: ${{secrets.EC2_MY_GPT_PATH}}
+          remote_path: ~/my-gpt
           remote_host:  ${{ secrets.EC2_ELASTIC_IP }}
-          remote_user: ec2-user
+          remote_user: ${{ secrets.EC2_USER }}
           remote_key: "${{ secrets.EC2_SSH_KEY }}"
       - name: Running Migrations
         uses: appleboy/ssh-action@master
@@ -44,4 +44,4 @@ jobs:
           host: ${{ secrets.EC2_ELASTIC_IP }}
           username: ec2-user
           key: "${{ secrets.EC2_SSH_KEY }}"
-          script: cd ${{secrets.EC2_MY_GPT_PATH}} && npx prisma generate && npx prisma migrate deploy && pm2 restart ${{secrets.EC2_PM2_APP_NAME}}
+          script: cd ~/my-gpt && npx prisma generate && npx prisma migrate deploy && pm2 restart my-gpt
