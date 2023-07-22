@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import db from '@/prisma/db';
-import { verifyToken } from '@/utils/token';
+import { decryptAndVerifyToken } from '@/utils/token';
 import { generateSession } from '@/utils/session';
 import { TUser } from '@/types/User';
 
 export async function POST(req: NextRequest) {
 	const token = req.cookies.get(process.env.TOKEN_NAME)?.value;
-	const claims = await verifyToken(token as string);
+	const claims = await decryptAndVerifyToken(token as string);
 
 	if(claims?.payload.id) {
 		const user = await db.user.findUnique({

@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyToken } from '@/utils/token';
+import { decryptAndVerifyToken } from '@/utils/token';
 import axios from 'axios';
 export const middleware = async(req: NextRequest) => {
 	const token = req.cookies.get(process.env.TOKEN_NAME)?.value;
 	if(token) {
-		const tokenClaims = await verifyToken(token);
+		const tokenClaims = await decryptAndVerifyToken(token);
 		if(tokenClaims) {
 			if(!tokenClaims?.payload?.username) {
 				await axios.get('api/auth/logout');
