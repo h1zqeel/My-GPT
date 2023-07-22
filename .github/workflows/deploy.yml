@@ -58,6 +58,7 @@ jobs:
           host: ${{ secrets.EC2_ELASTIC_IP }}
           username: ${{ secrets.EC2_USER }}
           key: "${{ secrets.EC2_SSH_KEY }}"
+          command_timeout: 40m
           script: cd ~/my-gpt && yarn build
       - name: Starting Server
         uses: appleboy/ssh-action@master
