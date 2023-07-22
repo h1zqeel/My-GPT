@@ -51,7 +51,7 @@ jobs:
           host: ${{ secrets.EC2_ELASTIC_IP }}
           username: ${{ secrets.EC2_USER }}
           key: "${{ secrets.EC2_SSH_KEY }}"
-          script: cd ~/my-gpt && npx prisma migrate deploy
+          script: cd ~/my-gpt && npx prisma generate && npx prisma migrate deploy
       - name: Building App
         uses: appleboy/ssh-action@master
         with:
