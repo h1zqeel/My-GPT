@@ -44,4 +44,4 @@ jobs:
           host: ${{ secrets.EC2_ELASTIC_IP }}
           username: ${{ secrets.EC2_USER }}
           key: "${{ secrets.EC2_SSH_KEY }}"
-          script: cd ~/my-gpt && npx prisma generate && npx prisma migrate deploy && pm2 restart my-gpt
+          script: cd ~/my-gpt && npx prisma migrate deploy && yarn build && pm2 restart my-gpt
