@@ -1,9 +1,7 @@
 'use client';
 
 import { Button } from '@mui/material';
-import axios from 'axios';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export const LoginButton = () => {
 	return (
@@ -26,14 +24,11 @@ export const RegisterButton = () => {
 };
 
 export const LogoutButton = () => {
-	const router = useRouter();
-	const signOut = async() => {
-		await axios.get('/api/auth/logout');
-		router.push('/login');
-	};
 	return (
-		<Button onClick={signOut}>
-			Sign Out
+		<Button>
+			<Link href={'/api/auth/logout'}>
+				Sign Out
+			</Link>
 		</Button>
 	);
 };
