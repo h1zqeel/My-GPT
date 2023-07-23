@@ -26,9 +26,9 @@ export const RegisterButton = () => {
 export const LogoutButton = () => {
 	return (
 		<Button>
-			<Link href={'/api/auth/logout'}>
+			{/* <Link href={'/api/auth/logout'}> */}
 				Sign Out
-			</Link>
+			{/* </Link> */}
 		</Button>
 	);
 };
