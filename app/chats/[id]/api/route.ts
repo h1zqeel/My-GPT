@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import db from '@/prisma/db';
 import { createEdgeRouter } from 'next-connect';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
-
+import { askGPT } from '@/utils/openai';
+import { getUserSession } from '@/utils/session';
 interface RequestContext {
 	params: {
 		id: number | string;
@@ -31,6 +32,7 @@ router
 	.post(async(req: NextRequest, { params } : RequestContext) => {
 		const { id: chatId } = params;
 		const { text } = await req.json();
+		const user = await getUserSession(req);
 
 		if(!text) {
 			return NextResponse.json(
@@ -42,19 +44,23 @@ router
 			);
 		}
 
-		const message = await db.message.create({
-			data: {
-				text,
-				chatId: Number(chatId),
-				sender: 'User'
-			}
-		});
+		const gptResponse = await askGPT({ chatId, message: text, openAIKey: user.openAIKey });
 
+		if(!gptResponse?.content?.length) {
+			return NextResponse.json(
+				{
+					ok: false,
+					error: 'Something went wrong'
+				},
+				{ status: 500 }
+			);
+		}
 
 		return NextResponse.json(
 			{
 				ok: true,
-				message
+				prompt: text,
+				gptResponse
 			},
 			{ status: 200 }
 		);
