@@ -28,15 +28,16 @@ model Chat {
 
 model Message {
   id            Int        @id @default(autoincrement())
-  text          String
+  content       String
   chat          Chat       @relation(fields: [chatId], references: [id])
   chatId        Int
-  sender        Role
+  role          Role       @default(user)
   createdAt     DateTime   @default(now())
   archived      Boolean    @default(false)
 }
 
 enum Role {
-  User
-  Ai
+  user
+  assistant
+  system
 }

@@ -1,12 +1,23 @@
 'use client';
 import Sidebar from '@/components/Sidebar';
 import ChildLayout from '@/components/childLayout';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 export default function ChatLayout({ children }: {
 	children: React.ReactNode
 }) {
-	const [chats, setChats] = useState([{ text: 'Chat 1', id: 1, page: 'chats' }, { text: 'Chat 2', id: 2, page: 'chats' }]);
+	const [chats, setChats] = useState([]);
+
+	const getChats = async() => {
+		const response = await axios.get('/chats/api');
+		response.data.chats.map((chat: any) => {
+			chat.text = chat.name;
+		});
+		setChats(response.data.chats);
+	};
+	useEffect(()=>{
+		getChats();
+	}, []);
 
 	return (
 		<ChildLayout>
