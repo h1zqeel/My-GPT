@@ -16,6 +16,9 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 	});
 
 	let messages = await db.message.findMany({
+		orderBy: {
+			id: 'asc'
+		},
 		where: {
 			chatId: Number(chatId)
 		}
