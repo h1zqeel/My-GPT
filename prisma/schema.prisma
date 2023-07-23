@@ -22,6 +22,7 @@ model Chat {
   creator       User       @relation(fields: [creatorId], references: [id])
   creatorId     Int
   messages      Message[]
+  systemMessage String     @default("You are a helpful AI Assistant")
   createdAt     DateTime   @default(now())
   archived      Boolean    @default(false)
 }

@@ -4,16 +4,16 @@ import { TSidebarElement } from '@/types/Sidebar';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/redux/hooks';
 
-const SidebarElement = ({ icon = '', text = '', page = 'chats', id }: TSidebarElement) => {
+const SidebarElement = ({ Icon = '', text = '', page = 'chats', id }: TSidebarElement) => {
 	const selectedChatId = useAppSelector(({ selectedChatReducer }) => selectedChatReducer.chatId);
 	const router = useRouter();
 	const redirect = () => {
 		router.push(`/${page}/${id}`);
 	};
 	return (
-		<div className={`transition-colors duration-150 flex items-center m-2 rounded-md p-2 cursor-pointer hover:bg-sky-700 w-64 overflow-hidden ${id === selectedChatId ? 'bg-sky-800': ''}`} onClick={redirect}>
-			{icon}
+		<div className={`transition-colors duration-150 flex items-center justify-between m-2 rounded-md p-2 cursor-pointer hover:bg-sky-700 w-64 overflow-hidden ${id === selectedChatId ? 'bg-sky-800': ''}`} onClick={redirect}>
 			<p>{text}</p>
+			{Icon && <div className='float-right'><Icon id={id}/></div>}
 		</div>
 	);
 };
