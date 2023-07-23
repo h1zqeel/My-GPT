@@ -26,5 +26,5 @@ export async function POST(request: Request) {
 		}
 	}
 
-	return NextResponse.json({ username });
+	return NextResponse.json({ ok: true, username });
 }
