@@ -15,6 +15,12 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 		}
 	});
 
+	const chat = await db.chat.findUnique({
+		where: {
+			id: Number(chatId)
+		}
+	});
+
 	let messages = await db.message.findMany({
 		orderBy: {
 			id: 'asc'
@@ -35,8 +41,7 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 		model,
 		// TODO: Add a way to change the temperature
 		// TODO: Add a way to change the max_tokens
-		// TODO: Add a way to change System Message
-		messages: [{ 'role': 'system', 'content': 'You are a helpful AI Assistant' }, ...messagesForOpenAI]
+		messages: [{ 'role': 'system', 'content': chat?.systemMessage }, ...messagesForOpenAI]
 	});
 
 	await db.message.create({
