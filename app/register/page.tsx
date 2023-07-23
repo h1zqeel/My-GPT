@@ -34,14 +34,7 @@ export default function Login()	{
 				password
 			});
 			if (res.status === 200 && res.data.ok) {
-				setLoading(false);
-				setUsername('');
-				setPassword('');
-				setCPassword('');
-				setError('Registration successful, redirecting to login page');
-				setTimeout(()=>{
-					router.push(callbackUrl);
-				}, 600);
+				router.push(callbackUrl);
 			} else {
 				setError(res.data.error || 'An error occurred');
 				setLoading(false);
