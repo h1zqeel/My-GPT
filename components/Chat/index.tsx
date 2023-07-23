@@ -1,9 +1,12 @@
 import { createRef, useEffect } from 'react';
 import { setSelectedChat } from '@/redux/features/selectedChatSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { setMessages } from '@/redux/features/messagesSlice';
+
 import { TChatProps, TMessage } from '@/types/Chat';
 import Message from './subcomponents/Message';
 import MessageBox from './subcomponents/MessageBox';
+import axios from 'axios';
 
 export default function Chat({ id }: TChatProps) {
 	const dispatch = useAppDispatch();
@@ -12,7 +15,13 @@ export default function Chat({ id }: TChatProps) {
 	dispatch(setSelectedChat(parseInt(id, 10)));
 
 	const messages = useAppSelector(({ messagesReducer }) => messagesReducer.messages);
+
+	const getMesssages = async() => {
+		const response = await axios.get(`/chats/${id}/api`);
+		dispatch(setMessages(response.data.messages));
+	};
 	useEffect(()=>{
+		getMesssages();
 		messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
 	}, []);
 
@@ -30,7 +39,7 @@ export default function Chat({ id }: TChatProps) {
 			</div>
 
 			<div>
-				<MessageBox />
+				<MessageBox id= {id}/>
 			</div>
 		</div>
 	</div>;
