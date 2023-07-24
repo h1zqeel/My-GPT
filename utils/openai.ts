@@ -7,50 +7,73 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 	});
 	const openai = new OpenAIApi(configuration);
 
-	await db.message.create({
-		data: {
-			content: message,
-			chatId: Number(chatId),
-			role: 'user'
-		}
-	});
+	try {
+		const chat = await db.chat.findUnique({
+			where: {
+				id: Number(chatId)
+			}
+		});
 
-	const chat = await db.chat.findUnique({
-		where: {
-			id: Number(chatId)
-		}
-	});
+		let messages = await db.message.findMany({
+			orderBy: {
+				id: 'asc'
+			},
+			where: {
+				chatId: Number(chatId)
+			}
+		});
 
-	let messages = await db.message.findMany({
-		orderBy: {
-			id: 'asc'
-		},
-		where: {
-			chatId: Number(chatId)
-		}
-	});
+		console.time('OPENAI-ASK');
+		const messagesForOpenAI : ChatCompletionRequestMessage[] = messages.map(message=>{
+			return {
+				role: message.role,
+				content: message.content
+			};
+		});
+		const { data : { choices:[{ message: gptResponse }] } } = await openai.createChatCompletion({
+			model,
+			// TODO: Add a way to change the temperature
+			// TODO: Add a way to change the max_tokens
+			messages: [{ 'role': 'system', 'content': chat?.systemMessage }, ...messagesForOpenAI, { 'role': 'user', 'content': message }]
+		});
+		console.timeEnd('OPENAI-ASK');
 
-	const messagesForOpenAI : ChatCompletionRequestMessage[] = messages.map(message=>{
+		await db.$transaction([
+			db.message.create({
+				data: {
+					content: message,
+					chatId: Number(chatId),
+					role: 'user'
+				}
+			}),
+			db.message.create({
+				data: {
+					content: String(gptResponse?.content),
+					chatId: Number(chatId),
+					role: 'assistant'
+				}
+			})
+		]);
+		return gptResponse;
+	} catch (error : any) {
 		return {
-			role: message.role,
-			content: message.content
+			role: '',
+			content: parseOpenAIError(error.response!.status)
 		};
-	});
+	}
+};
 
-	const { data : { choices:[{ message: gptResponse }] } } = await openai.createChatCompletion({
-		model,
-		// TODO: Add a way to change the temperature
-		// TODO: Add a way to change the max_tokens
-		messages: [{ 'role': 'system', 'content': chat?.systemMessage }, ...messagesForOpenAI]
-	});
-
-	await db.message.create({
-		data: {
-			content: String(gptResponse?.content),
-			chatId: Number(chatId),
-			role: 'assistant'
-		}
-	});
-
-	return gptResponse;
+const parseOpenAIError = (statusCode : number) => {
+	switch (statusCode) {
+	case 401:
+		return 'Incorrect API key provided';
+	case 429:
+		return 'Rate limit reached for requests';
+	case 500:
+		return 'The server had an error while processing your request';
+	case 503:
+		return 'The server is currently unavailable';
+	default:
+		return 'Something went wrong';
+	}
 };
