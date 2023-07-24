@@ -38,14 +38,13 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 					content: message.content
 				};
 			});
-			console.time('OPEN-AI-MESSAGE-CREATION');
+
 			const { data : { choices:[{ message: gptResponse }] } } = await openai.createChatCompletion({
 				model,
 				// TODO: Add a way to change the temperature
 				// TODO: Add a way to change the max_tokens
 				messages: [{ 'role': 'system', 'content': chat?.systemMessage }, ...messagesForOpenAI]
 			});
-			console.timeEnd('OPEN-AI-MESSAGE-CREATION');
 
 			await transaction.message.create({
 				data: {
