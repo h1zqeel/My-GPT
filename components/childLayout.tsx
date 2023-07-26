@@ -1,5 +1,6 @@
 'use client';
 
+import NextTopLoader from 'nextjs-toploader';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useEffect, useState } from 'react';
@@ -23,6 +24,10 @@ const ChildLayout = ({ children } : any) => {
 	}, []);
 	return (
 		<>
+			<NextTopLoader
+				color="#ffff"
+				easing="ease-in-out"
+			/>
 			{domLoaded && <ThemeProvider theme={darkTheme}>
 				<CssBaseline />
 				{children}
