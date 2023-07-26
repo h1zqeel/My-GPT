@@ -40,7 +40,7 @@ export default function Login()	{
 				setCPassword('');
 				setError('Registration successful, redirecting to login page');
 				setTimeout(()=>{
-					router.push(callbackUrl);
+					return router.push(callbackUrl);
 				}, 600);
 			} else {
 				setError(res.data.error || 'An error occurred');

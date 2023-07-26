@@ -8,7 +8,7 @@ const SidebarElement = ({ Icon = '', text = '', page = 'chats', id }: TSidebarEl
 	const selectedChatId = useAppSelector(({ selectedChatReducer }) => selectedChatReducer.chatId);
 	const router = useRouter();
 	const redirect = () => {
-		router.push(`/${page}/${id}`);
+		return router.push(`/${page}/${id}`);
 	};
 	return (
 		<div className={`transition-colors duration-150 flex items-center justify-between m-2 rounded-md p-2 cursor-pointer hover:bg-secondary hover:text-black w-64 overflow-hidden ${id === selectedChatId ? 'bg-primary text-black': ''}`} onClick={redirect}>

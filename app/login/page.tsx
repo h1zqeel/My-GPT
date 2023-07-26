@@ -29,7 +29,7 @@ export default function Login()	{
 
 			if(res.status === 200 && res.data.ok) {
 				dispatch(setSession(res.data.user));
-				router.push(callbackUrl);
+				return router.push(callbackUrl);
 			}
 		} catch (err) {
 			const error = err as AxiosError;
