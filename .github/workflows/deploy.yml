@@ -15,11 +15,10 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-    
     environment:
       name: Production
-      url: http://ec2-18-159-114-201.eu-central-1.compute.amazonaws.com
-    
+      url: https://my-gpt-h1zqeel.is-an.app
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
