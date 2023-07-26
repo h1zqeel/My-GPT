@@ -4,6 +4,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { ReduxProvider } from '@/redux/provider';
 import { SessionProvider } from './provider';
+import ChildLayout from '@/components/childLayout';
 config.autoAddCss = false;
 
 const inter = Inter({ subsets: ['latin'] });
@@ -20,10 +21,12 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
+			<body>
 				<ReduxProvider>
 					<SessionProvider>
-						{children}
+						<ChildLayout>
+							{children}
+						</ChildLayout>
 					</SessionProvider>
 				</ReduxProvider>
 			</body>

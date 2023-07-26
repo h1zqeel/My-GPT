@@ -98,8 +98,9 @@ export default function Login()	{
 					variant="contained"
 					size="small"
 					onClick={handleSignUp}
+					disabled={loading}
 				>
-					{loading ? <CircularProgress /> : 'Register'}
+					{loading ? <CircularProgress size={25}/> : 'Register'}
 				</Button>
 			</div>
 			<div>{error}</div>
