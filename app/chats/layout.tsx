@@ -46,9 +46,11 @@ export default function ChatLayout({ children }: {
 
 	const ChildActionComp = () => {
 		return <center>
-			<Button onClick={()=>{
-				setOpenCreateChat(true);
-			}} variant='outlined'>Create Chat</Button>
+			<div className='flex grow justify-center w-48 overflow-hidden'>
+				<Button onClick={()=>{
+					setOpenCreateChat(true);
+				}} variant='outlined'>Create Chat</Button>
+			</div>
 			<PopUpModal open={openCreateChat} handleClose={()=>{
 				setOpenCreateChat(false);
 			}} Child={InsertChatModal}/>

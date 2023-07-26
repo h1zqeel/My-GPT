@@ -20,6 +20,7 @@ export default function Login()	{
 
 	const handleSignIn = async() => {
 		setLoading(true);
+		setError('');
 		try {
 			const res = await axios.post('/login/api', {
 				username,
@@ -69,8 +70,9 @@ export default function Login()	{
 					variant="contained"
 					size="small"
 					onClick={handleSignIn}
+					disabled={loading}
 				>
-					{loading ? <CircularProgress /> : 'Login'}
+					{loading ? <CircularProgress size={25} /> : 'Login'}
 				</Button>
 			</div>
 			<div>{error}</div>

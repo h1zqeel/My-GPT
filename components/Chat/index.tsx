@@ -31,9 +31,9 @@ export default function Chat({ id }: TChatProps) {
 
 	return <div className='lg:relative'>
 		<div className='flex flex-col max-h-[100vh] pb-28'>
-			<div className='overflow-scroll'>
+			<div className='overflow-scroll grow min-w-[70vw] max-w-[70vw] h-[100vh]'>
 				{messages.map((message : TMessage) => {
-					return <div key={message.id} className=' w-[100%]'> <Message key={message.id} message={message} /> </div>;
+					return <div key={message.id} className=' max-w-[70vw]'> <Message key={message.id} message={message} /> </div>;
 				})}
 				<div ref={messagesEndRef as React.RefObject<HTMLDivElement>} />
 			</div>

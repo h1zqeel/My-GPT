@@ -11,7 +11,7 @@ export default function Home() {
 
 	return (
 		<main className="flex min-h-screen flex-col items-center p-24">
-			{loading ? <CircularProgress /> : <>Welcome,  {user?.name}
+			{loading ? <CircularProgress size={25} /> : <>Welcome,  {user?.name}
 				<Button><Link href={'/chats'}>Chats</Link></Button>
 				<Button><Link href={'/profile'}>Profile</Link></Button>
 				<LogoutButton />

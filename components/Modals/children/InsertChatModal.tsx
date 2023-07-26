@@ -43,12 +43,12 @@ export const InsertChatModal = ({ props } : TInsertChatModal) => {
 	}, []);
 	return <>
 		<p className='text-2xl p-1 mb-2'>{props?.chatId ? 'System Message' : 'New Chat'}</p>
-		{props?.chatId && loading ? <> <center><CircularProgress /> </center></> : <>
+		{props?.chatId && loading ? <> <center><CircularProgress size={25}/> </center></> : <>
 			<TextareaAutosize disabled={!!props?.chatId} className="bg-transparent p-1 m-0 w-full resize-none focus:ring-0 focus-visible:ring-0 outline-0 focus-visible:outline-0 focus-visible:outline-none" placeholder='Enter a Name' value={name} onChange={(e)=>setName(e.target.value)} maxRows={1}/>
 			<TextareaAutosize disabled={!!props?.chatId} className="bg-transparent p-1 m-0 w-full resize-none focus:ring-0 focus-visible:ring-0 outline-0 focus-visible:outline-0 focus-visible:outline-none" placeholder='Type a System Message' value={message} onChange={(e)=>setMessage(e.target.value)} maxRows={6}/>
 		</>}
 		{!props?.chatId && <>
-			{loading ? <div className='float-right'><CircularProgress /> </div>: <Button className='float-right' onClick={handleChatCreation}>Create</Button>}
+			{loading ? <div className='float-right'><CircularProgress size={25} /> </div>: <Button className='float-right' onClick={handleChatCreation}>Create</Button>}
 			<div className='text-xs mt-5 text-red-500'>{ error }</div>
 		</>}
 	</>;

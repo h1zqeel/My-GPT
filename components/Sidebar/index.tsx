@@ -15,11 +15,11 @@ export default function Sidebar({ elements, allowClosage = true, ChildActionComp
 	};
 
 	return <> <div className={`h-screen transition-[width] duration-200 ease-in-out absolute z-50 lg:static ${close? 'w-0' : 'w-4/5 lg:w-1/5 md:w-2/5'}`}>
-		<div className='flex flex-col bg-slate-800 h-screen overflow-hidden ease-in-out'>
+		<div className='flex flex-col bg-secondBackground h-screen overflow-hidden ease-in-out'>
 			{ChildActionComp && <div className='mt-2'>
 				<ChildActionComp />
 			</div>}
-			{allowClosage && <div className='p-5 m-2 text-right' onClick={closeSidebar}>
+			{allowClosage && <div className='p-5 m-2 text-right lg:hidden' onClick={closeSidebar}>
 				<FontAwesomeIcon icon={faCircleXmark} />
 			</div>}
 			{elements.map((element: TSidebarElement) => {
