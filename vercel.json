@@ -2,7 +2,7 @@
 	"regions": ["fra1"],
 	"git": {
 		"deploymentEnabled": {
-	"main": false
+			"main": false
+		}
 	}
-}
 }
