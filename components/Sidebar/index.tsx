@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import SidebarElement from './subcomponents/SidebarElement';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,39 +17,44 @@ export default function Sidebar({ elements, allowClosage = true, ChildActionComp
 	};
 
 	const chatsLoading = useAppSelector(({ chatsReducer }) => chatsReducer.loading);
+	const messagesLoading = useAppSelector(({ messagesReducer }) => messagesReducer.loading);
+	useEffect(()=>{
+		if (messagesLoading === true) {
+			setClose(true);
+		}
+	}, [messagesLoading]);
+	return <>
+		{<div className='lg:hidden' style={{
+			opacity: !close ? '0' : '1',
+			transitionProperty: 'opacity',
+			transitionDuration: '150ms'
+		}}>
+			<div className='p-5 m-2 text-right absolute' onClick={closeSidebar}>
+				<FontAwesomeIcon icon={faBars} />
+			</div>
 
-	return <> <div className={`h-screen transition-[width] duration-200 ease-in-out absolute z-50 lg:static ${close? 'w-0' : 'w-4/5 lg:w-1/5 md:w-2/5'}`}>
-		<div className='flex flex-col bg-secondBackground h-screen overflow-hidden ease-in-out'>
-			{ChildActionComp && <div className='mt-2'>
-				<ChildActionComp />
-			</div>}
-			{allowClosage && <div className='p-5 m-2 text-right lg:hidden' onClick={closeSidebar}>
-				<FontAwesomeIcon icon={faCircleXmark} />
-			</div>}
+		</div>}
+		<div className={`h-screen transition-[width] duration-200 ease-in-out absolute z-50 lg:static ${close? 'w-0 lg:w-[100%]' : 'w-[80vw] md:w-[40vw] lg:w-[100%]'}`}>
+			<div className='flex flex-col bg-secondBackground h-screen overflow-hidden ease-in-out'>
+				{ChildActionComp && <div className='mt-2'>
+					<ChildActionComp />
+				</div>}
+				{allowClosage && <div className='p-5 m-2 text-right lg:hidden' onClick={closeSidebar}>
+					<FontAwesomeIcon icon={faCircleXmark} />
+				</div>}
 
-			{!chatsLoading && elements.map((element: TChat) => {
-				return <SidebarElement key={element.id} element={element} page='chats' />;
-			})}
-			{chatsLoading && <div className='mt-10'>
-				{Array(10)
-					.fill(1)
-					.map((_:any, i) => {
-						return <SidebarElement key={i} skeleton={true}/>;
-					})}
-			</div>}
+				{!chatsLoading && elements.map((element: TChat) => {
+					return <SidebarElement key={element.id} element={element} page='chats' />;
+				})}
+				{chatsLoading && <div className='mt-10'>
+					{Array(10)
+						.fill(1)
+						.map((_:any, i) => {
+							return <SidebarElement key={i} skeleton={true}/>;
+						})}
+				</div>}
+			</div>
 		</div>
-	</div>
-	{<div className='' style={{
-		opacity: !close ? '0' : '1',
-		transitionProperty: 'opacity',
-		transitionDuration: '150ms'
-	}}>
-		<div className='p-5 m-2 text-right' onClick={closeSidebar}>
-
-			<FontAwesomeIcon icon={faBars} />
-		</div>
-
-	</div>}
 
 	</>;
 }
