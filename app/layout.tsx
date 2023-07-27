@@ -4,6 +4,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { ReduxProvider } from '@/redux/provider';
 import { SessionProvider } from './provider';
+import { Analytics } from '@vercel/analytics/react';
 import ChildLayout from '@/components/childLayout';
 config.autoAddCss = false;
 
@@ -30,6 +31,7 @@ export default function RootLayout({
 					<SessionProvider>
 						<ChildLayout>
 							{children}
+							<Analytics />
 						</ChildLayout>
 					</SessionProvider>
 				</ReduxProvider>
