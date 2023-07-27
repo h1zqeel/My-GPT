@@ -2,4 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
+body {
+	font-family: var(--font-ubuntu) !important;
+}

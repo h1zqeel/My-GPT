@@ -1,16 +1,27 @@
 import { TMessage } from '@/types/Chat';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 type messagesState = {
 	messages: TMessage[];
+	loading: boolean;
 };
 
 const initialState = {
-	messages: []
+	messages: [],
+	loading: false
 } as messagesState;
 
+
+export const getMessagesForChat = createAsyncThunk(
+	'message/getMessagesForChat',
+	async({ chatId }: {chatId: number}) => {
+		const response = await axios.get(`/chats/${chatId}/api`);
+		return response.data;
+	});
+
 export const messages = createSlice({
-	name: 'selectChat',
+	name: 'messages',
 	initialState,
 	reducers: {
 		reset: () => initialState,
@@ -31,6 +42,18 @@ export const messages = createSlice({
 				state.messages = state.messages.concat(action.payload);
 			}
 		}
+	},
+	extraReducers: (builder) => {
+		builder.addCase(getMessagesForChat.fulfilled, (state, action) => {
+			state.messages = action.payload.messages;
+			state.loading = false;
+		});
+		builder.addCase(getMessagesForChat.pending, (state, action) => {
+			state.loading = true;
+		});
+		builder.addCase(getMessagesForChat.rejected, (state, action) => {
+			state.loading = false;
+		});
 	}
 });
 

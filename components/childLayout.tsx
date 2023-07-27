@@ -6,6 +6,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useEffect, useState } from 'react';
 
 const darkTheme = createTheme({
+	typography: {
+		fontFamily: '\'__Ubuntu_761005\', \'__Ubuntu_Fallback_761005\''
+	},
 	palette: {
 		mode: 'dark',
 		primary: {

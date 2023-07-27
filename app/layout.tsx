@@ -1,5 +1,5 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
+import { Ubuntu } from 'next/font/google';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { ReduxProvider } from '@/redux/provider';
@@ -7,7 +7,11 @@ import { SessionProvider } from './provider';
 import ChildLayout from '@/components/childLayout';
 config.autoAddCss = false;
 
-const inter = Inter({ subsets: ['latin'] });
+const ubuntu = Ubuntu({
+	weight: ['400', '700'],
+	variable: '--font-ubuntu',
+	preload: false
+});
 
 export const metadata = {
 	title: 'My GPT',
@@ -20,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 	return (
-		<html lang="en">
+		<html lang="en" className={ubuntu.className} style={ubuntu.style}>
 			<body>
 				<ReduxProvider>
 					<SessionProvider>
