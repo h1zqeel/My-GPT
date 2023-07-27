@@ -7,6 +7,8 @@ import Message from './subcomponents/Message';
 import MessageBox from './subcomponents/MessageBox';
 import axios from 'axios';
 import { useCompletion } from 'ai/react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Chat({ id }: TChatProps) {
 	const dispatch = useAppDispatch();
@@ -14,6 +16,19 @@ export default function Chat({ id }: TChatProps) {
 	const { completion, input, handleInputChange, handleSubmit, isLoading } = useCompletion({
 		api: `/chats/${id}/completion/api`,
 		onFinish: async function(prompt, completion) {
+			if(!completion.length) {
+				toast.error('Request Failed: Failed to handle the Request', {
+					position: 'top-center',
+					autoClose: 600,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'dark'
+				});
+				return;
+			};
 			await axios.post(`/chats/${id}/api`, { content: prompt, role: 'user' });
 			return axios.post(`/chats/${id}/api`, { content: completion, role: 'assistant' });
 		}
@@ -61,5 +76,6 @@ export default function Chat({ id }: TChatProps) {
 				<MessageBox input={input} handleInputChange={handleInputChange} handleSubmit ={handleSubmit} isLoading={isLoading}/>
 			</div>
 		</div>
+		<ToastContainer />
 	</div>;
 }
