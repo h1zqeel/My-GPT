@@ -31,6 +31,8 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 			};
 		});
 
+		// TODO: Add a way to change the temperature
+		// TODO: Add a way to change the max_tokens
 		const response = await openai.createChatCompletion({
 			model,
 			stream: true,
