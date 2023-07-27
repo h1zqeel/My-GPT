@@ -4,15 +4,15 @@ import { useAppDispatch } from '@/redux/hooks';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CircularProgress, TextareaAutosize } from '@mui/material';
-import axios from 'axios';
+import { TChatMessageBoxProps } from '@/types/Chat';
 
-export default function MessageBox({ id : chatId, input, handleInputChange, handleSubmit, isLoading }: any) {
+export default function MessageBox({ input, handleInputChange, handleSubmit, isLoading }: TChatMessageBoxProps) {
 	const dispatch = useAppDispatch();
-	const [message, setMessage] = useState('');
 
 	const sendMessage = async(e:any) => {
 		e.preventDefault();
 		if(!input.length) return;
+
 		dispatch(insertChat({ role: 'user', content: input }));
 		handleSubmit(e);
 
