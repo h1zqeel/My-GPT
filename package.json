@@ -2,6 +2,7 @@
   "name": "my-gpt",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -21,6 +22,7 @@
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "add": "^2.0.6",
+    "ai": "^2.1.26",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
@@ -31,6 +33,7 @@
     "next-connect": "^1.0.0",
     "nextjs-toploader": "^1.4.2",
     "openai": "^3.3.0",
+    "openai-edge": "^1.2.2",
     "postcss": "8.4.24",
     "prisma": "^5.0.0",
     "react": "18.2.0",

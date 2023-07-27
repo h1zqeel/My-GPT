@@ -1,5 +1,6 @@
 import db from '@/prisma/db';
-import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai';
+import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
+import { OpenAIStream, StreamingTextResponse } from 'ai';
 
 export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatId } : {message: string, openAIKey: string, model?: string, chatId: number | string}) =>  {
 	const configuration = new Configuration({
@@ -23,38 +24,22 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 			}
 		});
 
-		console.time('OPENAI-ASK');
 		const messagesForOpenAI : ChatCompletionRequestMessage[] = messages.map(message=>{
 			return {
 				role: message.role,
 				content: message.content
 			};
 		});
-		const { data : { choices:[{ message: gptResponse }] } } = await openai.createChatCompletion({
+
+		const response = await openai.createChatCompletion({
 			model,
-			// TODO: Add a way to change the temperature
-			// TODO: Add a way to change the max_tokens
+			stream: true,
 			messages: [{ 'role': 'system', 'content': chat?.systemMessage }, ...messagesForOpenAI, { 'role': 'user', 'content': message }]
 		});
-		console.timeEnd('OPENAI-ASK');
 
-		await db.$transaction([
-			db.message.create({
-				data: {
-					content: message,
-					chatId: Number(chatId),
-					role: 'user'
-				}
-			}),
-			db.message.create({
-				data: {
-					content: String(gptResponse?.content),
-					chatId: Number(chatId),
-					role: 'assistant'
-				}
-			})
-		]);
-		return gptResponse;
+		const stream = OpenAIStream(response);
+
+		return new StreamingTextResponse(stream);
 	} catch (error : any) {
 		return {
 			role: '',

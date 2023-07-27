@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import db from '@/prisma/db';
 import { createEdgeRouter } from 'next-connect';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
 import { askGPT } from '@/utils/openai';
@@ -9,56 +8,29 @@ interface RequestContext {
 		id: number | string;
 	};
 }
+
 const router = createEdgeRouter<NextRequest, RequestContext>();
 
 router
 	.use(chatBelongsToUser)
-	.get(async(req: NextRequest, { params } : RequestContext)=>{
-		const { id: chatId } = params;
-		const messages = await db.message.findMany({
-			where: {
-				chatId: Number(chatId)
-			}
-		});
-
-		return NextResponse.json(
-			{
-				ok: true,
-				messages
-			},
-			{ status: 200 }
-		);
-	})
 	.post(async(req: NextRequest, { params } : RequestContext) => {
 		const { id: chatId } = params;
-		const { content, role } = await req.json();
+		const { prompt } = await req.json();
+		const user = await getUserSession(req);
 
-		if(!content) {
+		if(!prompt) {
 			return NextResponse.json(
 				{
 					ok: false,
-					error: 'Content is required'
+					error: 'Prompt is required'
 				},
 				{ status: 400 }
 			);
 		}
 
-		const message = await db.message.create({
-			data: {
-				content,
-				role,
-				chatId: Number(chatId)
-			}
-		});
+		const gptResponse = await askGPT({ chatId, message: prompt, openAIKey: user.openAIKey });
 
-		return NextResponse.json(
-			{
-				ok: true,
-				message
-			},
-			{ status: 200 }
-		);;
-
+		return gptResponse;
 	})
 ;
 
