@@ -34,7 +34,7 @@
     "nextjs-toploader": "^1.4.2",
     "openai": "^3.3.0",
     "openai-edge": "^1.2.2",
-    "postcss": "8.4.24",
+    "postcss": "8.4.27",
     "prisma": "^5.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
