@@ -57,10 +57,10 @@ export default function Chat({ id }: TChatProps) {
 	}, [completion]);
 
 	return <div className='lg:relative'>
-		<div className='flex flex-col max-h-[100vh] pb-28'>
-			<div className='overflow-scroll grow min-w-[70vw] justify-center max-w-[70vw] h-[100vh]'>
+		<div className='flex flex-col max-h-[100vh] pb-[5.5rem] overflow-clip w-[100vw] lg:w-[100%]'>
+			<div className='overflow-scroll grow justify-center h-[100vh]'>
 				{!messagesLoading && messages.map((message : TMessage) => {
-					return <div key={message.id} className=' max-w-[70vw]'> <Message key={message.id} message={message} /> </div>;
+					return <div key={message.id} className=' lg:max-w-[80vw]'> <Message key={message.id} message={message} /> </div>;
 				})}
 				{messagesLoading && <div className='mt-10'>
 					{Array(6)
@@ -72,7 +72,7 @@ export default function Chat({ id }: TChatProps) {
 				<div ref={messagesEndRef as React.RefObject<HTMLDivElement>} />
 			</div>
 
-			<div>
+			<div className='mt-2'>
 				<MessageBox input={input} handleInputChange={handleInputChange} handleSubmit ={handleSubmit} isLoading={isLoading}/>
 			</div>
 		</div>

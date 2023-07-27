@@ -39,8 +39,10 @@ export default function ChatLayout({ children }: {
 				<nav></nav>
 				<div className="h-screen duration-400 transition-all">
 					<div className='flex flex-row'>
-						<Sidebar elements={chats} allowClosage={true} ChildActionComp={ChildActionComp}/>
-						{<div className='lg:w-[70%]'>
+						<div className='lg:w-[20%]'>
+							<Sidebar elements={chats} allowClosage={true} ChildActionComp={ChildActionComp}/>
+						</div>
+						{<div className='lg:w-[80%]'>
 							{children}
 						</div>}
 					</div>
