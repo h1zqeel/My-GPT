@@ -54,7 +54,7 @@ export default function Chat({ id }: TChatProps) {
 			</div>
 
 			<div>
-				<MessageBox id= {id} input={input} handleInputChange={handleInputChange} handleSubmit ={handleSubmit} isLoading={isLoading}/>
+				<MessageBox input={input} handleInputChange={handleInputChange} handleSubmit ={handleSubmit} isLoading={isLoading}/>
 			</div>
 		</div>
 	</div>;
