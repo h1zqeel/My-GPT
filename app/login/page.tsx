@@ -39,7 +39,7 @@ export default function Login()	{
 		}
 		setLoading(false);
 	};
-	return <div className="grid h-screen place-items-center">
+	return <div className="grid h-[calc(100dvh)] place-items-center">
 		<div className="text-center flex flex-col space-y-4">
 			<h1 className="text-3xl text-bold">Enter Details</h1>
 			<div>

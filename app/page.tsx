@@ -10,7 +10,7 @@ export default function Home() {
 	const dispatch = useAppDispatch();
 
 	return (
-		<main className="flex min-h-screen flex-col items-center p-24">
+		<main className="flex min-h-[calc(100dvh)] flex-col items-center p-24">
 			{loading ? <CircularProgress size={25} /> : <>Welcome,  {user?.name}
 				<Button><Link href={'/chats'}>Chats</Link></Button>
 				<Button><Link href={'/profile'}>Profile</Link></Button>

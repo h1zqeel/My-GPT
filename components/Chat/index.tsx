@@ -56,9 +56,9 @@ export default function Chat({ id }: TChatProps) {
 		}
 	}, [completion]);
 
-	return <div className='lg:relative'>
-		<div className='flex flex-col max-h-[100vh] pb-[5.5rem] overflow-clip w-[100vw] lg:w-[100%]'>
-			<div className='overflow-scroll grow justify-center h-[100vh]'>
+	return <div className='relative'>
+		<div className='flex flex-col h-[calc(100dvh)] overflow-clip w-[100vw] lg:w-[100%] pt-20 md:pt-0 lg:pt-0'>
+			<div className='overflow-scroll grow justify-center'>
 				{!messagesLoading && messages.map((message : TMessage) => {
 					return <div key={message.id} className=' lg:max-w-[80vw]'> <Message key={message.id} message={message} /> </div>;
 				})}
