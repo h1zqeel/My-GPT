@@ -1,26 +1,26 @@
 'use client';
 
 import React, { useState } from 'react';
+import axios, { AxiosError } from 'axios';
 import { Button, CircularProgress, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { RegisterButton } from '@/components/buttons';
-import axios, { AxiosError } from 'axios';
 import { ResData } from '@/types/axios';
 import { useAppDispatch } from '@/redux/hooks';
 import { setSession } from '@/redux/features/sessionSlice';
+import { toast } from '@/utils/toast';
+import { errors } from '@/constants';
 
 export default function Login()	{
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
-	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const callbackUrl = '/';
 
 	const handleSignIn = async() => {
 		setLoading(true);
-		setError('');
 		try {
 			const res = await axios.post('/login/api', {
 				username,
@@ -34,14 +34,14 @@ export default function Login()	{
 		} catch (err) {
 			const error = err as AxiosError;
 			const data = error.response?.data as ResData;
-			setError(data.error || 'An error occurred');
+			toast(data.error || errors.DEFAULT, 'error');
 			setLoading(false);
 		}
 		setLoading(false);
 	};
 	return <div className="grid h-[calc(100dvh)] place-items-center">
 		<div className="text-center flex flex-col space-y-4">
-			<h1 className="text-3xl text-bold">Enter Details</h1>
+			<h1 className="text-3xl text-bold">Login</h1>
 			<div>
 				<TextField
 					id="outlined-basic"
@@ -63,7 +63,7 @@ export default function Login()	{
 					size="small"
 				/>
 			</div>
-			<div>
+			<div className='flex flex-row justify-center space-x-4'>
 				<RegisterButton />
 				<Button
 					className="bg-primary hover:bg-secondary hover:text-white"
@@ -75,7 +75,6 @@ export default function Login()	{
 					{loading ? <CircularProgress size={25} /> : 'Login'}
 				</Button>
 			</div>
-			<div>{error}</div>
 		</div>
 	</div>;
 }

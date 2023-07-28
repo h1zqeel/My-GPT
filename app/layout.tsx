@@ -1,11 +1,14 @@
 import './globals.css';
+import ChildLayout from '@/components/childLayout';
 import { Ubuntu } from 'next/font/google';
-import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { ReduxProvider } from '@/redux/provider';
 import { SessionProvider } from './provider';
 import { Analytics } from '@vercel/analytics/react';
-import ChildLayout from '@/components/childLayout';
+import { ToastContainer } from 'react-toastify';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 config.autoAddCss = false;
 
 const ubuntu = Ubuntu({
@@ -26,11 +29,12 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className={ubuntu.className} style={ubuntu.style}>
-			<body>
+			<body className='bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-600 via-gray-800 to-black'>
 				<ReduxProvider>
 					<SessionProvider>
 						<ChildLayout>
 							{children}
+							<ToastContainer />
 							<Analytics />
 						</ChildLayout>
 					</SessionProvider>

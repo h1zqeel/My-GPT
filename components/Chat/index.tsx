@@ -1,32 +1,24 @@
+import Message from './subcomponents/Message';
+import MessageBox from './subcomponents/MessageBox';
+import axios from 'axios';
 import { createRef, useEffect } from 'react';
 import { setSelectedChat } from '@/redux/features/selectedChatSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { updateBotMessage, getMessagesForChat } from '@/redux/features/messagesSlice';
 import { TChatProps, TMessage } from '@/types/Chat';
-import Message from './subcomponents/Message';
-import MessageBox from './subcomponents/MessageBox';
-import axios from 'axios';
 import { useCompletion } from 'ai/react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { getSession } from '@/redux/features/sessionSlice';
+import { toast } from '@/utils/toast';
+import { errors } from '@/constants';
 
 export default function Chat({ id }: TChatProps) {
 	const dispatch = useAppDispatch();
-
+	const { user, loading: userLoading } = useAppSelector(({ sessionReducer }) => sessionReducer);
 	const { completion, input, handleInputChange, handleSubmit, isLoading } = useCompletion({
 		api: `/chats/${id}/completion/api`,
 		onFinish: async function(prompt, completion) {
 			if(!completion.length) {
-				toast.error('Request Failed: Failed to handle the Request', {
-					position: 'top-center',
-					autoClose: 600,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'dark'
-				});
+				toast('Request Failed: Is your Open AI Key Valid ?', 'error');
 				return;
 			};
 			await axios.post(`/chats/${id}/api`, { content: prompt, role: 'user' });
@@ -42,6 +34,7 @@ export default function Chat({ id }: TChatProps) {
 
 	useEffect(()=>{
 		dispatch(getMessagesForChat({ chatId: parseInt(id, 10) }));
+		dispatch(getSession());
 		messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
 	}, []);
 
@@ -56,14 +49,22 @@ export default function Chat({ id }: TChatProps) {
 		}
 	}, [completion]);
 
+	useEffect(()=>{
+		if(user?.username && userLoading === false) {
+			if(!user.openAIKey) {
+				toast(errors.NO_KEY, 'error', 4000);
+			}
+		}
+	}, []);
+
 	return <div className='relative'>
 		<div className='flex flex-col h-[calc(100dvh)] overflow-clip w-[100vw] lg:w-[100%] pt-20 md:pt-0 lg:pt-0'>
-			<div className='overflow-scroll grow justify-center'>
+			<div className={`grow justify-center ${messagesLoading?'overflow-clip': 'overflow-scroll'}`}>
 				{!messagesLoading && messages.map((message : TMessage) => {
 					return <div key={message.id} className=' lg:max-w-[80vw]'> <Message key={message.id} message={message} /> </div>;
 				})}
-				{messagesLoading && <div className='mt-10'>
-					{Array(6)
+				{messagesLoading && <div className=''>
+					{Array(10)
 						.fill(1)
 						.map((_:any, i) => {
 							return <Message key={i} skeleton={true}/>;
@@ -73,9 +74,8 @@ export default function Chat({ id }: TChatProps) {
 			</div>
 
 			<div className='mt-2'>
-				<MessageBox input={input} handleInputChange={handleInputChange} handleSubmit ={handleSubmit} isLoading={isLoading}/>
+				<MessageBox input={input} handleInputChange={handleInputChange} allowSubmit={!!user?.openAIKey} handleSubmit={handleSubmit} isLoading={isLoading}/>
 			</div>
 		</div>
-		<ToastContainer />
 	</div>;
 }
