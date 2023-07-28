@@ -29,13 +29,13 @@ export default function Sidebar({ elements, allowClosage = true, ChildActionComp
 			transitionProperty: 'opacity',
 			transitionDuration: '150ms'
 		}}>
-			<div className='p-5 m-2 text-right absolute' onClick={closeSidebar}>
+			<div className='p-5 m-2 text-right z-50 absolute' onClick={closeSidebar}>
 				<FontAwesomeIcon icon={faBars} />
 			</div>
 
 		</div>}
-		<div className={`h-screen transition-[width] duration-200 ease-in-out absolute z-50 lg:static ${close? 'w-0 lg:w-[100%]' : 'w-[80vw] md:w-[40vw] lg:w-[100%]'}`}>
-			<div className='flex flex-col bg-secondBackground h-screen overflow-hidden ease-in-out'>
+		<div className={`h-fill transition-[width] duration-200 ease-in-out absolute z-50 lg:static ${close? 'w-0 lg:w-[100%]' : 'w-[80vw] md:w-[40vw] lg:w-[100%]'}`}>
+			<div className='flex flex-col bg-secondBackground overflow-hidden ease-in-out h-[calc(100dvh)]'>
 				{ChildActionComp && <div className='mt-2'>
 					<ChildActionComp />
 				</div>}

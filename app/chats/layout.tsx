@@ -37,7 +37,7 @@ export default function ChatLayout({ children }: {
 		<ChildLayout>
 			<section>
 				<nav></nav>
-				<div className="h-screen duration-400 transition-all">
+				<div className="h-[calc(100dvh)] duration-400 transition-all">
 					<div className='flex flex-row'>
 						<div className='lg:w-[20%]'>
 							<Sidebar elements={chats} allowClosage={true} ChildActionComp={ChildActionComp}/>
