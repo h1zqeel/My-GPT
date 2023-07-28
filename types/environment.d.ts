@@ -4,6 +4,7 @@ declare global {
       AUTH_SECRET: string;
       TOKEN_NAME: string;
       AUTH_KEY: string;
+      KV_URL: string;
     }
   }
 }
