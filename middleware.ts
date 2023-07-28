@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { decryptAndVerifyToken } from '@/utils/token';
 import axios from 'axios';
 export const middleware = async(req: NextRequest) => {
+	if(req.nextUrl.pathname === '/') {
+		return NextResponse.next();
+	}
 	const token = req.cookies.get(process.env.TOKEN_NAME)?.value;
 	if(token) {
 		const tokenClaims = await decryptAndVerifyToken(token);
@@ -29,6 +32,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-		'/((?!api/auth|login|register|_next/static|_next/image|favicon.ico).*)'
+		'/((?!api/auth|AI-LOGO.png|login|register|_next/static|_next/image|favicon.ico).*)'
 	]
 };

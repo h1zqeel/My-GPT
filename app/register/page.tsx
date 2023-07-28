@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
+import axios, { AxiosError } from 'axios';
 import { Button, CircularProgress, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import axios, { AxiosError } from 'axios';
 import { ResData } from '@/types/axios';
 import { LoginButton } from '@/components/buttons';
+import { toast } from '@/utils/toast';
+import { errors } from '@/constants';
 
 export default function Login()	{
 	const router = useRouter();
@@ -21,7 +23,7 @@ export default function Login()	{
 		setError('');
 		setLoading(true);
 		if(username.length < 6 || password.length < 6 || password !== cPassword) {
-			setError('Invalid username or password: username and password must be at least 6 characters long and passwords must match');
+			toast('Invalid username or password: username and password must be at least 6 characters long and passwords must match', 'error');
 			setLoading(false);
 			return;
 		}
@@ -38,18 +40,18 @@ export default function Login()	{
 				setUsername('');
 				setPassword('');
 				setCPassword('');
-				setError('Registration successful, redirecting to login page');
+				toast('Registration successful, redirecting to login page', 'success');
 				setTimeout(()=>{
 					return router.push(callbackUrl);
 				}, 600);
 			} else {
-				setError(res.data.error || 'An error occurred');
+				toast(res.data.error || errors.DEFAULT, 'error');
 				setLoading(false);
 			}
 		} catch (err) {
 			const error = err as AxiosError;
 			const data = error.response?.data as ResData;
-			setError(data.error || 'An error occurred');
+			toast(data.error || errors.DEFAULT, 'error');
 			setLoading(false);
 		}
 	};
@@ -91,7 +93,7 @@ export default function Login()	{
 					size="small"
 				/>
 			</div>
-			<div>
+			<div className='flex flex-row justify-center space-x-4'>
 				<LoginButton />
 				<Button
 					className="bg-primary hover:bg-secondary hover:text-white"

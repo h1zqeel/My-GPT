@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Button, CircularProgress, TextField } from '@mui/material';
 import axios, { AxiosError } from 'axios';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import { ResData } from '@/types/axios';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { getSession } from '@/redux/features/sessionSlice';
@@ -58,7 +58,7 @@ export default function Login()	{
 	};
 	return <div className="grid h-[calc(100dvh)] place-items-center">
 		<div className="text-center flex flex-col space-y-4">
-			<h1 className="text-3xl text-bold">Update Profile</h1>
+			<h1 className="text-3xl text-bold">Settings</h1>
 			<div>
 				<TextField
 					name='r-name'
@@ -86,10 +86,10 @@ export default function Login()	{
 			<div>
 				<TextField
 					autoComplete='chrome-off'
-					type='password'
+					type='text'
 					name='r-openai-key'
 					id="outlined-basic"
-					label="Open AI Key"
+					label="Add your Open AI Key Here"
 					variant="outlined"
 					value={openAIKey}
 					onChange={(e) => setOpenAIKey(e.target.value)}
@@ -102,8 +102,9 @@ export default function Login()	{
 					variant="contained"
 					size="small"
 					onClick={updateProfile}
+					disabled={loading}
 				>
-					{loading ? <CircularProgress /> : 'Update Profile'}
+					{loading ? <CircularProgress  size={25}/> : 'Update'}
 				</Button>
 			</div>
 			<div>{error}</div>

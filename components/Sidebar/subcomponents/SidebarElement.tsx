@@ -1,11 +1,10 @@
 'use client';
 
-import { useAppSelector } from '@/redux/hooks';
 import Link from 'next/link';
+import { useAppSelector } from '@/redux/hooks';
 import { TChat } from '@/types/Chat';
 import { ChatIcon } from './chat/ChatIcon';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 
 const SidebarElement = ({ element, page, skeleton = false }:  {element?: TChat, page?: string, skeleton?: Boolean}) => {
 	const selectedChatId = useAppSelector(({ selectedChatReducer }) => selectedChatReducer.chatId);
