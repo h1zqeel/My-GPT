@@ -3,6 +3,7 @@ import { createEdgeRouter } from 'next-connect';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
 import { askGPT } from '@/utils/openai';
 import { getUserSession } from '@/utils/session';
+import { errors } from '@/constants';
 interface RequestContext {
 	params: {
 		id: number | string;
@@ -22,7 +23,7 @@ router
 			return NextResponse.json(
 				{
 					ok: false,
-					error: 'Prompt is required'
+					error: errors.OPEN_AI.PROMPT_REQUIRED
 				},
 				{ status: 400 }
 			);

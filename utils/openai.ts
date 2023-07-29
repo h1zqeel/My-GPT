@@ -1,6 +1,10 @@
 import db from '@/prisma/db';
+// vercel edge api
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
+// openai node api
+import { Configuration as CFG, OpenAIApi as OAA } from 'openai';
+import { TUser } from '@/types/User';
 
 export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatId } : {message: string, openAIKey: string, model?: string, chatId: number | string}) =>  {
 	const configuration = new Configuration({
@@ -34,7 +38,7 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 		// TODO: Add a way to change the temperature
 		// TODO: Add a way to change the max_tokens
 		const response = await openai.createChatCompletion({
-			model,
+			model: chat?.model || model,
 			stream: true,
 			messages: [{ 'role': 'system', 'content': chat?.systemMessage }, ...messagesForOpenAI, { 'role': 'user', 'content': message }]
 		});
@@ -43,24 +47,15 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 
 		return new StreamingTextResponse(stream);
 	} catch (error : any) {
-		return {
-			role: '',
-			content: parseOpenAIError(error.response!.status)
-		};
+		throw error;
 	}
 };
 
-const parseOpenAIError = (statusCode : number) => {
-	switch (statusCode) {
-	case 401:
-		return 'Incorrect API key provided';
-	case 429:
-		return 'Rate limit reached for requests';
-	case 500:
-		return 'The server had an error while processing your request';
-	case 503:
-		return 'The server is currently unavailable';
-	default:
-		return 'Something went wrong';
-	}
+export const getAllowedModels = async({ user }: {user: TUser}) => {
+	const configuration = new CFG({
+		apiKey: user.openAIKey
+	});
+	const openai = new OAA(configuration);
+	const res = await openai.listModels();
+	return res.data;
 };

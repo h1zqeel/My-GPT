@@ -18,7 +18,7 @@ export default function Chat({ id }: TChatProps) {
 		api: `/chats/${id}/completion/api`,
 		onFinish: async function(prompt, completion) {
 			if(!completion.length) {
-				toast('Request Failed: Is your Open AI Key Valid ?', 'error');
+				toast(errors.OPEN_AI.FAILED_REQUEST, 'error');
 				return;
 			};
 			await axios.post(`/chats/${id}/api`, { content: prompt, role: 'user' });

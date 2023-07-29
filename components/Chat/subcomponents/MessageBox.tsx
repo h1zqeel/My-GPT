@@ -11,7 +11,7 @@ export default function MessageBox({ input, handleInputChange, handleSubmit, all
 	const sendMessage = async(e:any) => {
 		e.preventDefault();
 		if(!input.length)  {
-			toast('Message Can\'t be Empty', 'error', 300);
+			toast(errors.EMPTY_MESSAGE, 'error', 300);
 			return;
 		};
 		if(!allowSubmit) {
