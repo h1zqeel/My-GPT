@@ -6,7 +6,7 @@ const kv = createClient({
 export const createData = async({ key, value } : {key: string, value: any}) => {
 	try{
 		console.log(key, ' Miss');
-		await kv.set(key, JSON.stringify(value), { ex: 200 });
+		await kv.set(key, JSON.stringify(value), { ex: 500 });
 	} catch(e) {
 		throw e;
 	}
@@ -25,14 +25,16 @@ export const fetchData = async({ key } : {key: string}) => {
 	}
 };
 
-export const cacheExtension = async({ model, operation, args, query } : any) => {
+export const cacheExtension = async({ model, operation, args, query } : any, { pivot } : {pivot?: string} = {}) => {
 	if(process.env.SKIP_CACHING === 'yes') {
 		console.log('Skipping caching');
 		return query(args);
 	}
+	const pivotPoint = pivot ? args.where[pivot] ?? '' : '';
+
 	const key = `${process.env.TOKEN_NAME}_${model}_${operation}_${JSON.stringify(args)}`;
 	let data = null;
-	const allow = await kv.sismember(`${process.env.TOKEN_NAME}_allow`, `${model}_${operation}`);
+	const allow = await kv.sismember(`${process.env.TOKEN_NAME}_allow`, `${model}_${operation}_${pivotPoint}`);
 	if(allow) {
 		data = await fetchData({ key });
 	}
@@ -41,17 +43,19 @@ export const cacheExtension = async({ model, operation, args, query } : any) => 
 	} else {
 		const data = await query(args);
 		await createData({ key, value: data });
-		await kv.sadd(`${process.env.TOKEN_NAME}_allow`, `${model}_${operation}`);
+		await kv.sadd(`${process.env.TOKEN_NAME}_allow`, `${model}_${operation}_${pivotPoint}`);
 		return data;
 	}
 };
 
-export const cacheInvalidationExtension = async({ model, query, args } : any) => {
+export const cacheInvalidationExtension = async({ model, query, args } : any, { pivot }:{pivot?: string} = {}) => {
 	if(process.env.SKIP_CACHING === 'yes') {
 		console.log('Skipping caching');
 		return query(args);
 	}
+	const pivotPoint = pivot ? args.data[pivot] ?? '' : '';
+
 	console.log('Force Invalidating Cache');
-	await kv.srem(`${process.env.TOKEN_NAME}_allow`, `${model}_findUnique`, `${model}_findMany`);
+	await kv.srem(`${process.env.TOKEN_NAME}_allow`, `${model}_findUnique_${pivotPoint}`, `${model}_findMany_${pivotPoint}`);
 	return query(args);
 };
