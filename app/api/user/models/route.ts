@@ -5,6 +5,7 @@ import { getUserSession } from '@/utils/session';
 import { NextRequest, NextResponse } from 'next/server';
 import { gptModels } from '@/constants';
 import { parseOpenAIError } from '@/utils/helpers';
+
 export async function GET(req: NextRequest) {
 	try{
 		const user = await getUserSession(req);
@@ -19,8 +20,7 @@ export async function GET(req: NextRequest) {
 	} catch(e : any) {
 		return NextResponse.json({
 			ok: false,
-			error: parseOpenAIError(e.response.status)
-		}, { status: e.response.status });
+			error: parseOpenAIError(e.response?.status)
+		}, { status: e.response?.status ?? 500 });
 	}
-
 }
