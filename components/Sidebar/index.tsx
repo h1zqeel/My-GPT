@@ -43,7 +43,7 @@ export default function Sidebar({ elements, allowClosage = true, ChildActionComp
 				{allowClosage && <div className='p-5 m-2 text-right lg:hidden' onClick={closeSidebar}>
 					<FontAwesomeIcon icon={faCircleXmark} />
 				</div>}
-				<div className='flex flex-col justify-between h-[100%]'>
+				<div className='flex flex-col justify-between h-[100%] overflow-scroll'>
 					<div>
 						{!chatsLoading && elements.map((element: TChat) => {
 							return <SidebarElement key={element.id} element={element} page='chats' />;
