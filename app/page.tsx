@@ -17,7 +17,7 @@ export default function Home() {
 						</div>
 					</div>
 					<div className='lg:w-4/12 flex flex-col items-start'>
-						<Image src='/AI-LOGO.png' width={440} height={800} alt="Picture of the author" />
+						<Image src='https://my-gpt-axq.pages.dev/landing-image.png' width={440} height={800} alt="Picture of the author" priority={true} />
 					</div>
 				</div>
 			</div>
