@@ -8,10 +8,13 @@ function getRndInteger(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min) ) + min;
 }
 export default function Message({ message, skeleton }: { message?: TMessage, skeleton?: boolean }) {
+	const height = getRndInteger(60, 250);
+	const width = getRndInteger(40, 99);
+
 	if(skeleton) {
 		return <SkeletonTheme  baseColor="#212838" highlightColor="#374151">
 			<div className='mt-2'>
-				<Skeleton className='rounded-e-2xl rounded-bl-lg rounded-tl-md shadow-lg' height={getRndInteger(60, 250)} width={`${getRndInteger(40, 99)}%`} containerClassName='flex-1 mx-2'/>
+				<Skeleton className='rounded-e-2xl rounded-bl-lg rounded-tl-md shadow-lg' height={height} width={`${width}%`} containerClassName='flex-1 mx-2'/>
 			</div>
 		</SkeletonTheme>
 		;
