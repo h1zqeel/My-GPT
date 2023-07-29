@@ -3,15 +3,7 @@ import { Redis } from 'ioredis';
 import { createPrismaRedisCache } from 'prisma-redis-middleware';
 
 const prisma = new PrismaClient();
-const redis = new Redis(process.env.REDIS_HOST ? {
-	host: process.env.REDIS_HOST,
-	lazyConnect: true,
-	showFriendlyErrorStack: true,
-	enableAutoPipelining: true,
-	port: parseInt(process.env.REDIS_PORT),
-	username: process.env.REDIS_USER,
-	password: process.env.REDIS_PASSWORD
-} : {});
+const redis = new Redis(process.env.KV_URL || '');
 
 const cacheMiddleware = createPrismaRedisCache({
 	models: [
