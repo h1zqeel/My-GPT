@@ -1,4 +1,4 @@
-import { cacheExtension } from '@/utils/cache';
+import { cacheExtension, cacheInvalidationExtension } from '@/utils/cache';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -6,13 +6,17 @@ const prisma = new PrismaClient();
 const xPrisma = prisma.$extends({
 	query: {
 		chat:{
-			findMany: cacheExtension
+			findMany: cacheExtension,
+			findUnique: cacheExtension,
+			create: cacheInvalidationExtension
 		},
 		message:{
-			findMany: cacheExtension
+			findMany: cacheExtension,
+			create: cacheInvalidationExtension
 		},
 		user:{
-			findUnique: cacheExtension
+			findUnique: cacheExtension,
+			create: cacheInvalidationExtension
 		}
 	}
 });
