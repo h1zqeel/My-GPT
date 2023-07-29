@@ -32,8 +32,8 @@ TOKEN_NAME (string)
 AUTH_SECRET (32 Chars)
 AUTH_KEY (43 Chars)
 SKIP_CACHING (add 'yes' here to skip caching on local servers, otherwise you need to add KV_* Vars)
-KV_URL (Vercel Redis Store)
-KV_TOKEN (Vercel Redis Store Token)
+KV_URL (Redis Store URL)
+KV_TOKEN (Redis Store Token)
 ```
 #### Install Dependencies
 ```
