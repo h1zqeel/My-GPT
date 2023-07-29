@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { ResData } from '@/types/axios';
 import { LoginButton } from '@/components/buttons';
 import { toast } from '@/utils/toast';
-import { errors } from '@/constants';
+import { errors, successes } from '@/constants';
 
 export default function Login()	{
 	const router = useRouter();
@@ -40,7 +40,7 @@ export default function Login()	{
 				setUsername('');
 				setPassword('');
 				setCPassword('');
-				toast(errors.REGISTRATION_SUCCESS, 'success');
+				toast(successes.REGISTRATION_SUCCESS, 'success');
 				setTimeout(()=>{
 					return router.push(callbackUrl);
 				}, 600);
