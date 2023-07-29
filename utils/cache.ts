@@ -6,7 +6,7 @@ const kv = createClient({
 export const createData = async({ key, value } : {key: string, value: any}) => {
 	try{
 		console.log(key, ' Miss');
-		await kv.set(key, JSON.stringify(value), { ex: 500 });
+		await kv.set(key, JSON.stringify(value), { ex: 240 });
 	} catch(e) {
 		throw e;
 	}
