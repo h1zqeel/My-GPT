@@ -2,9 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { decryptAndVerifyToken } from '@/utils/token';
 import axios from 'axios';
 export const middleware = async(req: NextRequest) => {
-	if(req.nextUrl.pathname === '/') {
-		return NextResponse.next();
-	}
 	const token = req.cookies.get(process.env.TOKEN_NAME)?.value;
 	if(token) {
 		const tokenClaims = await decryptAndVerifyToken(token);
@@ -14,10 +11,16 @@ export const middleware = async(req: NextRequest) => {
 
 				return NextResponse.redirect(new URL('/login', req.url));
 			} else {
+				if(req.nextUrl.pathname === '/') {
+					return NextResponse.redirect(new URL('/chats', req.url));
+				}
 				return NextResponse.next();
 			}
 		}
 	} else {
+		if(req.nextUrl.pathname === '/') {
+			return NextResponse.next();
+		}
 		return NextResponse.redirect(new URL('/login', req.url));
 	}
 };
