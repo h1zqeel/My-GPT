@@ -3,12 +3,12 @@ import { Redis } from 'ioredis';
 import { createPrismaRedisCache } from 'prisma-redis-middleware';
 
 const prisma = new PrismaClient();
-const redis = new Redis(process.env.KV_URL || '');
+const redis = new Redis(process.env.REDIS_URL);
 
 const cacheMiddleware = createPrismaRedisCache({
 	models: [
-		{ model: 'Chat' },
-		{ model: 'Message' }
+		{ model: 'Chat', cacheKey: 'chat' },
+		{ model: 'Message', cacheKey: 'message' }
 	],
 	storage: { type: 'redis', options: { client: redis, invalidation: { referencesTTL: 300 }, log: console } },
 	cacheTime: 300,
