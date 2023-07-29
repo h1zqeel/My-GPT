@@ -3,11 +3,10 @@ const kv = createClient({
 	url: process.env.KV_URL,
 	token: process.env.KV_TOKEN
 });
-export const createData = async({ key, value } : {key: string, value: any}, { model, operation }: any) => {
+export const createData = async({ key, value } : {key: string, value: any}) => {
 	try{
 		console.log(key, ' Miss');
 		await kv.set(key, JSON.stringify(value), { ex: 200 });
-		await kv.sadd(`${process.env.TOKEN_NAME}_allow`, `${model}_${operation}`);
 	} catch(e) {
 		throw e;
 	}
@@ -41,7 +40,8 @@ export const cacheExtension = async({ model, operation, args, query } : any) => 
 		return data;
 	} else {
 		const data = await query(args);
-		await createData({ key, value: data }, { model, operation, args });
+		await createData({ key, value: data });
+		await kv.sadd(`${process.env.TOKEN_NAME}_allow`, `${model}_${operation}`);
 		return data;
 	}
 };
