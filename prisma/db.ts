@@ -11,8 +11,8 @@ const cacheMiddleware = createPrismaRedisCache({
 		{ model: 'Message', cacheTime: 200, cacheKey: `${process.env.TOKEN_NAME}_message` },
 		{ model: 'User', cacheTime: 400, cacheKey: `${process.env.TOKEN_NAME}_user` }
 	],
-	storage: { type: 'redis', options: { client: redis, invalidation: { referencesTTL: 300 }, log: console } },
-	cacheTime: 300,
+	storage: { type: 'redis', options: { client: redis, invalidation: { referencesTTL: 400 }, log: console } },
+	cacheTime: 400,
 	excludeMethods: ['count', 'groupBy'],
 	onHit: (key) => {
 		console.log('Redis hit', key);
