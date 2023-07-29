@@ -5,6 +5,8 @@ declare global {
       TOKEN_NAME: string;
       AUTH_KEY: string;
       REDIS_URL: string;
+      KV_URL: string;
+      KV_TOKEN: string;
     }
   }
 }
