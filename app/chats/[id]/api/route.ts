@@ -1,9 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
 import db from '@/prisma/db';
+import { NextRequest, NextResponse } from 'next/server';
 import { createEdgeRouter } from 'next-connect';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
-import { askGPT } from '@/utils/openai';
-import { getUserSession } from '@/utils/session';
+import { errors } from '@/constants';
 interface RequestContext {
 	params: {
 		id: number | string;
@@ -33,11 +32,11 @@ router
 		const { id: chatId } = params;
 		const { content, role } = await req.json();
 
-		if(!content) {
+		if(!content || !role) {
 			return NextResponse.json(
 				{
 					ok: false,
-					error: 'Content is required'
+					error: errors.OPEN_AI.CONTENT_ROLE_REQUIRED
 				},
 				{ status: 400 }
 			);

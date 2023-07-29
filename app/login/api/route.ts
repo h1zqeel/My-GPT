@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt';
 import db from '@/prisma/db';
 import { generateSession } from '@/utils/session';
 import { TUser } from '@/types/User';
+import { errors } from '@/constants';
 
 export async function POST(request: Request) {
 	const { username, password } = await request.json();
@@ -13,12 +14,12 @@ export async function POST(request: Request) {
 	});
 
 	if (!user) {
-		return NextResponse.json({ error: 'Username or Password is incorrect' }, { status: 400 });
+		return NextResponse.json({ error: errors.USERNAME_PASSWORD_INCORRECT }, { status: 400 });
 	}
 	const match = await bcrypt.compare(password, user.password);
 
 	if (!match) {
-		return NextResponse.json({ error: 'Username or Password is incorrect' }, { status: 400 });
+		return NextResponse.json({ error: errors.USERNAME_PASSWORD_INCORRECT }, { status: 400 });
 	}
 	if(!user.name) user.name = user.username;
 

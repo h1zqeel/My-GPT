@@ -23,6 +23,7 @@ model Chat {
   creatorId     Int
   messages      Message[]
   systemMessage String     @default("You are a helpful AI Assistant")
+  model         String     @default("gpt-3.5-turbo")
   createdAt     DateTime   @default(now())
   archived      Boolean    @default(false)
 }

@@ -3,13 +3,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import db from '@/prisma/db';
 export async function POST(req: NextRequest) {
 	const user = await getUserSession(req);
-	const { name, systemMessage } = await req.json();
+	const { name, systemMessage, model } = await req.json();
 
 	const chat = await db.chat.create({
 		data: {
 			name,
 			creatorId: user.id,
-			systemMessage
+			systemMessage,
+			model
 		}
 	});
 

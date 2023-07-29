@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { ResData } from '@/types/axios';
 import { LoginButton } from '@/components/buttons';
 import { toast } from '@/utils/toast';
-import { errors } from '@/constants';
+import { errors, successes } from '@/constants';
 
 export default function Login()	{
 	const router = useRouter();
@@ -23,7 +23,7 @@ export default function Login()	{
 		setError('');
 		setLoading(true);
 		if(username.length < 6 || password.length < 6 || password !== cPassword) {
-			toast('Invalid username or password: username and password must be at least 6 characters long and passwords must match', 'error');
+			toast(errors.INVALID_USERNAME_PASSWORD, 'error');
 			setLoading(false);
 			return;
 		}
@@ -40,7 +40,7 @@ export default function Login()	{
 				setUsername('');
 				setPassword('');
 				setCPassword('');
-				toast('Registration successful, redirecting to login page', 'success');
+				toast(successes.REGISTRATION_SUCCESS, 'success');
 				setTimeout(()=>{
 					return router.push(callbackUrl);
 				}, 600);
