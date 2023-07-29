@@ -7,9 +7,9 @@ const redis = new Redis(process.env.REDIS_URL);
 
 const cacheMiddleware = createPrismaRedisCache({
 	models: [
-		{ model: 'Chat', cacheTime: 200, cacheKey:  `${process.env.TOKEN_NAME}_chat` },
-		{ model: 'Message', cacheTime: 200, cacheKey: `${process.env.TOKEN_NAME}_message` },
-		{ model: 'User', cacheTime: 400, cacheKey: `${process.env.TOKEN_NAME}_user` }
+		{ model: 'Chat', cacheTime: 200 },
+		{ model: 'Message', cacheTime: 200 },
+		{ model: 'User', cacheTime: 400 }
 	],
 	storage: { type: 'redis', options: { client: redis, invalidation: { referencesTTL: 400 }, log: console } },
 	cacheTime: 400,
