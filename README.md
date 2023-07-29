@@ -10,7 +10,6 @@
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
 ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
-![Upstash](https://img.shields.io/static/v1?style=for-the-badge&message=Upstash&color=222222&logo=Upstash&logoColor=00E9A3&label=)
 
 ### To access the Application
 https://my-gpt.is-an.app
@@ -32,7 +31,9 @@ DATABASE_URL (Postgres DB URL)
 TOKEN_NAME (string)
 AUTH_SECRET (32 Chars)
 AUTH_KEY (43 Chars)
-REDIS_URL (Redis URL)
+SKIP_CACHING (add 'yes' here to skip caching on local servers, otherwise you need to add KV_* Vars)
+KV_URL (Vercel Redis Store)
+KV_TOKEN (Vercel Redis Store Token)
 ```
 #### Install Dependencies
 ```
