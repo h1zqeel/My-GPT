@@ -2,7 +2,7 @@
 import db from '@/prisma/db';
 import { NextRequest, NextResponse } from 'next/server';
 import { OAuth2Client } from 'google-auth-library';
-
+import { v4 as uuid } from 'uuid';
 export async function GET(req: Request) {
 	const callBackUrl = new URL('/login/api/google/callback', req.url).toString();
 
@@ -13,6 +13,7 @@ export async function GET(req: Request) {
 	);
 
 	const authorizeUrl = oAuth2Client.generateAuthUrl({
+		state: uuid(),
 		scope: [
 			'https://www.googleapis.com/auth/userinfo.profile',
 			'https://www.googleapis.com/auth/userinfo.email'
