@@ -14,7 +14,7 @@ export async function GET(req: Request) {
 
 	let githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${callBackUrl}&scope=read:user`;
 
-	if(state){
+	if(state) {
 		githubAuthURL += `&state=${state}`;
 	}
 

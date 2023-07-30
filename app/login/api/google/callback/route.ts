@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
 		return NextResponse.redirect(new URL('/login?googleEmailUnVerified=1', req.url));
 	}
 	const loginURL = new URL('/login/api/google', req.url).toString();
-	const { data: { user } } = await axios.post(loginURL, {...payload, userId});
+	const { data: { user } } = await axios.post(loginURL, { ...payload, userId });
 
 	if(user) {
 		return generateSession(user as TUser, { redirect: true, url: req.url });
