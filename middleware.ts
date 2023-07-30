@@ -46,6 +46,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-		'/((?!api/auth|AI-LOGO.png|login|register|_next/static|_next/image|favicon.ico).*)'
+		'/((?!api/auth|AI-LOGO.png|login|login/api/google|register|_next/static|_next/image|favicon.ico).*)'
 	]
 };
