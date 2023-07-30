@@ -4,7 +4,7 @@ import { Landing } from '@/components/Landing';
 export default function Home() {
 	return (
 		<main>
-			<div className='min-h-[calc(100dvh)] flex flex-col items-center'>
+			<div className='min-h-[calc(100dvh)] flex flex-col items-center justify-between'>
 				<div className='flex flex-col-reverse lg:flex-row items-center px-8 lg:p-24'>
 					<div className='lg:w-9/12 flex flex-col'>
 						<span className='text-3xl font-bold'>Custom AI bots made easy<br></br></span>
@@ -20,6 +20,7 @@ export default function Home() {
 						<Image src='https://my-gpt-axq.pages.dev/landing-image.png' width={440} height={800} alt="Picture of the author" priority={true} />
 					</div>
 				</div>
+				<p className='p-2 text-lg'>© h1zqeel</p>
 			</div>
 		</main>
 	);
