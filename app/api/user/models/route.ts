@@ -8,7 +8,7 @@ import { parseOpenAIError } from '@/utils/helpers';
 
 export async function GET(req: NextRequest) {
 	try{
-		const user = await getUserSession(req);
+		const user = await getUserSession({ req });
 		const { data: models } = await getAllowedModels({ user });
 		const allowedUserModels = _.map(models, 'id');
 		const supportedModels = _.map(gptModels, 'value');
