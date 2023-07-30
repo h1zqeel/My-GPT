@@ -1,11 +1,11 @@
-import { decryptAndVerifyToken } from '@/utils/token';
+import { getUserSession } from '@/utils/session';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
-	const token = req.cookies.get(process.env.TOKEN_NAME)?.value;
-	if(token) {
-		const claims = await decryptAndVerifyToken(token);
-		return NextResponse.json({ user: claims?.payload });
+	const sessionId = req.cookies.get(process.env.TOKEN_NAME)?.value;
+	if(sessionId) {
+		const session = await getUserSession({ sessionId });
+		return NextResponse.json({ user: session });
 	} else {
 		return NextResponse.redirect(new URL('/login', req.url));
 	}
