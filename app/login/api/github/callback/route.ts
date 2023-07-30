@@ -22,13 +22,10 @@ export async function GET(req: NextRequest) {
 		client_secret: process.env.GITHUB_CLIENT_SECRET,
 		redirect_uri: callBackUrl
 	});
-	console.log({ data: response.data });
 	const params = new URLSearchParams(response.data);
-	console.log({ params });
 	const accessToken = params.get('access_token');
-	console.log({ accessToken });
 	const tokenData = { access_token: accessToken };
-	console.log({ tokenData });
+
 	const { data : { name, email } } = await axios.get('https://api.github.com/user', {
 		headers: {
 			Authorization: `token ${tokenData.access_token}`
