@@ -5,7 +5,7 @@ import { OAuth2Client } from 'google-auth-library';
 
 export async function GET(req: Request) {
 	const callBackUrl = new URL('/login/api/google/callback', req.url).toString();
-	console.log({ callBackUrl }, 'from main route');
+
 	const oAuth2Client = new OAuth2Client(
 		process.env.GOOGLE_CLIENT_ID,
 		process.env.GOOGLE_CLIENT_SECRET,
