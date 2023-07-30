@@ -27,11 +27,15 @@ export default function Login()	{
 	useEffect(() => {
 		const googleSignInFailed = searchParams.get('googleSignInFailed');
 		const googleEmailUnVerified = searchParams.get('googleEmailUnVerified');
+		const githubSignInFailed = searchParams.get('githubSignInFailed');
 		if(googleSignInFailed) {
 			toast(errors.GOOGLE.SIGN_IN, 'error');
 		}
 		if(googleEmailUnVerified) {
 			toast(errors.GOOGLE.EMAIL_UNVERIFIED, 'error');
+		}
+		if(githubSignInFailed) {
+			toast(errors.GITHUB.SIGN_IN, 'error');
 		}
 	}, []);
 	const handleSignIn = async() => {

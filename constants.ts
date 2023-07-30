@@ -16,6 +16,9 @@ export const errors = {
 	GOOGLE: {
 		SIGN_IN: 'Google Sign In Failed, Please Try Again Later',
 		EMAIL_UNVERIFIED: 'Your Google Email is not verified, please verify your email and try again'
+	},
+	GITHUB: {
+		SIGN_IN: 'Github Sign In Failed, Please Try Again Later'
 	}
 };
 

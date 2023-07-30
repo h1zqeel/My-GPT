@@ -1,24 +1,15 @@
 
 import db from '@/prisma/db';
 import { NextRequest, NextResponse } from 'next/server';
-import { OAuth2Client } from 'google-auth-library';
 import { v4 as uuid } from 'uuid';
 import { Prisma } from '@prisma/client';
-
 export async function GET(req: Request) {
-	const callBackUrl = new URL('/login/api/google/callback', req.url).toString();
+	const callBackUrl = new URL('/login/api/github/callback', req.url).toString();
+	const state = uuid();
 
-	const oAuth2Client = new OAuth2Client({ clientId: process.env.GOOGLE_CLIENT_ID, clientSecret: process.env.GOOGLE_CLIENT_SECRET, redirectUri: callBackUrl });
+	const githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${callBackUrl}&scope=read:user&state=${state}`;
 
-	const authorizeUrl = oAuth2Client.generateAuthUrl({
-		state: uuid(),
-		scope: [
-			'https://www.googleapis.com/auth/userinfo.profile',
-			'https://www.googleapis.com/auth/userinfo.email'
-		]
-	});
-
-	return NextResponse.redirect(authorizeUrl);
+	return NextResponse.redirect(githubAuthURL);
 }
 
 export async function POST(req: NextRequest) {
@@ -26,7 +17,7 @@ export async function POST(req: NextRequest) {
 	let user = await db.user.findFirst({
 		where: {
 			providers: {
-				array_contains: [{ name: 'google', email: email }]
+				array_contains: [{ name: 'github', email: email }]
 			}
 		}
 	});
@@ -43,7 +34,7 @@ export async function POST(req: NextRequest) {
 				data: {
 					providers: [
 						...userWithSameEmail.providers as Prisma.JsonArray,
-						{ name: 'google', email: email }
+						{ name: 'github', email: email }
 					]
 				},
 				where: {
@@ -61,7 +52,7 @@ export async function POST(req: NextRequest) {
 				data: {
 					name,
 					email,
-					providers: [{ name: 'google', email: email }]
+					providers: [{ name: 'github', email: email }]
 				}
 			});
 		}
