@@ -8,6 +8,13 @@ import { TUser } from '@/types/User';
 
 export async function GET(req: NextRequest) {
 	const { searchParams } = new URL(req.url);
+	const state = searchParams.get('state');
+	let userId = null;
+
+	if(state) {
+		userId = parseInt(JSON.parse(state).userId) ?? null;
+	}
+
 	const callBackUrl = new URL('/login/api/google/callback', req.url).toString();
 
 	const oAuth2Client = new OAuth2Client({ clientId: process.env.GOOGLE_CLIENT_ID, clientSecret: process.env.GOOGLE_CLIENT_SECRET, redirectUri: callBackUrl });
@@ -22,7 +29,7 @@ export async function GET(req: NextRequest) {
 		return NextResponse.redirect(new URL('/login?googleEmailUnVerified=1', req.url));
 	}
 	const loginURL = new URL('/login/api/google', req.url).toString();
-	const { data: { user } } = await axios.post(loginURL, payload);
+	const { data: { user } } = await axios.post(loginURL, {...payload, userId});
 
 	if(user) {
 		return generateSession(user as TUser, { redirect: true, url: req.url });

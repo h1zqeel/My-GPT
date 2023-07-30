@@ -6,6 +6,8 @@ import { Button, CircularProgress, TextField } from '@mui/material';
 import { ResData } from '@/types/axios';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { getSession } from '@/redux/features/sessionSlice';
+import { GithubLoginButton, GoogleLoginButton } from 'react-social-login-buttons';
+import Link from 'next/link';
 
 export default function Login()	{
 	const { user, loading:userLoading } = useAppSelector(({ sessionReducer }) => sessionReducer);
@@ -16,6 +18,8 @@ export default function Login()	{
 	const [openAIKey, setOpenAIKey] = useState('');
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [hasGoogle, setHasGoogle] = useState(false);
+	const [hasGithub, setHasGithub] = useState(false);
 
 	useEffect(()=>{
 		setLoading(userLoading);
@@ -25,6 +29,17 @@ export default function Login()	{
 		setUsername(user?.username || '');
 		setName(user?.name || '');
 		setOpenAIKey(user?.openAIKey || '');
+		if(user?.providers) {
+			const google = user?.providers.find((provider : {name: string, email: string}) => provider.name === 'google');
+			const github = user?.providers.find((provider : {name: string, email: string}) => provider.name === 'github');
+			console.log({ google, github });
+			if (google && google.email) {
+				setHasGoogle(true);
+			}
+			if (github && github.email) {
+				setHasGithub(true);
+			}
+		}
 	}, [user]);
 
 	const updateProfile = async() => {
@@ -107,6 +122,28 @@ export default function Login()	{
 					{loading ? <CircularProgress  size={25}/> : 'Update'}
 				</Button>
 			</div>
+
+			{hasGithub ?
+				<div>
+					<GithubLoginButton>Unlink Github Account</GithubLoginButton>
+				</div>
+				:
+				<div>
+					<Link href={`/login/api/github?userId=${user?.id}`}>
+						<GithubLoginButton>Unlink Google Account</GithubLoginButton>
+					</Link>
+				</div>}
+
+			{hasGoogle ?
+				<div className='cursor-default'>
+					<GoogleLoginButton>Unlink Google Account</GoogleLoginButton>
+				</div>
+				:
+				<div>
+					<Link href={`/login/api/google?userId=${user?.id}`}>
+						<GoogleLoginButton>Link Google Account </GoogleLoginButton>
+					</Link>
+				</div>}
 			<div>{error}</div>
 		</div>
 	</div>;

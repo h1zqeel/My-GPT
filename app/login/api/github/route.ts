@@ -1,20 +1,36 @@
 
 import db from '@/prisma/db';
 import { NextRequest, NextResponse } from 'next/server';
-import { v4 as uuid } from 'uuid';
-import { Prisma } from '@prisma/client';
+import { linkExistingUser, signUpNewUser } from '@/utils/socialLogin';
 export async function GET(req: Request) {
+	const { searchParams } = new URL(req.url);
+	const userId = searchParams.get('userId');
 	const callBackUrl = new URL('/login/api/github/callback', req.url).toString();
-	const state = uuid();
+	let state = null;
 
-	const githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${callBackUrl}&scope=read:user&state=${state}`;
+	if(userId) {
+		state = JSON.stringify({ userId });
+	}
+
+	let githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${callBackUrl}&scope=read:user`;
+
+	if(state){
+		githubAuthURL += `&state=${state}`;
+	}
+
 
 	return NextResponse.redirect(githubAuthURL);
 }
 
 export async function POST(req: NextRequest) {
-	const { name, email } = await req.json();
-	let user = await db.user.findFirst({
+	const { name, email, userId } = await req.json();
+	let user;
+
+	if(userId) {
+		return linkExistingUser({ userId, name, email }, 'github');
+	}
+
+	user = await db.user.findFirst({
 		where: {
 			providers: {
 				array_contains: [{ name: 'github', email: email }]
@@ -23,39 +39,7 @@ export async function POST(req: NextRequest) {
 	});
 
 	if(!user) {
-		let userWithSameEmail = await db.user.findFirst({
-			where: {
-				email: email
-			}
-		});
-
-		if(userWithSameEmail) {
-			await db.user.update({
-				data: {
-					providers: [
-						...userWithSameEmail.providers as Prisma.JsonArray,
-						{ name: 'github', email: email }
-					]
-				},
-				where: {
-					id: userWithSameEmail.id
-				}
-			});
-
-			user = await db.user.findUnique({
-				where: {
-					id: userWithSameEmail.id
-				}
-			});
-		} else {
-			user = await db.user.create({
-				data: {
-					name,
-					email,
-					providers: [{ name: 'github', email: email }]
-				}
-			});
-		}
+		return signUpNewUser({ name, email }, 'github');
 	}
 
 	return NextResponse.json({

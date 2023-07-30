@@ -7,6 +7,13 @@ import { TUser } from '@/types/User';
 
 export async function GET(req: NextRequest) {
 	const { searchParams } = new URL(req.url);
+
+	const state = searchParams.get('state');
+	let userId = null;
+	if(state) {
+		userId = parseInt(JSON.parse(state).userId) ?? null;
+	}
+
 	const callBackUrl = new URL('/login/api/github/callback', req.url).toString();
 
 	const response = await axios.post('https://github.com/login/oauth/access_token', {
@@ -28,7 +35,7 @@ export async function GET(req: NextRequest) {
 		}
 	});
 	const loginURL = new URL('/login/api/github', req.url).toString();
-	const { data: { user } } = await axios.post(loginURL, { name, email });
+	const { data: { user } } = await axios.post(loginURL, { name, email, userId });
 
 	if(user) {
 		return generateSession(user as TUser, { redirect: true, url: req.url });
