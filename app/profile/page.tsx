@@ -130,7 +130,7 @@ export default function Login()	{
 				:
 				<div>
 					<Link href={`/login/api/github?userId=${user?.id}`}>
-						<GithubLoginButton>Unlink Google Account</GithubLoginButton>
+						<GithubLoginButton>Link Google Account</GithubLoginButton>
 					</Link>
 				</div>}
 
