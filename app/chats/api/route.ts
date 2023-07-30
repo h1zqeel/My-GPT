@@ -1,14 +1,22 @@
+import db from '@/prisma/db';
 import { getUserSession } from '@/utils/session';
 import { NextRequest, NextResponse } from 'next/server';
-import db from '@/prisma/db';
+import { errors } from '@/constants';
+
 export async function POST(req: NextRequest) {
-	const user = await getUserSession(req);
+	const user = await getUserSession({ req });
 	const { name, systemMessage, model } = await req.json();
+	if(!user) {
+		return NextResponse.json(
+			{ ok: false, error: errors.DEFAULT },
+			{ status: 500 }
+		);
+	}
 
 	const chat = await db.chat.create({
 		data: {
 			name,
-			creatorId: user.id,
+			creatorId: user?.id,
 			systemMessage,
 			model
 		}
@@ -21,7 +29,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-	const user = await getUserSession(req);
+	const user = await getUserSession({ req });
 	const { searchParams } = new URL(req.url);
 	const chatId = searchParams.get('id');
 
@@ -39,7 +47,7 @@ export async function GET(req: NextRequest) {
 
 	const chats = await db.chat.findMany({
 		where: {
-			creatorId: user.id,
+			creatorId: user?.id,
 			archived: false
 		}
 	});

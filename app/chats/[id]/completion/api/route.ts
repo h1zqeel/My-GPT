@@ -17,7 +17,7 @@ router
 	.post(async(req: NextRequest, { params } : RequestContext) => {
 		const { id: chatId } = params;
 		const { prompt } = await req.json();
-		const user = await getUserSession(req);
+		const user = await getUserSession({ req });
 
 		if(!prompt) {
 			return NextResponse.json(
@@ -29,7 +29,7 @@ router
 			);
 		}
 
-		const gptResponse = await askGPT({ chatId, message: prompt, openAIKey: user.openAIKey });
+		const gptResponse = await askGPT({ chatId, message: prompt, openAIKey: user?.openAIKey });
 
 		return gptResponse;
 	})

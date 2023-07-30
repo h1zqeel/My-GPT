@@ -6,7 +6,7 @@ import { OpenAIStream, StreamingTextResponse } from 'ai';
 import { Configuration as CFG, OpenAIApi as OAA } from 'openai';
 import { TUser } from '@/types/User';
 
-export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatId } : {message: string, openAIKey: string, model?: string, chatId: number | string}) =>  {
+export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatId } : {message: string, openAIKey?: string, model?: string, chatId: number | string}) =>  {
 	const configuration = new Configuration({
 		apiKey: openAIKey
 	});
@@ -51,9 +51,9 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 	}
 };
 
-export const getAllowedModels = async({ user }: {user: TUser}) => {
+export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 	const configuration = new CFG({
-		apiKey: user.openAIKey
+		apiKey: user?.openAIKey
 	});
 	const openai = new OAA(configuration);
 	const res = await openai.listModels();

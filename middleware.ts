@@ -1,29 +1,38 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { decryptAndVerifyToken } from '@/utils/token';
 import axios from 'axios';
-export const middleware = async(req: NextRequest) => {
-	const token = req.cookies.get(process.env.TOKEN_NAME)?.value;
-	if(token) {
-		const tokenClaims = await decryptAndVerifyToken(token);
-		if(tokenClaims) {
-			if(!tokenClaims?.payload?.username) {
-				await axios.get('/api/auth/logout');
+import { NextRequest, NextResponse } from 'next/server';
+import { getUserSession } from './utils/session';
 
-				return NextResponse.redirect(new URL('/login', req.url));
+const throwBack = async(req: NextRequest, destroyCookie : Boolean = true) => {
+	if(destroyCookie) {
+		await axios.get('/api/auth/logout');
+	}
+	if(req.nextUrl.pathname === '/') {
+		return NextResponse.next();
+	}
+	return NextResponse.redirect(new URL('/login', req.url));
+};
+
+export const middleware = async(req: NextRequest) => {
+	const sessionId = req.cookies.get(process.env.TOKEN_NAME)?.value;
+	if(sessionId) {
+		const sessionData = await getUserSession({ sessionId });
+		if(sessionData) {
+			if(!sessionData?.username) {
+				return throwBack(req);
 			} else {
 				if(req.nextUrl.pathname === '/') {
 					return NextResponse.redirect(new URL('/chats', req.url));
 				}
 				return NextResponse.next();
 			}
+		} else {
+			return throwBack(req);
 		}
 	} else {
-		if(req.nextUrl.pathname === '/') {
-			return NextResponse.next();
-		}
-		return NextResponse.redirect(new URL('/login', req.url));
+		return throwBack(req, false);
 	}
 };
+
 export const config = {
 	matcher: [
 		/*

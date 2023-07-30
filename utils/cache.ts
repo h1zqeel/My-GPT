@@ -6,7 +6,7 @@ const kv = createClient({
 export const createData = async({ key, value } : {key: string, value: any}) => {
 	try{
 		console.log(key, ' Miss');
-		await kv.set(key, JSON.stringify(value), { ex: 240 });
+		await kv.set(key, JSON.stringify(value), { ex: 500 });
 	} catch(e) {
 		throw e;
 	}
@@ -59,3 +59,5 @@ export const cacheInvalidationExtension = async({ model, query, args } : any, { 
 	await kv.srem(`${process.env.TOKEN_NAME}_allow`, `${model}_findUnique_${pivotPoint}`, `${model}_findMany_${pivotPoint}`, `${model}_findUnique_`, `${model}_findMany_`);
 	return query(args);
 };
+
+export default kv;
