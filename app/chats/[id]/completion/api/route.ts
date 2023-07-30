@@ -29,7 +29,7 @@ router
 			);
 		}
 
-		const gptResponse = await askGPT({ chatId, message: prompt, openAIKey: user.openAIKey });
+		const gptResponse = await askGPT({ chatId, message: prompt, openAIKey: user?.openAIKey });
 
 		return gptResponse;
 	})
