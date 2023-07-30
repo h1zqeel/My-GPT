@@ -3,13 +3,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getUserSession } from './utils/session';
 
 const throwBack = async(req: NextRequest, destroyCookie : Boolean = true) => {
+	const response = NextResponse.redirect(new URL('/login', req.url));
+
 	if(destroyCookie) {
-		await axios.get('/api/auth/logout');
+		response.cookies.delete(process.env.TOKEN_NAME);
 	}
 	if(req.nextUrl.pathname === '/') {
 		return NextResponse.next();
 	}
-	return NextResponse.redirect(new URL('/login', req.url));
+	return response;
 };
 
 export const middleware = async(req: NextRequest) => {
