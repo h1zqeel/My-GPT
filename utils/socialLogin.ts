@@ -10,8 +10,10 @@ export const linkExistingUser = async ({userId, email, name, } : {userId: number
 		});
 		if(user) {
 			let currentProviders = user.providers ? user.providers : []
+			let newEmail = user.email ? user.email : email;
 			await db.user.update({
 				data: {
+					email: newEmail,
 					providers: [
 						...currentProviders as Prisma.JsonArray,
 						{ name: provider, email: email }
