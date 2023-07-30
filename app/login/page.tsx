@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
+import Link from 'next/link';
 import { Button, CircularProgress, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { RegisterButton } from '@/components/buttons';
@@ -10,15 +11,29 @@ import { useAppDispatch } from '@/redux/hooks';
 import { setSession } from '@/redux/features/sessionSlice';
 import { toast } from '@/utils/toast';
 import { errors } from '@/constants';
+import { GithubLoginButton, GoogleLoginButton } from 'react-social-login-buttons';
+import { useSearchParams } from 'next/navigation';
+
 
 export default function Login()	{
 	const router = useRouter();
 	const dispatch = useAppDispatch();
+	const callbackUrl = '/';
+	const searchParams = useSearchParams();
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
-	const callbackUrl = '/';
 
+	useEffect(() => {
+		const googleSignInFailed = searchParams.get('googleSignInFailed');
+		const googleEmailUnVerified = searchParams.get('googleEmailUnVerified');
+		if(googleSignInFailed) {
+			toast(errors.GOOGLE.SIGN_IN, 'error');
+		}
+		if(googleEmailUnVerified) {
+			toast(errors.GOOGLE.EMAIL_UNVERIFIED, 'error');
+		}
+	}, []);
 	const handleSignIn = async() => {
 		setLoading(true);
 		try {
@@ -42,8 +57,11 @@ export default function Login()	{
 	return <div className="grid h-[calc(100dvh)] place-items-center">
 		<div className="text-center flex flex-col space-y-4">
 			<h1 className="text-3xl text-bold">Login</h1>
-			<div>
+			<div className='w-64'>
 				<TextField
+					sx={{
+						width: '100%'
+					}}
 					id="outlined-basic"
 					label="Username"
 					variant="outlined"
@@ -52,8 +70,11 @@ export default function Login()	{
 					size="small"
 				/>
 			</div>
-			<div>
+			<div className='w-64'>
 				<TextField
+					sx={{
+						width: '100%'
+					}}
 					id="outlined-basic"
 					label="Password"
 					variant="outlined"
@@ -63,7 +84,7 @@ export default function Login()	{
 					size="small"
 				/>
 			</div>
-			<div className='flex flex-row justify-center space-x-4'>
+			<div className='flex flex-row justify-center space-x-10'>
 				<RegisterButton />
 				<Button
 					className="bg-primary hover:bg-secondary hover:text-white"
@@ -74,6 +95,16 @@ export default function Login()	{
 				>
 					{loading ? <CircularProgress size={25} /> : 'Login'}
 				</Button>
+			</div>
+			<div className='flex flex-row justify-center space-x-3'>
+				<div className='flex flex-col'>
+					<Link href="/login/api/github">
+						<GithubLoginButton />
+					</Link>
+					<Link href="/login/api/google">
+						<GoogleLoginButton />
+					</Link>
+				</div>
 			</div>
 		</div>
 	</div>;

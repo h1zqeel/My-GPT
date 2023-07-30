@@ -19,7 +19,7 @@ export const middleware = async(req: NextRequest) => {
 	if(sessionId) {
 		const sessionData = await getUserSession({ sessionId });
 		if(sessionData) {
-			if(!sessionData?.username) {
+			if(!sessionData?.name && !sessionData?.username) {
 				return throwBack(req);
 			} else {
 				if(req.nextUrl.pathname === '/') {

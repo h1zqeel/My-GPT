@@ -12,6 +12,10 @@ export const errors = {
 		CONTENT_ROLE_REQUIRED: 'Content and Role is required',
 		PROMPT_REQUIRED: 'Prompt is required',
 		FAILED_REQUEST: 'Request Failed: Is your Open AI Key Valid ?'
+	},
+	GOOGLE: {
+		SIGN_IN: 'Google Sign In Failed, Please Try Again Later',
+		EMAIL_UNVERIFIED: 'Your Google Email is not verified, please verify your email and try again'
 	}
 };
 

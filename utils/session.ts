@@ -3,8 +3,9 @@ import { TUser } from '@/types/User';
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 
-export const generateSession = async(user: TUser, { userSessionId } : {userSessionId?: string | null} = {}) => {
-	const response = NextResponse.json(
+export const generateSession = async(user: TUser, { userSessionId, redirect, url } : {userSessionId?: string | null, redirect?: Boolean, url?: string} = {}) => {
+	let response;
+	response = NextResponse.json(
 		{
 			ok: true,
 			user: {
@@ -17,13 +18,18 @@ export const generateSession = async(user: TUser, { userSessionId } : {userSessi
 		{ status: 200 }
 	);
 
+	if(redirect) {
+		response = NextResponse.redirect(new URL('/', url));
+	}
+
 	const sessionId = userSessionId || uuidv4();
 
 	const sessionData = {
 		id: user.id,
 		username: user.username,
 		name: user.name,
-		openAIKey: user.openAIKey
+		openAIKey: user.openAIKey,
+		providers: user.providers
 	};
 
 	await cache.set(sessionId, JSON.stringify(sessionData), { ex: 60 * 60 * 24 * 1 });
