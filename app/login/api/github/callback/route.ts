@@ -7,11 +7,13 @@ import { TUser } from '@/types/User';
 
 export async function GET(req: NextRequest) {
 	const { searchParams } = new URL(req.url);
+	const callBackUrl = new URL('/login/api/github/callback', req.url).toString();
+
 	const response = await axios.post('https://github.com/login/oauth/access_token', {
 		code: searchParams.get('code') ?? '',
 		client_id: process.env.GITHUB_CLIENT_ID,
 		client_secret: process.env.GITHUB_CLIENT_SECRET,
-		redirect_uri: 'http://localhost:3000/login/api/github/callback'
+		redirect_uri: callBackUrl
 	});
 	console.log({ data: response.data });
 	const params = new URLSearchParams(response.data);
