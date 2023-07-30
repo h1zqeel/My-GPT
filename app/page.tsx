@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Landing } from '@/components/Landing';
 
 export default function Home() {
@@ -20,7 +21,7 @@ export default function Home() {
 						<Image src='https://my-gpt-axq.pages.dev/landing-image.png' width={440} height={800} alt="Picture of the author" priority={true} />
 					</div>
 				</div>
-				<p className='p-2 text-lg'>© h1zqeel</p>
+				<p className='p-2 text-lg'>© <Link href="https://github.com/h1zqeel">@h1zqeel</Link></p>
 			</div>
 		</main>
 	);
