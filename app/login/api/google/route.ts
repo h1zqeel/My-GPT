@@ -6,11 +6,7 @@ import { v4 as uuid } from 'uuid';
 export async function GET(req: Request) {
 	const callBackUrl = new URL('/login/api/google/callback', req.url).toString();
 
-	const oAuth2Client = new OAuth2Client(
-		process.env.GOOGLE_CLIENT_ID,
-		process.env.GOOGLE_CLIENT_SECRET,
-		callBackUrl
-	);
+	const oAuth2Client = new OAuth2Client({ clientId: process.env.GOOGLE_CLIENT_ID, clientSecret: process.env.GOOGLE_CLIENT_SECRET, redirectUri: callBackUrl });
 
 	const authorizeUrl = oAuth2Client.generateAuthUrl({
 		state: uuid(),
