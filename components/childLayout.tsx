@@ -8,7 +8,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 const darkTheme = createTheme({
 	typography: {
-		fontFamily: '\'__Ubuntu_761005\', \'__Ubuntu_Fallback_761005\''
+		fontFamily: '\'__Ubuntu_5c337d\', \'__Ubuntu_Fallback_5c337d\''
 	},
 	palette: {
 		mode: 'dark',
