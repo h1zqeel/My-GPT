@@ -64,13 +64,26 @@ export async function DELETE(req: NextRequest) {
 
 		let updatedProviders = user?.providers.filter((provider : {name: string}) => provider.name !== 'google');
 
+		const updatedFields : any = {
+			providers: updatedProviders
+		};
+
+		if(updatedProviders.length === 0 && !user?.username) {
+			return NextResponse.json({
+				ok: false,
+				error: 'You must have at least one provider or a username set.'
+			});
+		}
+
+		if(updatedProviders.length === 0) {
+			updatedFields.email = null;
+		}
+
 		await db.user.update({
 			where: {
 				id: user?.id
 			},
-			data: {
-				providers: updatedProviders
-			}
+			data: updatedFields
 		});
 
 		return NextResponse.json({

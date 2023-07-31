@@ -11,8 +11,7 @@ export const generateSession = async(user: TUser, { userSessionId, redirect, url
 			user: {
 				id: user.id,
 				username: user.username,
-				name: user.name,
-				openAIKey: user.openAIKey
+				name: user.name
 			}
 		},
 		{ status: 200 }
@@ -28,6 +27,7 @@ export const generateSession = async(user: TUser, { userSessionId, redirect, url
 		id: user.id,
 		username: user.username,
 		name: user.name,
+		email: user.email,
 		openAIKey: user.openAIKey,
 		providers: user.providers
 	};

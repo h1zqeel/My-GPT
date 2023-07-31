@@ -19,13 +19,14 @@ export default function Login()	{
 
 	const [username, setUsername] = useState('');
 	const [name, setName] = useState('');
+	const [email, setEmail] = useState('');
+
 	const [openAIKey, setOpenAIKey] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [hasGoogle, setHasGoogle] = useState(false);
 	const [hasGithub, setHasGithub] = useState(false);
 	const [googleLoading, setGoogleLoading] = useState(false);
 	const [githubLoading, setGithubLoading] = useState(false);
-
 	useEffect(() => {
 		const errorFromParam = searchParams.get('error');
 		if(errorFromParam) {
@@ -41,6 +42,7 @@ export default function Login()	{
 		setUsername(user?.username || '');
 		setName(user?.name || '');
 		setOpenAIKey(user?.openAIKey || '');
+		setEmail(user?.email || '');
 		if(user?.providers) {
 			const google = user?.providers.find((provider : {name: string, email: string}) => provider.name === 'google');
 			const github = user?.providers.find((provider : {name: string, email: string}) => provider.name === 'github');
@@ -149,6 +151,19 @@ export default function Login()	{
 					value={username}
 					onChange={(e) => setUsername(e.target.value)}
 					size="small"
+					disabled={true}
+				/>
+			</div>
+			<div>
+				<TextField
+					type='text'
+					name='r-email'
+					id="r-email"
+					label="Email"
+					variant="outlined"
+					value={email}
+					size="small"
+					placeholder='Connect to Github or Google to add Email'
 					disabled={true}
 				/>
 			</div>
