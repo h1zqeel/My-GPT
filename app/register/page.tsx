@@ -2,12 +2,16 @@
 
 import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
-import { Button, CircularProgress, TextField } from '@mui/material';
+import { Button, CircularProgress, Icon, IconButton, InputAdornment, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { ResData } from '@/types/axios';
 import { LoginButton } from '@/components/buttons';
 import { toast } from '@/utils/toast';
 import { errors, successes } from '@/constants';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { GithubLoginButton, GoogleLoginButton } from 'react-social-login-buttons';
+import Link from 'next/link';
+
 
 export default function Login()	{
 	const router = useRouter();
@@ -18,6 +22,8 @@ export default function Login()	{
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const callbackUrl = '/login';
+
+	const [showPassword, setShowPassword] = useState(false);
 
 	const handleSignUp = async() => {
 		setError('');
@@ -58,8 +64,11 @@ export default function Login()	{
 	return <div className="grid h-[calc(100dvh)] place-items-center">
 		<div className="text-center flex flex-col space-y-4">
 			<h1 className="text-3xl text-bold">Register</h1>
-			<div>
+			<div className='w-60'>
 				<TextField
+					sx={{
+						width: '100%'
+					}}
 					name='r-username'
 					id="outlined-basic"
 					label="Username"
@@ -69,25 +78,36 @@ export default function Login()	{
 					size="small"
 				/>
 			</div>
-			<div>
+			<div className='w-60'>
 				<TextField
+					sx={{
+						width: '100%'
+					}}
 					name='r-password'
 					id="outlined-basic"
 					label="Password"
 					variant="outlined"
-					type="password"
+					type={showPassword ? 'text' : 'password'}
+					InputProps={{
+						endAdornment: <InputAdornment position="end"><IconButton onClick={()=>{
+							setShowPassword(!showPassword);
+						}}> {showPassword ? <VisibilityOff /> :  <Visibility />} </IconButton></InputAdornment>
+					}}
 					onChange={(e) => setPassword(e.target.value)}
 					value={password}
 					size="small"
 				/>
 			</div>
-			<div>
+			<div className='w-60'>
 				<TextField
+					sx={{
+						width: '100%'
+					}}
 					name='r-cpassword'
 					id="outlined-basic"
 					label="Confirm Password"
 					variant="outlined"
-					type="password"
+					type={showPassword ? 'text' : 'password'}
 					onChange={(e) => setCPassword(e.target.value)}
 					value={cPassword}
 					size="small"
@@ -106,6 +126,16 @@ export default function Login()	{
 				</Button>
 			</div>
 			<div>{error}</div>
+			<div className='flex flex-row justify-center space-x-3'>
+				<div className='flex flex-col'>
+					<Link href="/login/api/github">
+						<GithubLoginButton />
+					</Link>
+					<Link href="/login/api/google">
+						<GoogleLoginButton />
+					</Link>
+				</div>
+			</div>
 		</div>
 	</div>;
 }

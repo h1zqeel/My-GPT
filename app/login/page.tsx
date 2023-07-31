@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import Link from 'next/link';
-import { Button, CircularProgress, TextField } from '@mui/material';
+import { Button, CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { RegisterButton } from '@/components/buttons';
 import { ResData } from '@/types/axios';
@@ -13,6 +13,7 @@ import { toast } from '@/utils/toast';
 import { errors } from '@/constants';
 import { GithubLoginButton, GoogleLoginButton } from 'react-social-login-buttons';
 import { useSearchParams } from 'next/navigation';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 
 export default function Login()	{
@@ -23,6 +24,7 @@ export default function Login()	{
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 
 	useEffect(() => {
 		const googleSignInFailed = searchParams.get('googleSignInFailed');
@@ -65,7 +67,7 @@ export default function Login()	{
 	return <div className="grid h-[calc(100dvh)] place-items-center">
 		<div className="text-center flex flex-col space-y-4">
 			<h1 className="text-3xl text-bold">Login</h1>
-			<div className='w-64'>
+			<div className='w-60'>
 				<TextField
 					sx={{
 						width: '100%'
@@ -78,10 +80,15 @@ export default function Login()	{
 					size="small"
 				/>
 			</div>
-			<div className='w-64'>
+			<div className='w-60'>
 				<TextField
 					sx={{
 						width: '100%'
+					}}
+					InputProps={{ 
+						endAdornment: <InputAdornment position="end"><IconButton onClick={()=>{
+							setShowPassword(!showPassword);
+						}}> {showPassword ? <VisibilityOff /> :  <Visibility />} </IconButton></InputAdornment>
 					}}
 					id="outlined-basic"
 					label="Password"
