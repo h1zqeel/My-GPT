@@ -85,7 +85,7 @@ export default function Login()	{
 					sx={{
 						width: '100%'
 					}}
-					InputProps={{ 
+					InputProps={{
 						endAdornment: <InputAdornment position="end"><IconButton onClick={()=>{
 							setShowPassword(!showPassword);
 						}}> {showPassword ? <VisibilityOff /> :  <Visibility />} </IconButton></InputAdornment>
@@ -93,7 +93,7 @@ export default function Login()	{
 					id="outlined-basic"
 					label="Password"
 					variant="outlined"
-					type="password"
+					type={showPassword ? 'text' : 'password'}
 					onChange={(e) => setPassword(e.target.value)}
 					value={password}
 					size="small"
