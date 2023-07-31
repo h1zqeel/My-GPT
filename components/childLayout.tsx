@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { GlobalStyles } from '@mui/material';
 
 const darkTheme = createTheme({
 	typography: {
@@ -45,16 +44,14 @@ const ChildLayout = ({ children } : any) => {
 	}, []);
 	return (
 		<>
-			<NextTopLoader color="#ffff" easing="ease-in-out" />
-			<GlobalStyles styles={{
-				body: { fontFamily: 'var(--font-ubuntu) !important' }
-			}} />
-			{domLoaded && (
-				<ThemeProvider theme={darkTheme}>
-					<CssBaseline />
-					{children}
-				</ThemeProvider>
-			)}
+			<NextTopLoader
+				color="#ffff"
+				easing="ease-in-out"
+			/>
+			{domLoaded && <ThemeProvider theme={darkTheme}>
+				<CssBaseline />
+				{children}
+			</ThemeProvider>}
 		</>
 	);
 };
