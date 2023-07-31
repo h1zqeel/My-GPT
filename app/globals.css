@@ -3,11 +3,14 @@
 @tailwind utilities;
 
 * {
-	font-family: var(--font-ubuntu) !important;
 	-ms-overflow-style: none !important;  /* IE and Edge */
   	scrollbar-width: none !important;  /* Firefox */
 }
 
 *::-webkit-scrollbar {
 	display: none !important; /* Chrome, Safari, Opera*/
+}
+
+body {
+	font-family: var(--font-ubuntu) !important;
 }
