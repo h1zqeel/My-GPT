@@ -29,7 +29,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className={ubuntu.className} style={ubuntu.style}>
-			<body className='bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-600 via-gray-800 to-black'>
+			<body className={`bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-600 via-gray-800 to-black ${ubuntu.className}`} style={ubuntu.style}>
 				<ReduxProvider>
 					<SessionProvider>
 						<ChildLayout>
