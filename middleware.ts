@@ -19,7 +19,7 @@ export const middleware = async(req: NextRequest) => {
 	if(sessionId) {
 		const sessionData = await getUserSession({ sessionId });
 		if(sessionData) {
-			if(!sessionData?.username) {
+			if(!sessionData?.name && !sessionData?.username) {
 				return throwBack(req);
 			} else {
 				if(req.nextUrl.pathname === '/') {
@@ -46,6 +46,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-		'/((?!api/auth|AI-LOGO.png|login|register|_next/static|_next/image|favicon.ico).*)'
+		'/((?!api/auth|AI-LOGO.png|login|login/api/google|login/api/github|register|_next/static|_next/image|favicon.ico).*)'
 	]
 };

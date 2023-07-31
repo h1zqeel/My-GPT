@@ -1,6 +1,8 @@
 export type TUser = {
 	id: number,
-	username: string,
+	username?: string,
 	name: string,
-	openAIKey: string
+	openAIKey: string,
+	email?: string,
+	providers?: any
 }

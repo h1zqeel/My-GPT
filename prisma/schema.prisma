@@ -10,9 +10,11 @@ datasource db {
 model User {
   id            Int        @id @default(autoincrement())
   name          String?
-  username      String     @unique
-  password      String
+  username      String?     @unique
+  email         String?     @unique
+  password      String?
   openAIKey     String?
+  providers     Json?
   chats         Chat[]
 }
 

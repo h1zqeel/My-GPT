@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 	if (!user) {
 		return NextResponse.json({ error: errors.USERNAME_PASSWORD_INCORRECT }, { status: 400 });
 	}
-	const match = await bcrypt.compare(password, user.password);
+	const match = await bcrypt.compare(password, user?.password || '');
 
 	if (!match) {
 		return NextResponse.json({ error: errors.USERNAME_PASSWORD_INCORRECT }, { status: 400 });

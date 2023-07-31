@@ -56,7 +56,7 @@ export const cacheInvalidationExtension = async({ model, query, args } : any, { 
 	const pivotPoint = pivot ? args.data[pivot] ?? '' : '';
 
 	console.log('Force Invalidating Cache');
-	await kv.srem(`${process.env.TOKEN_NAME}_allow`, `${model}_findUnique_${pivotPoint}`, `${model}_findMany_${pivotPoint}`, `${model}_findUnique_`, `${model}_findMany_`);
+	await kv.srem(`${process.env.TOKEN_NAME}_allow`, `${model}_findUnique_${pivotPoint}`, `${model}_findMany_${pivotPoint}`, `${model}_findFirst_${pivotPoint}` , `${model}_findUnique_`, `${model}_findMany_`, `${model}_findFirst_`);
 	return query(args);
 };
 
