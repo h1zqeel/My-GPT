@@ -20,7 +20,7 @@ export const linkExistingUser = async({ userId, email, name } : {userId: number,
 	if(userWithSameAccount) {
 		return NextResponse.json({
 			ok: false,
-			reason: `Your ${_.startCase(provider)} Account in Already Linked to Another User.`
+			reason: `Your ${_.startCase(provider)} Account is Already Linked to Another User.`
 		});
 	}
 
@@ -52,7 +52,7 @@ export const linkExistingUser = async({ userId, email, name } : {userId: number,
 	} else {
 		return NextResponse.json({
 			ok: false,
-			error: 'User not found'
+			reason: 'User not found'
 		});
 	}
 };
