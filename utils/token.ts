@@ -11,10 +11,11 @@ export const verifyToken = async(token: string) => {
 	}
 };
 
-export const signToken = async(payload: any) => {
+export const signToken = async(payload: any, { expiresIn } : {expiresIn?: string} = {}) => {
 	return new jose.SignJWT(payload)
 		.setProtectedHeader({ alg: 'HS256' })
 		.setIssuedAt()
+		.setExpirationTime(expiresIn ?? '1h')
 		.sign(secret);
 };
 

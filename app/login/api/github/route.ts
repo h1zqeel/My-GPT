@@ -2,6 +2,9 @@
 import db from '@/prisma/db';
 import { NextRequest, NextResponse } from 'next/server';
 import { linkExistingUser, signUpNewUser } from '@/utils/socialLogin';
+import { errors } from '@/constants';
+import { getUserSession } from '@/utils/session';
+import { signToken } from '@/utils/token';
 export async function GET(req: Request) {
 	const { searchParams } = new URL(req.url);
 	const userId = searchParams.get('userId');
@@ -9,7 +12,7 @@ export async function GET(req: Request) {
 	let state = null;
 
 	if(userId) {
-		state = JSON.stringify({ userId });
+		state = await signToken({ userId }, { expiresIn: '1h' });
 	}
 
 	let githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${callBackUrl}&scope=read:user`;
@@ -23,27 +26,53 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: NextRequest) {
-	const { name, email, userId } = await req.json();
+	const { name, email, userId, githubId } = await req.json();
 	let user;
 
 	if(userId) {
-		return linkExistingUser({ userId, name, email }, 'github');
+		return linkExistingUser({ userId, name, email }, 'github', { githubId });
 	}
 
 	user = await db.user.findFirst({
 		where: {
 			providers: {
-				array_contains: [{ name: 'github', email: email }]
+				array_contains: [{ name: 'github', identifier: githubId }]
 			}
 		}
 	});
 
 	if(!user) {
-		return signUpNewUser({ name, email }, 'github');
+		return signUpNewUser({ name, email }, 'github', { githubId });
 	}
 
 	return NextResponse.json({
 		ok: true,
 		user
 	});
+}
+
+export async function DELETE(req: NextRequest) {
+	try{
+		const user = await getUserSession({ req });
+
+		let updatedProviders = user?.providers.filter((provider : {name: string}) => provider.name !== 'github');
+
+		await db.user.update({
+			where: {
+				id: user?.id
+			},
+			data: {
+				providers: updatedProviders
+			}
+		});
+
+		return NextResponse.json({
+			ok: true
+		});
+	} catch(e) {
+		console.log(e);
+		return NextResponse.json({
+			error: errors.DEFAULT
+		}, { status: 500 });
+	}
 }

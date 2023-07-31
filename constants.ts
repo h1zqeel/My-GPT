@@ -8,6 +8,7 @@ export const errors = {
 	NO_CHAT_PERMISSION: 'You do not have permission to access chat',
 	INVALID_USERNAME_PASSWORD: 'Invalid username or password: username and password must be at least 6 characters long and passwords must match',
 	EMPTY_MESSAGE: 'Message cannot be empty',
+	INVALID_REQUEST: 'Invalid Request',
 	OPEN_AI: {
 		CONTENT_ROLE_REQUIRED: 'Content and Role is required',
 		PROMPT_REQUIRED: 'Prompt is required',

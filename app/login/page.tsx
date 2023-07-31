@@ -28,6 +28,7 @@ export default function Login()	{
 		const googleSignInFailed = searchParams.get('googleSignInFailed');
 		const googleEmailUnVerified = searchParams.get('googleEmailUnVerified');
 		const githubSignInFailed = searchParams.get('githubSignInFailed');
+		const errorFromParam = searchParams.get('error');
 		if(googleSignInFailed) {
 			toast(errors.GOOGLE.SIGN_IN, 'error');
 		}
@@ -36,6 +37,9 @@ export default function Login()	{
 		}
 		if(githubSignInFailed) {
 			toast(errors.GITHUB.SIGN_IN, 'error');
+		}
+		if(errorFromParam) {
+			toast(errorFromParam, 'error');
 		}
 	}, []);
 	const handleSignIn = async() => {
