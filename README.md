@@ -30,9 +30,13 @@ DATABASE_URL (Postgres DB URL)
 TOKEN_NAME (string)
 AUTH_SECRET (32 Chars)
 AUTH_KEY (43 Chars)
-SKIP_CACHING (add 'yes' here to skip caching on local servers, otherwise you need to add KV_* Vars)
+SKIP_CACHING (add 'yes' here to skip DB caching on local servers)
 KV_URL (Redis Store URL)
 KV_TOKEN (Redis Store Token)
+GITHUB_CLIENT_ID
+GITHUB_CLIENT_SECRET
+GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET
 ```
 #### Install Dependencies
 ```
