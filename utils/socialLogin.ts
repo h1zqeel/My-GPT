@@ -27,7 +27,7 @@ export const linkExistingUser = async({ userId, email, name } : {userId: number,
 	if(user) {
 		let currentProviders = user.providers ? user.providers : [];
 
-		let newEmail = null;
+		let newEmail = user.email ? user.email : email;
 
 		if(email && !user.email) {
 			const userWithSameEmail = await db.user.findFirst({
