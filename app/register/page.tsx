@@ -61,81 +61,85 @@ export default function Login()	{
 			setLoading(false);
 		}
 	};
-	return <div className="grid h-[calc(100dvh)] place-items-center">
-		<div className="text-center flex flex-col space-y-4">
-			<h1 className="text-3xl text-bold">Register</h1>
-			<div className='w-60'>
-				<TextField
-					sx={{
-						width: '100%'
-					}}
-					name='r-username'
-					id="outlined-basic"
-					label="Username"
-					variant="outlined"
-					value={username}
-					onChange={(e) => setUsername(e.target.value)}
-					size="small"
-				/>
-			</div>
-			<div className='w-60'>
-				<TextField
-					sx={{
-						width: '100%'
-					}}
-					name='r-password'
-					id="outlined-basic"
-					label="Password"
-					variant="outlined"
-					type={showPassword ? 'text' : 'password'}
-					InputProps={{
-						endAdornment: <InputAdornment position="end"><IconButton onClick={()=>{
-							setShowPassword(!showPassword);
-						}}> {showPassword ? <VisibilityOff /> :  <Visibility />} </IconButton></InputAdornment>
-					}}
-					onChange={(e) => setPassword(e.target.value)}
-					value={password}
-					size="small"
-				/>
-			</div>
-			<div className='w-60'>
-				<TextField
-					sx={{
-						width: '100%'
-					}}
-					name='r-cpassword'
-					id="outlined-basic"
-					label="Confirm Password"
-					variant="outlined"
-					type={showPassword ? 'text' : 'password'}
-					onChange={(e) => setCPassword(e.target.value)}
-					value={cPassword}
-					size="small"
-				/>
-			</div>
-			<div className='flex flex-row justify-center space-x-4'>
-				<LoginButton />
-				<Button
-					className="bg-primary hover:bg-secondary hover:text-white"
-					variant="contained"
-					size="small"
-					onClick={handleSignUp}
-					disabled={loading}
-				>
-					{loading ? <CircularProgress size={25}/> : 'Register'}
-				</Button>
-			</div>
-			<div>{error}</div>
-			<div className='flex flex-row justify-center space-x-3'>
-				<div className='flex flex-col'>
-					<Link href="/login/api/github">
-						<GithubLoginButton />
-					</Link>
-					<Link href="/login/api/google">
-						<GoogleLoginButton />
-					</Link>
+	return <form onSubmit={(e)=>{
+		e.preventDefault(); handleSignUp();
+	}}>
+		<div className="grid h-[calc(100dvh)] place-items-center">
+			<div className="text-center flex flex-col space-y-4">
+				<h1 className="text-3xl text-bold">Register</h1>
+				<div className='w-60'>
+					<TextField
+						sx={{
+							width: '100%'
+						}}
+						name='r-username'
+						id="outlined-basic"
+						label="Username"
+						variant="outlined"
+						value={username}
+						onChange={(e) => setUsername(e.target.value)}
+						size="small"
+					/>
+				</div>
+				<div className='w-60'>
+					<TextField
+						sx={{
+							width: '100%'
+						}}
+						name='r-password'
+						id="outlined-basic"
+						label="Password"
+						variant="outlined"
+						type={showPassword ? 'text' : 'password'}
+						InputProps={{
+							endAdornment: <InputAdornment position="end"><IconButton onClick={()=>{
+								setShowPassword(!showPassword);
+							}}> {showPassword ? <VisibilityOff /> :  <Visibility />} </IconButton></InputAdornment>
+						}}
+						onChange={(e) => setPassword(e.target.value)}
+						value={password}
+						size="small"
+					/>
+				</div>
+				<div className='w-60'>
+					<TextField
+						sx={{
+							width: '100%'
+						}}
+						name='r-cpassword'
+						id="outlined-basic"
+						label="Confirm Password"
+						variant="outlined"
+						type={showPassword ? 'text' : 'password'}
+						onChange={(e) => setCPassword(e.target.value)}
+						value={cPassword}
+						size="small"
+					/>
+				</div>
+				<div className='flex flex-row justify-center space-x-4'>
+					<LoginButton />
+					<Button
+						className="bg-primary hover:bg-secondary hover:text-white"
+						variant="contained"
+						size="small"
+						disabled={loading}
+						type='submit'
+					>
+						{loading ? <CircularProgress size={25}/> : 'Register'}
+					</Button>
+				</div>
+				<div>{error}</div>
+				<div className='flex flex-row justify-center space-x-3'>
+					<div className='flex flex-col'>
+						<Link href="/login/api/github">
+							<GithubLoginButton />
+						</Link>
+						<Link href="/login/api/google">
+							<GoogleLoginButton />
+						</Link>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>;
+	</form>;
 }
