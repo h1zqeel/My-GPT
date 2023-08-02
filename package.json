@@ -36,6 +36,7 @@
     "google-auth-library": "^9.0.0",
     "jose": "^4.14.4",
     "lodash": "^4.17.21",
+    "moment-timezone": "^0.5.43",
     "next": "13.4.12",
     "next-connect": "^1.0.0",
     "nextjs-toploader": "^1.4.2",
