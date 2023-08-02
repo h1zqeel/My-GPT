@@ -24,8 +24,7 @@ export default function Chat({ id }: TChatProps) {
 			await axios.post(`/chats/${id}/api`, { content: prompt, role: 'user' });
 			return axios.post(`/chats/${id}/api`, { content: completion, role: 'assistant' });
 		},
-		onError: function(err) {
-			console.log(err, err.message);
+		onError: function() {
 			toast(errors.OPEN_AI.FAILED_REQUEST, 'error');
 		}
 	});
