@@ -22,6 +22,7 @@ export const InsertChatModal = ({ props, handleClose } : TInsertChatModal) => {
 	const dispatch = useAppDispatch();
 
 	const handleChatCreation = async() => {
+		if(preventChatCreation) return;
 		setError('');
 		if(message.length < 10) {
 			setError('Message must be at least 5 character long');
