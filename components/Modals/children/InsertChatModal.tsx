@@ -10,7 +10,7 @@ import { getChats } from '@/redux/features/chatsSlice';
 import { parseOpenAIError } from '@/utils/helpers';
 import { toast } from '@/utils/toast';
 
-export const InsertChatModal = ({ props } : TInsertChatModal) => {
+export const InsertChatModal = ({ props, handleClose } : TInsertChatModal) => {
 	const [message, setMessage] = useState('');
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
@@ -22,6 +22,7 @@ export const InsertChatModal = ({ props } : TInsertChatModal) => {
 	const dispatch = useAppDispatch();
 
 	const handleChatCreation = async() => {
+		if(preventChatCreation) return;
 		setError('');
 		if(message.length < 10) {
 			setError('Message must be at least 5 character long');
@@ -40,8 +41,17 @@ export const InsertChatModal = ({ props } : TInsertChatModal) => {
 
 		if(response.data && response.data.ok) {
 			dispatch(getChats());
+			handleClose();
 		}
 	};
+
+	const handleKeyPress = (e:any) => {
+		if (e.key === 'Enter' && !e.shiftKey) {
+			e.preventDefault();
+			handleChatCreation();
+		}
+	};
+
 	const fetchChat = async() => {
 		setLoading(true);
 		const response = await axios.get(`/chats/api?id=${props?.chatId}`);
@@ -81,8 +91,8 @@ export const InsertChatModal = ({ props } : TInsertChatModal) => {
 	return <>
 		<p className='text-2xl p-1 mb-2'>{props?.chatId ? 'System Message' : 'New Chat'}</p>
 		{props?.chatId && loading ? <> <center><CircularProgress size={25}/> </center></> : <>
-			<TextareaAutosize disabled={!!props?.chatId} className="bg-transparent p-1 m-0 w-full resize-none focus:ring-0 focus-visible:ring-0 outline-0 focus-visible:outline-0 focus-visible:outline-none" placeholder='Enter a Name' value={name} onChange={(e)=>setName(e.target.value)} maxRows={1}/>
-			<TextareaAutosize disabled={!!props?.chatId} className="bg-transparent p-1 m-0 w-full resize-none focus:ring-0 focus-visible:ring-0 outline-0 focus-visible:outline-0 focus-visible:outline-none" placeholder='Type a System Message' value={message} onChange={(e)=>setMessage(e.target.value)} maxRows={6}/>
+			<TextareaAutosize onKeyDown={handleKeyPress} disabled={!!props?.chatId} className="bg-transparent p-1 m-0 w-full resize-none focus:ring-0 focus-visible:ring-0 outline-0 focus-visible:outline-0 focus-visible:outline-none" placeholder='Enter a Name' value={name} onChange={(e)=>setName(e.target.value)} maxRows={1}/>
+			<TextareaAutosize onKeyDown={handleKeyPress} disabled={!!props?.chatId} className="bg-transparent p-1 m-0 w-full resize-none focus:ring-0 focus-visible:ring-0 outline-0 focus-visible:outline-0 focus-visible:outline-none" placeholder='Type a System Message' value={message} onChange={(e)=>setMessage(e.target.value)} maxRows={6}/>
 			{!!allowedEngines.length && <div className='mt-2'>
 				<InputLabel id="demo-simple-select-label">Model</InputLabel>
 				{fetchingEngines ? <CircularProgress  size={25}/> : <Select

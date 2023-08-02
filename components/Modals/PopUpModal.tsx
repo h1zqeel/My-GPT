@@ -20,7 +20,7 @@ export const PopUpModal = ({ open, handleClose, Child, childProps } : TPopUpModa
 		aria-describedby="modal-modal-description"
 	>
 		<Box sx={style}>
-			<Child props={childProps}/>
+			<Child props={childProps} handleClose={handleClose}/>
 		</Box>
 	</Modal>;
 };

@@ -23,6 +23,9 @@ export default function Chat({ id }: TChatProps) {
 			};
 			await axios.post(`/chats/${id}/api`, { content: prompt, role: 'user' });
 			return axios.post(`/chats/${id}/api`, { content: completion, role: 'assistant' });
+		},
+		onError: function() {
+			toast(errors.OPEN_AI.FAILED_REQUEST, 'error');
 		}
 	});
 	const messagesEndRef : React.RefObject<HTMLDivElement> = createRef();
@@ -61,7 +64,7 @@ export default function Chat({ id }: TChatProps) {
 		<div className='flex flex-col h-[calc(100dvh)] overflow-clip w-[100vw] lg:w-[100%] pt-20 md:pt-0 lg:pt-0'>
 			<div className={`grow justify-center ${messagesLoading?'overflow-clip': 'overflow-scroll'}`}>
 				{!messagesLoading && messages.map((message : TMessage) => {
-					return <div key={message.id} className=' lg:max-w-[80vw]'> <Message key={message.id} message={message} /> </div>;
+					return <div key={message.id} className=' lg:max-w-[80vw]'> <Message message={message} /> </div>;
 				})}
 				{messagesLoading && <div className=''>
 					{Array(10)

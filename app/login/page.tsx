@@ -64,63 +64,67 @@ export default function Login()	{
 		}
 		setLoading(false);
 	};
-	return <div className="grid h-[calc(100dvh)] place-items-center">
-		<div className="text-center flex flex-col space-y-4">
-			<h1 className="text-3xl text-bold">Login</h1>
-			<div className='w-60'>
-				<TextField
-					sx={{
-						width: '100%'
-					}}
-					id="outlined-basic"
-					label="Username"
-					variant="outlined"
-					value={username}
-					onChange={(e) => setUsername(e.target.value)}
-					size="small"
-				/>
-			</div>
-			<div className='w-60'>
-				<TextField
-					sx={{
-						width: '100%'
-					}}
-					InputProps={{
-						endAdornment: <InputAdornment position="end"><IconButton onClick={()=>{
-							setShowPassword(!showPassword);
-						}}> {showPassword ? <VisibilityOff /> :  <Visibility />} </IconButton></InputAdornment>
-					}}
-					id="outlined-basic"
-					label="Password"
-					variant="outlined"
-					type={showPassword ? 'text' : 'password'}
-					onChange={(e) => setPassword(e.target.value)}
-					value={password}
-					size="small"
-				/>
-			</div>
-			<div className='flex flex-row justify-center space-x-10'>
-				<RegisterButton />
-				<Button
-					className="bg-primary hover:bg-secondary hover:text-white"
-					variant="contained"
-					size="small"
-					onClick={handleSignIn}
-					disabled={loading}
-				>
-					{loading ? <CircularProgress size={25} /> : 'Login'}
-				</Button>
-			</div>
-			<div className='flex flex-row justify-center space-x-3'>
-				<div className='flex flex-col'>
-					<Link href="/login/api/github">
-						<GithubLoginButton />
-					</Link>
-					<Link href="/login/api/google">
-						<GoogleLoginButton />
-					</Link>
+	return <form onSubmit={(e)=> {
+		e.preventDefault(); handleSignIn();
+	}}>
+		<div className="grid h-[calc(100dvh)] place-items-center">
+			<div className="text-center flex flex-col space-y-4">
+				<h1 className="text-3xl text-bold">Login</h1>
+				<div className='w-60'>
+					<TextField
+						sx={{
+							width: '100%'
+						}}
+						id="outlined-basic"
+						label="Username"
+						variant="outlined"
+						value={username}
+						onChange={(e) => setUsername(e.target.value)}
+						size="small"
+					/>
+				</div>
+				<div className='w-60'>
+					<TextField
+						sx={{
+							width: '100%'
+						}}
+						InputProps={{
+							endAdornment: <InputAdornment position="end"><IconButton onClick={()=>{
+								setShowPassword(!showPassword);
+							}}> {showPassword ? <VisibilityOff /> :  <Visibility />} </IconButton></InputAdornment>
+						}}
+						id="outlined-basic"
+						label="Password"
+						variant="outlined"
+						type={showPassword ? 'text' : 'password'}
+						onChange={(e) => setPassword(e.target.value)}
+						value={password}
+						size="small"
+					/>
+				</div>
+				<div className='flex flex-row justify-center space-x-10'>
+					<RegisterButton />
+					<Button
+						className="bg-primary hover:bg-secondary hover:text-white"
+						variant="contained"
+						size="small"
+						type='submit'
+						disabled={loading}
+					>
+						{loading ? <CircularProgress size={25} /> : 'Login'}
+					</Button>
+				</div>
+				<div className='flex flex-row justify-center space-x-3'>
+					<div className='flex flex-col'>
+						<Link href="/login/api/github">
+							<GithubLoginButton />
+						</Link>
+						<Link href="/login/api/google">
+							<GoogleLoginButton />
+						</Link>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>;
+	</form>;
 }
