@@ -9,6 +9,9 @@ const nextConfig = {
 				pathname: '/*'
 			}
 		]
+	},
+	experimental: {
+		instrumentationHook: true
 	}
 };
 
