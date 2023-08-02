@@ -23,6 +23,10 @@ export default function Chat({ id }: TChatProps) {
 			};
 			await axios.post(`/chats/${id}/api`, { content: prompt, role: 'user' });
 			return axios.post(`/chats/${id}/api`, { content: completion, role: 'assistant' });
+		},
+		onError: function(err) {
+			console.log(err, err.message);
+			toast(errors.OPEN_AI.FAILED_REQUEST, 'error');
 		}
 	});
 	const messagesEndRef : React.RefObject<HTMLDivElement> = createRef();
