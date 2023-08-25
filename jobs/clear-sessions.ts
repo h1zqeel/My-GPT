@@ -8,8 +8,8 @@ client.defineJob({
 	name: 'Job: Clear Redis Sessions',
 	version: '0.0.1',
 	trigger: cronTrigger({
-		// 9 AM UTC - every day
-		cron: '0 9 * * *'
+		// 12 AM UTC - every day
+		cron: '0 0 * * *'
 	}),
 	run: async(payload, io, ctx) => {
 		clearExpiredSessions({ logger: io.logger });
