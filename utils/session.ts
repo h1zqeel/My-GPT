@@ -75,3 +75,26 @@ export const getUserSession =async({ req, sessionId }:{req?: NextRequest, sessio
 	}
 	return session as TUser;
 };
+
+export const clearExpiredSessions = async({ logger = console } : {logger: Console | any}) => {
+	const sessions = await cache.hgetall(`${process.env.TOKEN_NAME}-sessions`);
+	const sessionLastAccessed = await cache.hgetall(`${process.env.TOKEN_NAME}-session-last-used`);
+	logger.info('Clearing expired sessions');
+	if(sessions && sessionLastAccessed) {
+		for(const session in sessions) {
+			if(sessions[session] && sessionLastAccessed[session]) {
+				if(moment().diff(moment.unix(sessionLastAccessed[session] as number), 'hours') > 24) {
+					await cache.hdel(`${process.env.TOKEN_NAME}-sessions`, session);
+					await cache.hdel(`${process.env.TOKEN_NAME}-session-last-used`, session);
+					logger.info(`Cleared Session with SessionID: ${JSON.stringify(session)}`);
+				} else {
+					logger.info(`Session with SessionID: ${JSON.stringify(session)} is still valid`);
+				}
+			} else if (sessionLastAccessed[session] || sessions[session]) {
+				logger.info(`Invalid Entry, deleting SessionID: ${JSON.stringify(session)}`);
+				await cache.hdel(`${process.env.TOKEN_NAME}-sessions`, session);
+				await cache.hdel(`${process.env.TOKEN_NAME}-session-last-used`, session);
+			}
+		}
+	}
+};

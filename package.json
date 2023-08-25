@@ -19,6 +19,8 @@
     "@mui/material": "^5.14.2",
     "@prisma/client": "^5.0.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "@trigger.dev/nextjs": "^2.0.11",
+    "@trigger.dev/sdk": "^2.0.11",
     "@types/lodash": "^4.14.197",
     "@types/node": "20.4.8",
     "@types/react": "18.2.17",
@@ -31,6 +33,7 @@
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
+    "encoding": "^0.1.13",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
     "google-auth-library": "^9.0.0",
@@ -58,5 +61,8 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0"
+  },
+  "trigger.dev": {
+    "endpointId": "mygpt-Es4P"
   }
 }
