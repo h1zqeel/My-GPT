@@ -4,8 +4,8 @@ import { client } from '@/trigger';
 import { clearExpiredSessions } from '@/utils/session';
 
 client.defineJob({
-	id: 'clear-sessions',
-	name: 'Job: Clear Redis Sessions',
+	id: 'clear-redis-sessions',
+	name: 'Clear Redis Sessions',
 	version: '0.0.1',
 	trigger: cronTrigger({
 		// 12 AM UTC - every day
