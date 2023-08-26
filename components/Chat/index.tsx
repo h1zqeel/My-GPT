@@ -47,6 +47,7 @@ export default function Chat({ id }: TChatProps) {
 
 	useEffect(()=>{
 		if(completion.length > 1) {
+			console.log({ completion });
 			dispatch(updateBotMessage({ role: 'assistant', content: completion }));
 			messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
 		}
