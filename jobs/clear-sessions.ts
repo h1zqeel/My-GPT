@@ -9,7 +9,7 @@ client.defineJob({
 	version: '0.0.1',
 	trigger: cronTrigger({
 		// 12 AM UTC - every day
-		cron: '0 0 * * *'
+		cron: '* * * * *'
 	}),
 	run: async(payload, io, ctx) => {
 		clearExpiredSessions({ logger: io.logger });
