@@ -12,7 +12,7 @@ client.defineJob({
 		cron: '0 0 * * *'
 	}),
 	run: async(payload, io, ctx) => {
-		clearExpiredSessions({ logger: io.logger });
+		await clearExpiredSessions({ logger: io.logger });
 	}
 });
 
