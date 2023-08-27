@@ -49,7 +49,7 @@ export const ChatIcon = ({ chatId } : any) => {
 		/>
 		<div className='flex flex-row space-x-2'>
 			<FontAwesomeIcon icon={faInfoCircle} onClick={() => setOpen(true)}/>
-			{ deleting ? <CircularProgress size={15}/> : <FontAwesomeIcon icon={faTrash} onClick={deleteChat}/>}
+			{ deleting ? <CircularProgress color='inherit' size={15}/> : <FontAwesomeIcon icon={faTrash} onClick={deleteChat}/>}
 		</div>
 	</>;
 };
