@@ -12,7 +12,10 @@ const xPrisma = prisma.$extends({
 			findUnique: async(args: any) => {
 				return cacheExtension(args, { pivot: 'creatorId' });
 			},
-			create:async(args: any) => {
+			create: async(args: any) => {
+				return cacheInvalidationExtension(args, { pivot: 'creatorId' });
+			},
+			update: async(args: any) => {
 				return cacheInvalidationExtension(args, { pivot: 'creatorId' });
 			}
 		},
@@ -20,7 +23,7 @@ const xPrisma = prisma.$extends({
 			findMany: async(args: any) => {
 				return cacheExtension(args, { pivot: 'chatId' });
 			},
-			create:async(args: any) => {
+			create: async(args: any) => {
 				return cacheInvalidationExtension(args, { pivot: 'chatId' });
 			}
 		},
