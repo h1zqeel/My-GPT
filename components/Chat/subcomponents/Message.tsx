@@ -9,7 +9,7 @@ function getRndInteger(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min) ) + min;
 }
 export default function Message({ message, skeleton }: { message?: TMessage, skeleton?: boolean }) {
-	const [height] = useState(getRndInteger(60, 250));
+	const [height] = useState(getRndInteger(60, 150));
 	const [width] = useState(getRndInteger(40, 99));
 	if(skeleton) {
 		return <SkeletonTheme  baseColor="#212838" highlightColor="#374151">
