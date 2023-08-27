@@ -1,68 +1,37 @@
 import db from '@/prisma/db';
+import { getUserSession } from '@/utils/session';
 import { NextRequest, NextResponse } from 'next/server';
-import { createEdgeRouter } from 'next-connect';
-import { chatBelongsToUser } from '@/utils/customMiddlewares';
 import { errors } from '@/constants';
 interface RequestContext {
 	params: {
 		id: number | string;
 	};
 }
-const router = createEdgeRouter<NextRequest, RequestContext>();
 
-router
-	.use(chatBelongsToUser)
-	.get(async(req: NextRequest, { params } : RequestContext)=>{
-		const { id: chatId } = params;
-		const messages = await db.message.findMany({
+export async function DELETE(req: NextRequest, { params } : RequestContext) {
+	const user = await getUserSession({ req });
+	const { id: chatId } = params;
+
+
+	if(chatId) {
+		const chat = await db.chat.update({
+			data: {
+				archived: true
+			},
 			where: {
-				chatId: Number(chatId)
+				id: Number(chatId),
+				creatorId: user?.id
 			}
 		});
 
 		return NextResponse.json(
-			{
-				ok: true,
-				messages
-			},
+			{ ok: true, chat },
 			{ status: 200 }
 		);
-	})
-	.post(async(req: NextRequest, { params } : RequestContext) => {
-		const { id: chatId } = params;
-		const { content, role } = await req.json();
-
-		if(!content || !role) {
-			return NextResponse.json(
-				{
-					ok: false,
-					error: errors.OPEN_AI.CONTENT_ROLE_REQUIRED
-				},
-				{ status: 400 }
-			);
-		}
-
-		const message = await db.message.create({
-			data: {
-				content,
-				role,
-				chatId: Number(chatId)
-			}
-		});
-
+	} else {
 		return NextResponse.json(
-			{
-				ok: true,
-				message
-			},
-			{ status: 200 }
-		);;
-
-	})
-;
-
-async function handler(request: NextRequest, ctx: RequestContext) {
-	return router.run(request, ctx);
+			{ ok: false, error: errors.INVALID_REQUEST },
+			{ status: 400 }
+		);
+	}
 }
-
-export { handler as GET, handler as POST };

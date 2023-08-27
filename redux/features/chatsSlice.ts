@@ -27,6 +27,10 @@ export const chats = createSlice({
 		reset: () => initialState,
 		setChats: (state, action: PayloadAction<any[]>) => {
 			state.chats = action.payload;
+		},
+		deleteChat: (state, action: PayloadAction<string>) => {
+			console.log('hello hello');
+			state.chats = state.chats.filter((chat) => chat.id !== action.payload);
 		}
 	},
 	extraReducers: (builder) => {
@@ -45,6 +49,7 @@ export const chats = createSlice({
 
 export const {
 	reset,
-	setChats
+	setChats,
+	deleteChat
 } = chats.actions;
 export default chats.reducer;
