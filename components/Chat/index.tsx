@@ -1,3 +1,5 @@
+'use client';
+
 import Message from './subcomponents/Message';
 import MessageBox from './subcomponents/MessageBox';
 import axios from 'axios';
@@ -10,19 +12,21 @@ import { useCompletion } from 'ai/react';
 import { getSession } from '@/redux/features/sessionSlice';
 import { toast } from '@/utils/toast';
 import { errors } from '@/constants';
+import { useRouter } from 'next/navigation';
 
 export default function Chat({ id }: TChatProps) {
 	const dispatch = useAppDispatch();
+	const router =	useRouter();
 	const { user, loading: userLoading } = useAppSelector(({ sessionReducer }) => sessionReducer);
 	const { completion, input, handleInputChange, handleSubmit, isLoading } = useCompletion({
-		api: `/chats/${id}/completion/api`,
+		api: `/chats/${id}/messages/completion/api`,
 		onFinish: async function(prompt, completion) {
 			if(!completion.length) {
 				toast(errors.OPEN_AI.FAILED_REQUEST, 'error');
 				return;
 			};
-			await axios.post(`/chats/${id}/api`, { content: prompt, role: 'user' });
-			return axios.post(`/chats/${id}/api`, { content: completion, role: 'assistant' });
+			await axios.post(`/chats/${id}/messages/api`, { content: prompt, role: 'user' });
+			return axios.post(`/chats/${id}/messages/api`, { content: completion, role: 'assistant' });
 		},
 		onError: function() {
 			toast(errors.OPEN_AI.FAILED_REQUEST, 'error');
@@ -34,7 +38,7 @@ export default function Chat({ id }: TChatProps) {
 
 	const messages = useAppSelector(({ messagesReducer }) => messagesReducer.messages);
 	const messagesLoading = useAppSelector(({ messagesReducer }) => messagesReducer.loading);
-
+	const messagesError = useAppSelector(({ messagesReducer }) => messagesReducer.error);
 	useEffect(()=>{
 		dispatch(getMessagesForChat({ chatId: parseInt(id, 10) }));
 		dispatch(getSession());
@@ -51,6 +55,13 @@ export default function Chat({ id }: TChatProps) {
 			messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
 		}
 	}, [completion]);
+
+	useEffect(()=>{
+		if(messagesError) {
+			toast(errors.NO_CHAT, 'error');
+			return router.push('/chats');
+		}
+	}, [messagesError]);
 
 	useEffect(()=>{
 		if(user?.username && userLoading === false) {

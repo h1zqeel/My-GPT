@@ -8,7 +8,8 @@ export const chatBelongsToUser = async(req : NextRequest, { params } : {params: 
 	const { id: chatId } = params;
 	const chat = await db.chat.findUnique({
 		where: {
-			id: Number(chatId)
+			id: Number(chatId),
+			archived: false
 		}
 	});
 

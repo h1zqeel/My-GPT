@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createEdgeRouter } from 'next-connect';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
 import { errors } from '@/constants';
+import { getUserSession } from '@/utils/session';
 interface RequestContext {
 	params: {
 		id: number | string;
@@ -12,57 +13,36 @@ const router = createEdgeRouter<NextRequest, RequestContext>();
 
 router
 	.use(chatBelongsToUser)
-	.get(async(req: NextRequest, { params } : RequestContext)=>{
+	.delete(async(req: NextRequest, { params } : RequestContext) => {
+		const user = await getUserSession({ req });
 		const { id: chatId } = params;
-		const messages = await db.message.findMany({
-			where: {
-				chatId: Number(chatId)
-			}
-		});
 
-		return NextResponse.json(
-			{
-				ok: true,
-				messages
-			},
-			{ status: 200 }
-		);
-	})
-	.post(async(req: NextRequest, { params } : RequestContext) => {
-		const { id: chatId } = params;
-		const { content, role } = await req.json();
-
-		if(!content || !role) {
-			return NextResponse.json(
-				{
-					ok: false,
-					error: errors.OPEN_AI.CONTENT_ROLE_REQUIRED
+		if(chatId) {
+			const chat = await db.chat.update({
+				data: {
+					archived: true
 				},
+				where: {
+					id: Number(chatId),
+					creatorId: user?.id
+				}
+			});
+
+			return NextResponse.json(
+				{ ok: true, chat },
+				{ status: 200 }
+			);
+		} else {
+			return NextResponse.json(
+				{ ok: false, error: errors.INVALID_REQUEST },
 				{ status: 400 }
 			);
 		}
-
-		const message = await db.message.create({
-			data: {
-				content,
-				role,
-				chatId: Number(chatId)
-			}
-		});
-
-		return NextResponse.json(
-			{
-				ok: true,
-				message
-			},
-			{ status: 200 }
-		);;
-
-	})
+	});
 ;
 
 async function handler(request: NextRequest, ctx: RequestContext) {
 	return router.run(request, ctx);
 }
 
-export { handler as GET, handler as POST };
+export { handler as DELETE };

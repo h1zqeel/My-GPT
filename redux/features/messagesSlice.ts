@@ -5,18 +5,20 @@ import axios from 'axios';
 type messagesState = {
 	messages: TMessage[];
 	loading: boolean;
+	error: boolean;
 };
 
 const initialState = {
 	messages: [],
-	loading: false
+	loading: false,
+	error: false
 } as messagesState;
 
 
 export const getMessagesForChat = createAsyncThunk(
 	'message/getMessagesForChat',
 	async({ chatId }: {chatId: number}) => {
-		const response = await axios.get(`/chats/${chatId}/api`);
+		const response = await axios.get(`/chats/${chatId}/messages/api`);
 		return response.data;
 	});
 
@@ -53,6 +55,7 @@ export const messages = createSlice({
 		});
 		builder.addCase(getMessagesForChat.rejected, (state, action) => {
 			state.loading = false;
+			state.error = true;
 		});
 	}
 });
