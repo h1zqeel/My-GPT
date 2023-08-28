@@ -8,9 +8,6 @@ interface RequestContext {
 		id: number | string;
 	};
 }
-export const config = {
-	runtime: 'edge'
-};
 const router = createEdgeRouter<NextRequest, RequestContext>();
 
 router
