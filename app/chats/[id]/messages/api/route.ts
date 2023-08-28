@@ -14,11 +14,13 @@ router
 	.use(chatBelongsToUser)
 	.get(async(req: NextRequest, { params } : RequestContext)=>{
 		const { id: chatId } = params;
+		console.time('messages::GET');
 		const messages = await db.message.findMany({
 			where: {
 				chatId: Number(chatId)
 			}
 		});
+		console.timeEnd('messages::GET');
 
 		return NextResponse.json(
 			{
