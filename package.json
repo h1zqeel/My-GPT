@@ -17,6 +17,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.2",
+    "@neondatabase/serverless": "^0.6.0",
     "@prisma/client": "^5.0.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@trigger.dev/nextjs": "^2.0.11",
@@ -33,6 +34,7 @@
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
+    "drizzle-orm": "^0.28.5",
     "encoding": "^0.1.13",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
@@ -60,7 +62,8 @@
     "yarn": "^1.22.19"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0"
+    "@types/bcrypt": "^5.0.0",
+    "drizzle-kit": "^0.19.13"
   },
   "trigger.dev": {
     "endpointId": "mygpt-Es4P"
