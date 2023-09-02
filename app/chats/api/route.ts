@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { errors } from '@/constants';
 import { eq, sql } from 'drizzle-orm';
 
+export const runtime = 'edge';
+
 export async function POST(req: NextRequest) {
 	const user = await getUserSession({ req });
 	const { name, systemMessage, model } = await req.json();

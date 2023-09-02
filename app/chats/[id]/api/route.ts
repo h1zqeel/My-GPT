@@ -13,6 +13,8 @@ interface RequestContext {
 }
 const router = createEdgeRouter<NextRequest, RequestContext>();
 
+export const runtime = 'edge';
+
 router
 	.use(chatBelongsToUser)
 	.delete(async(req: NextRequest, { params } : RequestContext) => {
