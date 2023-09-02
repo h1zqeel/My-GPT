@@ -3,7 +3,7 @@ import { drizzle } from 'drizzle-orm/neon-serverless';
 import { migrate } from 'drizzle-orm/neon-serverless/migrator';
 
 
-const pool = new Pool({ connectionString: 'postgres://hxzqll:iQqASceB4u9s@ep-late-pond-26867545-pooler.eu-central-1.aws.neon.tech/my-gpt' });
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const db = drizzle(pool);
 
 migrate(db, { migrationsFolder: './db/drizzle' }).then(()=>{
