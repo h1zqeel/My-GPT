@@ -7,9 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "generate": "npx drizzle-kit generate:pg",
-    "migrate": "npx -y tsx db/migrate.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -19,7 +17,6 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.2",
-    "@neondatabase/serverless": "^0.6.0",
     "@prisma/client": "^5.0.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@trigger.dev/nextjs": "^2.0.11",
@@ -36,8 +33,6 @@
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
-    "dotenv": "^16.3.1",
-    "drizzle-orm": "^0.28.5",
     "encoding": "^0.1.13",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
@@ -51,7 +46,6 @@
     "openai": "^3.3.0",
     "openai-edge": "^1.2.2",
     "postcss": "8.4.27",
-    "postgres": "^3.3.5",
     "prisma": "^5.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -66,8 +60,7 @@
     "yarn": "^1.22.19"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "drizzle-kit": "^0.19.13"
+    "@types/bcrypt": "^5.0.0"
   },
   "trigger.dev": {
     "endpointId": "mygpt-Es4P"

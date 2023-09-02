@@ -1,11 +1,7 @@
-import db from '@/db/connection';
-import { chats as chatsModel } from '@/db/schema';
+import db from '@/prisma/db';
 import { getUserSession } from '@/utils/session';
 import { NextRequest, NextResponse } from 'next/server';
 import { errors } from '@/constants';
-import { eq, sql } from 'drizzle-orm';
-
-export const runtime = 'edge';
 
 export async function POST(req: NextRequest) {
 	const user = await getUserSession({ req });
@@ -17,14 +13,14 @@ export async function POST(req: NextRequest) {
 		);
 	}
 
-	const chat = {
-		name,
-		creatorId: user?.id,
-		systemMessage,
-		model
-	};
-
-	await db.insert(chatsModel).values(chat);
+	const chat = await db.chat.create({
+		data: {
+			name,
+			creatorId: user?.id,
+			systemMessage,
+			model
+		}
+	});
 
 	return NextResponse.json(
 		{ ok: true, chat },
@@ -38,17 +34,25 @@ export async function GET(req: NextRequest) {
 	const chatId = searchParams.get('id');
 
 	if(chatId) {
-		const chat = (await db.select().from(chatsModel)
-			.where(eq(chatsModel.id, Number(chatId))))[0];
-
+		const chat = await db.chat.findUnique({
+			where: {
+				id: Number(chatId)
+			}
+		});
 		return NextResponse.json(
 			{ ok: true, chat },
 			{ status: 200 }
 		);
 	}
 
-	const chats = await db.select().from(chatsModel)
-		.where(sql`${chatsModel.creatorId} = ${user?.id} AND ${chatsModel.archived} = false`);
+	const chats = await db.chat.findMany({
+		where: {
+			creatorId: user?.id,
+			archived: false
+		}
+	});
+
+
 	return NextResponse.json(
 		{
 			ok: true,

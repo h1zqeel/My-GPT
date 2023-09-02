@@ -1,17 +1,17 @@
 import { NextResponse } from 'next/server';
 import * as bcrypt from 'bcrypt';
-import db from '@/db/connection';
-import { users } from '@/db/schema';
+import db from '@/prisma/db';
 import { generateSession } from '@/utils/session';
 import { TUser } from '@/types/User';
 import { errors } from '@/constants';
-import { eq } from 'drizzle-orm';
 
 export async function POST(request: Request) {
 	const { username, password } = await request.json();
-
-	const user = (await db.select().from(users)
-		.where(eq(users.username, username)))[0];
+	const user = await db.user.findUnique({
+		where: {
+			username
+		}
+	});
 
 	if (!user) {
 		return NextResponse.json({ error: errors.USERNAME_PASSWORD_INCORRECT }, { status: 400 });

@@ -1,6 +1,4 @@
-import db from '@/db/connection';
-import { messages as messagesModel } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import db from '@/prisma/db';
 import { NextRequest, NextResponse } from 'next/server';
 import { createEdgeRouter } from 'next-connect';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
@@ -10,9 +8,6 @@ interface RequestContext {
 		id: number | string;
 	};
 }
-
-export const runtime = 'edge';
-
 const router = createEdgeRouter<NextRequest, RequestContext>();
 
 router
@@ -20,10 +15,11 @@ router
 	.get(async(req: NextRequest, { params } : RequestContext)=>{
 		const { id: chatId } = params;
 		console.time('messages::GET');
-
-		const messages = await db.select().from(messagesModel)
-			.where(eq(messagesModel.chatId, Number(chatId)));
-
+		const messages = await db.message.findMany({
+			where: {
+				chatId: Number(chatId)
+			}
+		});
 		console.timeEnd('messages::GET');
 
 		return NextResponse.json(
@@ -48,14 +44,13 @@ router
 			);
 		}
 
-		const message = {
-			content,
-			role,
-			chatId: Number(chatId)
-		};
-
-		await db.insert(messagesModel).values(message);
-
+		const message = await db.message.create({
+			data: {
+				content,
+				role,
+				chatId: Number(chatId)
+			}
+		});
 
 		return NextResponse.json(
 			{
