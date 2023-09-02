@@ -7,7 +7,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate": "npx drizzle-kit generate:pg",
+    "migrate": "npx -y tsx db/migrate.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -34,6 +36,7 @@
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.28.5",
     "encoding": "^0.1.13",
     "eslint": "8.46.0",
@@ -48,6 +51,7 @@
     "openai": "^3.3.0",
     "openai-edge": "^1.2.2",
     "postcss": "8.4.27",
+    "postgres": "^3.3.5",
     "prisma": "^5.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
