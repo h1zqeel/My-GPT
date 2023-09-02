@@ -1,11 +1,13 @@
 
-import db from '@/prisma/db';
+import db from '@/db/connection';
+import { users } from '@/db/schema';
 import { NextRequest, NextResponse } from 'next/server';
 import { OAuth2Client } from 'google-auth-library';
 import { linkExistingUser, signUpNewUser } from '@/utils/socialLogin';
 import { getUserSession } from '@/utils/session';
 import { errors } from '@/constants';
 import { signToken } from '@/utils/token';
+import { sql } from 'drizzle-orm';
 
 export async function GET(req: Request) {
 	const { searchParams } = new URL(req.url);
@@ -39,14 +41,16 @@ export async function POST(req: NextRequest) {
 	if(userId) {
 		return linkExistingUser({ userId, name, email }, 'google', { googleSub });
 	}
+	user = (await db.select().from(users)
+		.where(sql`${users.providers} @> '[{"name": "google", "identifier": ${googleSub}}]'`))[0];
 
-	user = await db.user.findFirst({
-		where: {
-			providers: {
-				array_contains: [{ name: 'google', identifier: googleSub }]
-			}
-		}
-	});
+	// user = await db.user.findFirst({
+	// 	where: {
+	// 		providers: {
+	// 			array_contains: [{ name: 'google', identifier: googleSub }]
+	// 		}
+	// 	}
+	// });
 
 	if(!user) {
 		return signUpNewUser({ name, email }, 'google', { googleSub });
@@ -78,13 +82,14 @@ export async function DELETE(req: NextRequest) {
 		if(updatedProviders.length === 0) {
 			updatedFields.email = null;
 		}
-
-		await db.user.update({
-			where: {
-				id: user?.id
-			},
-			data: updatedFields
-		});
+		await db.update(users).set(updatedFields)
+			.where(sql`${users.id} = ${user?.id}`);
+		// await db.user.update({
+		// 	where: {
+		// 		id: user?.id
+		// 	},
+		// 	data: updatedFields
+		// });
 
 		return NextResponse.json({
 			ok: true
