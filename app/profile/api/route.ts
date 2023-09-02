@@ -4,8 +4,6 @@ import { users } from '@/db/schema';
 import { errors } from '@/constants';
 import { eq } from 'drizzle-orm';
 
-export const runtime = 'edge';
-
 export async function PUT(request: Request) {
 	const { userId, name, openAIKey } = await request.json();
 	if(!userId) {

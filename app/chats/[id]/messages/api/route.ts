@@ -5,8 +5,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createEdgeRouter } from 'next-connect';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
 import { errors } from '@/constants';
-
-export const runtime = 'edge';
 interface RequestContext {
 	params: {
 		id: number | string;

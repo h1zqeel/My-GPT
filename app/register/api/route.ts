@@ -5,8 +5,6 @@ import { users } from '@/db/schema';
 import { errors } from '@/constants';
 const saltRounds = process.env.SALT_ROUNDS || 10;
 
-export const runtime = 'edge';
-
 export async function POST(request: Request) {
 	const { username, password } = await request.json();
 	if(!username.length || !password.length) {

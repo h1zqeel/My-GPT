@@ -7,8 +7,6 @@ import { TUser } from '@/types/User';
 import { errors } from '@/constants';
 import { eq } from 'drizzle-orm';
 
-export const runtime = 'edge';
-
 export async function POST(request: Request) {
 	const { username, password } = await request.json();
 
