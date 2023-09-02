@@ -6,6 +6,8 @@ import { TUser } from '@/types/User';
 import { errors } from '@/constants';
 import { eq } from 'drizzle-orm';
 
+export const runtime = 'edge';
+
 export async function POST(req: NextRequest) {
 	const sessionId = req.cookies.get(process.env.TOKEN_NAME)?.value as string;
 	const session = await getUserSession({ sessionId });
