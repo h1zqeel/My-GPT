@@ -4,7 +4,6 @@
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
 ![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
@@ -26,11 +25,10 @@ https://my-gpt.is-an.app
 
 #### Set the following data in .env
 ```
-DATABASE_URL (Postgres DB URL)
+DATABASE_URL (Neon Postgres DB URL)
 TOKEN_NAME (string)
 AUTH_SECRET (32 Chars)
 AUTH_KEY (43 Chars)
-SKIP_CACHING (add 'yes' here to skip DB caching on local servers)
 KV_URL (Redis Store URL)
 KV_TOKEN (Redis Store Token)
 GITHUB_CLIENT_ID
@@ -42,12 +40,12 @@ GOOGLE_CLIENT_SECRET
 ```
 yarn
 ```
-#### Prisma Setup + Migrations
+#### Drizzle Setup + Migrations
 ```
-    npx prisma generate
+    yarn generate
 ```
 ```
-    npx prisma migrate deploy
+    yarn migrate
 ```
 #### Start the Dev Server
 ```
