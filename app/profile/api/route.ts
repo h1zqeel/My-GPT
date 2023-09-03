@@ -5,6 +5,7 @@ import { errors } from '@/constants';
 import { eq } from 'drizzle-orm';
 
 export const runtime = 'edge';
+export const preferredRegion = 'fra1';
 
 export async function PUT(request: Request) {
 	const { userId, name, openAIKey } = await request.json();
