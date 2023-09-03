@@ -4,6 +4,7 @@ import { getUserSession } from '@/utils/session';
 import { NextRequest, NextResponse } from 'next/server';
 import { errors } from '@/constants';
 import { eq, sql } from 'drizzle-orm';
+import { getChats, invalidateChatsCache } from '@/utils/chat';
 
 export const runtime = 'edge';
 
@@ -25,6 +26,7 @@ export async function POST(req: NextRequest) {
 	};
 
 	await db.insert(chatsModel).values(chat);
+	await invalidateChatsCache(user?.id as number);
 
 	return NextResponse.json(
 		{ ok: true, chat },
@@ -47,8 +49,7 @@ export async function GET(req: NextRequest) {
 		);
 	}
 
-	const chats = await db.select().from(chatsModel)
-		.where(sql`${chatsModel.creatorId} = ${user?.id} AND ${chatsModel.archived} = false`);
+	const chats = await getChats(user?.id as number);
 	return NextResponse.json(
 		{
 			ok: true,

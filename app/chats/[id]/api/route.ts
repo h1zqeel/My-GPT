@@ -6,6 +6,7 @@ import { createEdgeRouter } from 'next-connect';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
 import { errors } from '@/constants';
 import { getUserSession } from '@/utils/session';
+import { invalidateChatsCache } from '@/utils/chat';
 interface RequestContext {
 	params: {
 		id: number | string;
@@ -25,6 +26,7 @@ router
 
 			await db.update(chats).set({ archived: true })
 				.where(sql`${chats.id} = ${chatId} AND ${chats.creatorId} = ${user?.id}`);
+			await invalidateChatsCache(user?.id as number);
 
 			return NextResponse.json(
 				{ ok: true },
