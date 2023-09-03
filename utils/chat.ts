@@ -1,5 +1,5 @@
 import db from '@/db/connection';
-import { createData, fetchData } from './cache';
+import { createData, deleteData, fetchData } from './cache';
 import { chats as chatsModel } from '@/db/schema';
 import { sql } from 'drizzle-orm';
 
@@ -16,5 +16,5 @@ export const getChats = async(creatorId : number) => {
 };
 
 export const invalidateChatsCache = async(creatorId : number) => {
-	await createData({ key: `${process.env.TOKEN_NAME}::chats::${creatorId}`, value: null });
+	await deleteData({ key: `${process.env.TOKEN_NAME}::chats::${creatorId}` });
 };

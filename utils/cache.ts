@@ -25,6 +25,14 @@ export const fetchData = async({ key } : {key: string}) => {
 	}
 };
 
+export const deleteData = async({ key } : {key: string}) => {
+	try{
+		await kv.del(key);
+	} catch(e) {
+		throw e;
+	}
+};
+
 export const cacheExtension = async({ model, operation, args, query } : any, { pivot } : {pivot?: string} = {}) => {
 	if(process.env.SKIP_CACHING === 'yes') {
 		console.log('Skipping caching');

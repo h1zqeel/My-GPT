@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createEdgeRouter } from 'next-connect';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
 import { errors } from '@/constants';
+import { getMessages, invalidateMessagesCache } from '@/utils/messages';
 interface RequestContext {
 	params: {
 		id: number | string;
@@ -22,8 +23,7 @@ router
 		const { id: chatId } = params;
 		console.time('messages::GET');
 
-		const messages = await db.select().from(messagesModel)
-			.where(eq(messagesModel.chatId, Number(chatId)));
+		const messages = await getMessages(Number(chatId));
 
 		console.timeEnd('messages::GET');
 
@@ -56,7 +56,7 @@ router
 		};
 
 		await db.insert(messagesModel).values(message);
-
+		await invalidateMessagesCache(Number(chatId));
 
 		return NextResponse.json(
 			{

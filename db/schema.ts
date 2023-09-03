@@ -2,7 +2,7 @@ import { pgTable, serial, index, text, varchar, integer, date, boolean, pgEnum, 
 
 
 export const users = pgTable('users', {
-	id: serial('id').primaryKey(),
+	id: serial('id'),
 	name: text('name'),
 	username: varchar('username', { length: 256 }).unique(),
 	email: varchar('email', { length: 256 }).unique(),
@@ -12,7 +12,7 @@ export const users = pgTable('users', {
 });
 
 export const chats = pgTable('chats', {
-	id: serial('id').primaryKey(),
+	id: serial('id'),
 	name: varchar('name', { length: 256 }),
 	creatorId: integer('creatorId').references(() => users.id),
 	systemMessage: text('systemMessage').default('You are a helpful AI Assistant'),
@@ -28,7 +28,7 @@ export const chats = pgTable('chats', {
 export const roleEnum = pgEnum('role', ['user', 'assistant', 'system']);
 
 export const messages = pgTable('messages', {
-	id: serial('id').primaryKey(),
+	id: serial('id'),
 	content: text('content'),
 	chatId: integer('chatId').references(() => chats.id),
 	role: roleEnum('role').default('user'),
