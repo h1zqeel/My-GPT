@@ -35,7 +35,10 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
+	console.time('GET::API::CHATS');
+	console.time('GET::USER_SESSION');
 	const user = await getUserSession({ req });
+	console.timeEnd('GET::USER_SESSION');
 	const { searchParams } = new URL(req.url);
 	const chatId = searchParams.get('id');
 
@@ -48,8 +51,10 @@ export async function GET(req: NextRequest) {
 			{ status: 200 }
 		);
 	}
-
+	console.time('GET::CHATS');
 	const chats = await getChats(user?.id as number);
+	console.timeEnd('GET::CHATS');
+	console.timeEnd('GET::API::CHATS');
 	return NextResponse.json(
 		{
 			ok: true,
