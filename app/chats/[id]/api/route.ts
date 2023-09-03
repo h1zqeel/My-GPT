@@ -1,15 +1,21 @@
-import db from '@/prisma/db';
+import db from '@/db/connection';
+import { sql } from 'drizzle-orm';
+import { chats } from '@/db/schema';
 import { NextRequest, NextResponse } from 'next/server';
 import { createEdgeRouter } from 'next-connect';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
 import { errors } from '@/constants';
 import { getUserSession } from '@/utils/session';
+import { invalidateChatsCache } from '@/utils/chat';
 interface RequestContext {
 	params: {
 		id: number | string;
 	};
 }
 const router = createEdgeRouter<NextRequest, RequestContext>();
+
+export const runtime = 'edge';
+export const preferredRegion = 'fra1';
 
 router
 	.use(chatBelongsToUser)
@@ -18,18 +24,13 @@ router
 		const { id: chatId } = params;
 
 		if(chatId) {
-			const chat = await db.chat.update({
-				data: {
-					archived: true
-				},
-				where: {
-					id: Number(chatId),
-					creatorId: user?.id
-				}
-			});
+
+			await db.update(chats).set({ archived: true })
+				.where(sql`${chats.id} = ${chatId} AND ${chats.creatorId} = ${user?.id}`);
+			await invalidateChatsCache(user?.id as number);
 
 			return NextResponse.json(
-				{ ok: true, chat },
+				{ ok: true },
 				{ status: 200 }
 			);
 		} else {

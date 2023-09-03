@@ -1,10 +1,12 @@
 
-import db from '@/prisma/db';
+import db from '@/db/connection';
+import { users } from '@/db/schema';
 import { NextRequest, NextResponse } from 'next/server';
 import { linkExistingUser, signUpNewUser } from '@/utils/socialLogin';
 import { errors } from '@/constants';
 import { getUserSession } from '@/utils/session';
 import { signToken } from '@/utils/token';
+import { sql } from 'drizzle-orm';
 export async function GET(req: Request) {
 	const { searchParams } = new URL(req.url);
 	const userId = searchParams.get('userId');
@@ -32,14 +34,8 @@ export async function POST(req: NextRequest) {
 	if(userId) {
 		return linkExistingUser({ userId, name, email }, 'github', { githubId });
 	}
-
-	user = await db.user.findFirst({
-		where: {
-			providers: {
-				array_contains: [{ name: 'github', identifier: githubId }]
-			}
-		}
-	});
+	user = (await db.select().from(users)
+		.where(sql`${users.providers} @> ${JSON.stringify([{ name: 'github', identifier: githubId }])}`))[0];
 
 	if(!user) {
 		return signUpNewUser({ name, email }, 'github', { githubId });
@@ -72,12 +68,8 @@ export async function DELETE(req: NextRequest) {
 			updatedFields.email = null;
 		}
 
-		await db.user.update({
-			where: {
-				id: user?.id
-			},
-			data: updatedFields
-		});
+		await db.update(users).set(updatedFields)
+			.where(sql`${users.id} = ${user?.id}`);
 
 		return NextResponse.json({
 			ok: true

@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
-import db from '@/prisma/db';
+import db from '@/db/connection';
+import { users } from '@/db/schema';
 import { errors } from '@/constants';
+import { eq } from 'drizzle-orm';
+
+export const runtime = 'edge';
+export const preferredRegion = 'fra1';
 
 export async function PUT(request: Request) {
 	const { userId, name, openAIKey } = await request.json();
@@ -9,15 +14,9 @@ export async function PUT(request: Request) {
 	}
 
 	try{
-		await db.user.update({
-			data: {
-				name,
-				openAIKey
-			},
-			where: {
-				id: userId
-			}
-		});
+		await db.update(users).set({ name, openAIKey })
+			.where(eq(users.id, userId));
+
 	} catch(e: any) {
 		return NextResponse.json({ error: errors.DEFAULT }, { status: 500 });
 	}

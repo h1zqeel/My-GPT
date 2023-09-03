@@ -2,6 +2,7 @@ import cache from '@/utils/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'edge';
+export const preferredRegion = 'fra1';
 
 export async function GET(req: NextRequest) {
 	const response = NextResponse.redirect(new URL('/login', req.url));
