@@ -35,14 +35,7 @@ export async function POST(req: NextRequest) {
 		return linkExistingUser({ userId, name, email }, 'github', { githubId });
 	}
 	user = (await db.select().from(users)
-		.where(sql`${users.providers} @> '[{"name": "github", "identifier": ${githubId}}]'`))[0];
-	// user = await db.user.findFirst({
-	// 	where: {
-	// 		providers: {
-	// 			array_contains: [{ name: 'github', identifier: githubId }]
-	// 		}
-	// 	}
-	// });
+		.where(sql`${users.providers} @> ${JSON.stringify([{ name: 'github', identifier: githubId }])}`))[0];
 
 	if(!user) {
 		return signUpNewUser({ name, email }, 'github', { githubId });
@@ -77,12 +70,6 @@ export async function DELETE(req: NextRequest) {
 
 		await db.update(users).set(updatedFields)
 			.where(sql`${users.id} = ${user?.id}`);
-		// await db.user.update({
-		// 	where: {
-		// 		id: user?.id
-		// 	},
-		// 	data: updatedFields
-		// });
 
 		return NextResponse.json({
 			ok: true

@@ -15,6 +15,13 @@
       "when": 1693694392587,
       "tag": "0001_flimsy_gateway",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1693735974689,
+      "tag": "0002_tired_mysterio",
+      "breakpoints": true
     }
   ]
 }

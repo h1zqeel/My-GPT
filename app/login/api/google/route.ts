@@ -42,15 +42,7 @@ export async function POST(req: NextRequest) {
 		return linkExistingUser({ userId, name, email }, 'google', { googleSub });
 	}
 	user = (await db.select().from(users)
-		.where(sql`${users.providers} @> '[{"name": "google", "identifier": ${googleSub}}]'`))[0];
-
-	// user = await db.user.findFirst({
-	// 	where: {
-	// 		providers: {
-	// 			array_contains: [{ name: 'google', identifier: googleSub }]
-	// 		}
-	// 	}
-	// });
+		.where(sql`${users.providers} @> ${JSON.stringify([{ name: 'google', identifier: googleSub }])}`))[0];
 
 	if(!user) {
 		return signUpNewUser({ name, email }, 'google', { googleSub });
@@ -84,12 +76,6 @@ export async function DELETE(req: NextRequest) {
 		}
 		await db.update(users).set(updatedFields)
 			.where(sql`${users.id} = ${user?.id}`);
-		// await db.user.update({
-		// 	where: {
-		// 		id: user?.id
-		// 	},
-		// 	data: updatedFields
-		// });
 
 		return NextResponse.json({
 			ok: true

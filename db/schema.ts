@@ -1,4 +1,4 @@
-import { pgTable, serial, index, text, varchar, json, integer, date, boolean, pgEnum } from 'drizzle-orm/pg-core';
+import { pgTable, serial, index, text, varchar, integer, date, boolean, pgEnum, jsonb } from 'drizzle-orm/pg-core';
 
 
 export const users = pgTable('users', {
@@ -8,7 +8,7 @@ export const users = pgTable('users', {
 	email: varchar('email', { length: 256 }).unique(),
 	password: varchar('password', { length: 256 }),
 	openAIKey: varchar('openAIKey', { length: 256 }),
-	providers: json('providers')
+	providers: jsonb('providers')
 });
 
 export const chats = pgTable('chats', {
