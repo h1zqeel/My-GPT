@@ -37,7 +37,21 @@ router
 	})
 	.post(async(req: NextRequest, { params } : RequestContext) => {
 		const { id: chatId } = params;
-		const { content, role } = await req.json();
+		const { content, role, messages } = await req.json();
+		if(messages) {
+			await messages.forEach(async(message : any) => {
+				await db.insert(messagesModel).values({ ...message, chatId: Number(chatId) });
+			});
+			await invalidateMessagesCache(Number(chatId));
+
+			return NextResponse.json(
+				{
+					ok: true,
+					messages
+				},
+				{ status: 200 }
+			);
+		}
 
 		if(!content || !role) {
 			return NextResponse.json(
