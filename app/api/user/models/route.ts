@@ -18,6 +18,7 @@ export async function GET(req: NextRequest) {
 			models: _.intersection(allowedUserModels, supportedModels)
 		});
 	} catch(e : any) {
+		console.log(e);
 		return NextResponse.json({
 			ok: false,
 			error: parseOpenAIError(e.response?.status)

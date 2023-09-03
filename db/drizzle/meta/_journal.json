@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1693674332839,
+      "tag": "0000_same_tempest",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1693694392587,
+      "tag": "0001_flimsy_gateway",
+      "breakpoints": true
+    }
+  ]
+}

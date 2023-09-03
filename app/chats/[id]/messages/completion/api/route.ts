@@ -10,6 +10,8 @@ interface RequestContext {
 	};
 }
 
+export const runtime = 'edge';
+
 const router = createEdgeRouter<NextRequest, RequestContext>();
 
 router

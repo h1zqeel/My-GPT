@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import * as bcrypt from 'bcrypt';
-import db from '@/prisma/db';
+import db from '@/db/connection';
+import { users } from '@/db/schema';
 import { errors } from '@/constants';
 const saltRounds = process.env.SALT_ROUNDS || 10;
 
@@ -13,11 +14,10 @@ export async function POST(request: Request) {
 	const hashedPassword = await bcrypt.hash(password, saltRounds);
 
 	try{
-		await db.user.create({
-			data: {
-				username,
-				password: hashedPassword
-			}
+
+		await db.insert(users).values({
+			username,
+			password: hashedPassword
 		});
 	} catch(e: any) {
 		if(e.code === 'P2002') {
