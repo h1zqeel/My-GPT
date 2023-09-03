@@ -49,7 +49,7 @@
     "nextjs-toploader": "^1.4.2",
     "openai": "^3.3.0",
     "openai-edge": "^1.2.2",
-    "postcss": "8.4.27",
+    "postcss": "8.4.29",
     "postgres": "^3.3.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
