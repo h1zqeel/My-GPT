@@ -1,6 +1,5 @@
 import db from '@/db/connection';
 import _ from 'lodash';
-import { Prisma } from '@prisma/client';
 import { NextResponse } from 'next/server';
 import { users } from '@/db/schema';
 import { eq, sql } from 'drizzle-orm';
@@ -78,7 +77,7 @@ export const signUpNewUser = async({ email, name } : {email: string, name: strin
 			.where(eq(users.id, userWithSameEmail.id)))[0];
 
 	} else {
-		const newProvider = getNewProvider({ provider, googleSub, githubId }) as Prisma.JsonObject;
+		const newProvider = getNewProvider({ provider, googleSub, githubId });
 		user = {
 			email,
 			name,
