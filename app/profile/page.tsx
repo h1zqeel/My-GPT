@@ -57,7 +57,7 @@ export default function Login()	{
 
 	const refreshSession = async() => {
 		await axios.post('/login/api/refresh');
-		dispatch(getSession());
+		dispatch(getSession(true));
 	};
 	const updateProfile = async() => {
 		setLoading(true);
@@ -73,7 +73,7 @@ export default function Login()	{
 			});
 			if (res.status === 200 && res.data.ok) {
 				await axios.post('login/api/refresh');
-				dispatch(getSession());
+				dispatch(getSession(true));
 				toast('Update Successful', 'success');
 				setLoading(false);
 			} else {

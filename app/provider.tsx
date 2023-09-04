@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 export function SessionProvider({ children }: { children: React.ReactNode }) {
 	const dispatch = useAppDispatch();
 	useEffect(()=>{
-		dispatch(getSession());
+		dispatch(getSession(false));
 	}, []);
 	return <>
 		{children}

@@ -11,7 +11,7 @@ export const Landing = () => {
 	const dispatch = useAppDispatch();
 	const { user } = useAppSelector(({ sessionReducer }) => sessionReducer);
 	useEffect(()=>{
-		dispatch(getSession());
+		dispatch(getSession(false));
 	}, []);
 	if(user) {
 		return <div className='text-xl flex flex-col items-center space-y-4'>

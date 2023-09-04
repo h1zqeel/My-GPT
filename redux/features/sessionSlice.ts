@@ -14,7 +14,11 @@ const initialState = {
 
 export const getSession = createAsyncThunk(
 	'session/getSession',
-	async(thunkAPI) => {
+	async(refresh : Boolean, { getState }) => {
+		const state = getState() as { sessionReducer: sessionState};
+		if(state.sessionReducer.user && !refresh) {
+			return { user: state.sessionReducer.user };
+		}
 		const response = await axios.get('/api/auth');
 		return response.data;
 	});

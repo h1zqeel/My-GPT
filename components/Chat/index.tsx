@@ -44,7 +44,7 @@ export default function Chat({ id }: TChatProps) {
 	const messagesError = useAppSelector(({ messagesReducer }) => messagesReducer.error);
 	useEffect(()=>{
 		dispatch(getMessagesForChat({ chatId: parseInt(id, 10) }));
-		dispatch(getSession());
+		dispatch(getSession(false));
 		messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
 	}, []);
 
