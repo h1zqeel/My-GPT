@@ -4,7 +4,6 @@ import { Ubuntu } from 'next/font/google';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { ReduxProvider } from '@/redux/provider';
 import { SessionProvider } from './provider';
-import { Analytics } from '@vercel/analytics/react';
 import { ToastContainer } from 'react-toastify';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,7 +34,6 @@ export default function RootLayout({
 						<ChildLayout>
 							{children}
 							<ToastContainer />
-							<Analytics />
 						</ChildLayout>
 					</SessionProvider>
 				</ReduxProvider>
