@@ -9,7 +9,8 @@ export const getMessages = async(chatId : number) => {
 		return chatsFromCache;
 	}
 	const chats = await db.select().from(messagesModel)
-		.where(sql`${messagesModel.chatId} = ${chatId} AND ${messagesModel.archived} = false`);
+		.where(sql`${messagesModel.chatId} = ${chatId} AND ${messagesModel.archived} = false`)
+		.orderBy(messagesModel.id);
 	await createData({ key: `${process.env.TOKEN_NAME}::messages::${chatId}`, value: chats });
 
 	return chats;
