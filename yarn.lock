@@ -3607,6 +3607,11 @@ p-locate@^5.0.0:
   dependencies:
     p-limit "^3.0.2"
 
+p-map@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/p-map/-/p-map-6.0.0.tgz#4d9c40d3171632f86c47601b709f4b4acd70fed4"
+  integrity sha512-T8BatKGY+k5rU+Q/GTYgrEf2r4xRMevAN5mtXc2aPc4rS1j3s+vWTaO2Wag94neXuCAUAs8cxBL9EeB5EA6diw==
+
 parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/parent-module/-/parent-module-1.0.1.tgz"

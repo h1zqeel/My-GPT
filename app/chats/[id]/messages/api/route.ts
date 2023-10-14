@@ -1,6 +1,6 @@
 import db from '@/db/connection';
+import pMap from 'p-map';
 import { messages as messagesModel } from '@/db/schema';
-import { eq } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 import { createEdgeRouter } from 'next-connect';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
@@ -39,9 +39,10 @@ router
 		const { id: chatId } = params;
 		const { content, role, messages } = await req.json();
 		if(messages) {
-			await messages.forEach(async(message : any) => {
+			await pMap(messages, async(message : any) => {
 				await db.insert(messagesModel).values({ ...message, chatId: Number(chatId) });
-			});
+			}, { concurrency: 1 });
+
 			await invalidateMessagesCache(Number(chatId));
 
 			return NextResponse.json(
