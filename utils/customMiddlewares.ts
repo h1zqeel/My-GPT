@@ -10,7 +10,7 @@ export const chatBelongsToUser = async(req : NextRequest, { params } : {params: 
 	const { id: chatId } = params;
 
 	const chat = (await db.select().from(chats)
-		.where(sql`${chats.id} = ${chatId} AND ${chats.creatorId} = ${userId}`))[0];
+		.where(sql`${chats.id} = ${chatId} AND ${chats.creatorId} = ${userId} AND ${chats.archived} = false`))[0];
 
 
 	if(chat?.creatorId !== userId) {
