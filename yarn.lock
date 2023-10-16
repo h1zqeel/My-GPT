@@ -3995,10 +3995,10 @@ postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
-postgres@^3.3.5:
-  version "3.3.5"
-  resolved "https://registry.yarnpkg.com/postgres/-/postgres-3.3.5.tgz#8431605aae2112759d50e362fc08759165455677"
-  integrity sha512-+JD93VELV9gHkqpV5gdL5/70HdGtEw4/XE1S4BC8f1mcPmdib3K5XsKVbnR1XcAyC41zOnifJ+9YRKxdIsXiUw==
+postgres@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/postgres/-/postgres-3.4.0.tgz#c1a6fa938e769290b9e3b5134323a39cf57b51f3"
+  integrity sha512-d7UtSoCg4hUtzxM9aRi3J8BrM6t0h4bQmgAHG96cDCNpP9CnnWQRdRl7WWNvKs0oOaQU2InGoOi1jETmdZK02g==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
