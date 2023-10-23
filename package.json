@@ -40,7 +40,7 @@
     "encoding": "^0.1.13",
     "eslint": "8.46.0",
     "eslint-config-next": "13.5.5",
-    "google-auth-library": "^9.0.0",
+    "google-auth-library": "^9.1.0",
     "jose": "^4.14.4",
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.43",
