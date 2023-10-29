@@ -40,7 +40,7 @@ router
 ;
 
 async function handler(request: NextRequest, ctx: RequestContext) {
-	return router.run(request, ctx);
+	return router.run(request, ctx) as any;
 }
 
 export { handler as DELETE };
