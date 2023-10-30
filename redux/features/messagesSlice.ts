@@ -49,9 +49,11 @@ export const messages = createSlice({
 		builder.addCase(getMessagesForChat.fulfilled, (state, action) => {
 			state.messages = action.payload.messages;
 			state.loading = false;
+			state.error = false;
 		});
 		builder.addCase(getMessagesForChat.pending, (state, action) => {
 			state.loading = true;
+			state.error = false;
 		});
 		builder.addCase(getMessagesForChat.rejected, (state, action) => {
 			state.loading = false;
