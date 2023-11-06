@@ -645,13 +645,18 @@
   dependencies:
     tslib "^2.4.0"
 
-"@trigger.dev/core@^2.0.11":
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/@trigger.dev/core/-/core-2.0.11.tgz#34dd287378bdad384becefa19d0d3a3eac00033f"
-  integrity sha512-01Q2PhtOXA4nPnWUViXEMrqnScht0+N4zvcqxhdFuer/rRqFZa7XQK6WcdFWBtcYT1O8XPeezDE10XIuGkGFSQ==
+"@trigger.dev/core-backend@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@trigger.dev/core-backend/-/core-backend-2.2.4.tgz#a51fd47726a80cbfdab0c53012e911679272ccac"
+  integrity sha512-C+CtJjKuuE+KRZHt8FzmI3rno8iUU4Tkd0m67/bhOBAVDWbSXkv+/yHdd6ANMrWgdX8NjGlIlQgsgOFB0IeGyA==
+
+"@trigger.dev/core@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@trigger.dev/core/-/core-2.2.4.tgz#a932c30236cabb18bb65051532f4dc9e7327db9a"
+  integrity sha512-WO4w0HeJYwrloyTL6Y8apOqyRlsYFa5ihBEkNjyI+QDlvOQxO/DbppYuW3iMpU2xmyO0T6zdV7yf7UEJP6boDA==
   dependencies:
     ulid "^2.3.0"
-    zod "3.21.4"
+    zod "3.22.3"
     zod-error "1.5.0"
 
 "@trigger.dev/nextjs@^2.0.11":
@@ -661,12 +666,13 @@
   dependencies:
     debug "^4.3.4"
 
-"@trigger.dev/sdk@^2.0.11":
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/@trigger.dev/sdk/-/sdk-2.0.11.tgz#a7b4cab3461780e30f4eb57aff4bd3c1dcc753f6"
-  integrity sha512-F1+hKoxVFpZryVos7fEVgQNo1okuqR/WtMI+8TVFF/4MiCQ08iszjSgGjrLk/SjEydYse/bB2POO3d1Xhdc7Nw==
+"@trigger.dev/sdk@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@trigger.dev/sdk/-/sdk-2.2.4.tgz#863c26fd36a746cc1b9b3959d14778484414853c"
+  integrity sha512-Q0iUNLD//pCpMXnAScjQjFvLzQhNvWAjJ4y73v8dv1oLCoNyM9IreI/b4A92gr1LIlwC8hayKosgR/wP6G6lLQ==
   dependencies:
-    "@trigger.dev/core" "^2.0.11"
+    "@trigger.dev/core" "^2.2.4"
+    "@trigger.dev/core-backend" "^2.2.4"
     chalk "^5.2.0"
     cronstrue "^2.21.0"
     debug "^4.3.4"
@@ -674,14 +680,12 @@
     get-caller-file "^2.0.5"
     git-remote-origin-url "^4.0.0"
     git-repo-info "^2.1.1"
-    node-fetch "2.6.x"
     slug "^6.0.0"
     terminal-link "^3.0.0"
     ulid "^2.3.0"
     uuid "^9.0.0"
     ws "^8.11.0"
-    zod "3.21.4"
-    zod-error "1.5.0"
+    zod "3.22.3"
 
 "@tsconfig/node16@^1.0.3":
   version "1.0.4"
@@ -3617,13 +3621,6 @@ node-addon-api@^5.0.0:
   resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-5.1.0.tgz"
   integrity sha512-eh0GgfEkpnoWDq+VY8OyvYhFEzBk6jIYbRKdIlyTiAXIVJ8PyBaKb0rp7oDtoddbdoHWhq8wwr+XZ81F1rpNdA==
 
-node-fetch@2.6.x:
-  version "2.6.13"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.13.tgz#a20acbbec73c2e09f9007de5cda17104122e0010"
-  integrity sha512-StxNAxh15zr77QvvkmveSQ8uCQ4+v5FkvNTj0OESmiHu+VRi/gXArXtkWMElOsOUNLtUEvI4yS+rdtOHZTwlQA==
-  dependencies:
-    whatwg-url "^5.0.0"
-
 node-fetch@^2.6.1, node-fetch@^2.6.7, node-fetch@^2.6.9:
   version "2.6.12"
   resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.12.tgz"
@@ -5147,12 +5144,7 @@ zod-error@1.5.0:
   dependencies:
     zod "^3.20.2"
 
-zod@3.21.4:
-  version "3.21.4"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.21.4.tgz#10882231d992519f0a10b5dd58a38c9dabbb64db"
-  integrity sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==
-
-zod@^3.20.2:
-  version "3.22.2"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.2.tgz#3add8c682b7077c05ac6f979fea6998b573e157b"
-  integrity sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==
+zod@3.22.3, zod@^3.20.2:
+  version "3.22.3"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.3.tgz#2fbc96118b174290d94e8896371c95629e87a060"
+  integrity sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==

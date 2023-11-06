@@ -22,7 +22,7 @@
     "@neondatabase/serverless": "^0.6.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@trigger.dev/nextjs": "^2.0.11",
-    "@trigger.dev/sdk": "^2.0.11",
+    "@trigger.dev/sdk": "^2.2.4",
     "@types/lodash": "^4.14.200",
     "@types/node": "20.5.9",
     "@types/react": "^18.2.33",
