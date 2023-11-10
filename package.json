@@ -29,7 +29,7 @@
     "@types/react-dom": "^18.2.14",
     "@types/uuid": "^9.0.4",
     "@vercel/analytics": "^1.1.1",
-    "@vercel/kv": "^0.2.2",
+    "@vercel/kv": "^0.2.4",
     "add": "^2.0.6",
     "ai": "^2.2.20",
     "autoprefixer": "10.4.15",
