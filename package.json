@@ -46,7 +46,7 @@
     "moment-timezone": "^0.5.43",
     "next": "^14.0.0",
     "next-connect": "^1.0.0",
-    "nextjs-toploader": "^1.5.3",
+    "nextjs-toploader": "^1.6.4",
     "openai": "^3.3.0",
     "openai-edge": "^1.2.2",
     "p-map": "^6.0.0",
