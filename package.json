@@ -39,7 +39,7 @@
     "drizzle-orm": "^0.28.6",
     "encoding": "^0.1.13",
     "eslint": "8.46.0",
-    "eslint-config-next": "^14.0.0",
+    "eslint-config-next": "^14.0.2",
     "google-auth-library": "^9.2.0",
     "jose": "^4.14.4",
     "lodash": "^4.17.21",
