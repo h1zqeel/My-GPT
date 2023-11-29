@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { RegisterButton } from '@/components/buttons';
 import { ResData } from '@/types/axios';
 import { useAppDispatch } from '@/redux/hooks';
-import { setSession } from '@/redux/features/sessionSlice';
+import { getSession } from '@/redux/features/sessionSlice';
 import { toast } from '@/utils/toast';
 import { errors } from '@/constants';
 import { GithubLoginButton, GoogleLoginButton } from 'react-social-login-buttons';
@@ -53,7 +53,7 @@ export default function Login()	{
 			});
 
 			if(res.status === 200 && res.data.ok) {
-				dispatch(setSession(res.data.user));
+				dispatch(getSession(false));
 				return router.push(callbackUrl);
 			}
 		} catch (err) {
