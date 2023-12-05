@@ -9,6 +9,9 @@
 ![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
 ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
+### Wanna Help me Improve This Project ?
+email me at: hizqeeljaved2013@gmail.com
+
 ### To access the Application
 https://my-gpt.is-an.app
 ### Description of the Application:
