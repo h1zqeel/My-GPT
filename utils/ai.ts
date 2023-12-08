@@ -2,6 +2,7 @@ import db from '@/db/connection';
 import { chats, messages as messagesModel } from '@/db/schema';
 import { StreamingTextResponse } from 'ai';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
+import { ChatGooglePaLM } from 'langchain/chat_models/googlepalm';
 import { BytesOutputParser } from 'langchain/schema/output_parser';
 import { PromptTemplate } from 'langchain/prompts';
 
@@ -9,8 +10,9 @@ import { PromptTemplate } from 'langchain/prompts';
 import { Configuration as CFG, OpenAIApi as OAA } from 'openai';
 import { TUser } from '@/types/User';
 import { eq, sql } from 'drizzle-orm';
+import axios from 'axios';
 
-export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatId } : {message: string, openAIKey?: string, model?: string, chatId: number | string}) =>  {
+export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : {message: string, user: TUser, model?: string, chatId: number | string}) =>  {
 	try {
 		const chat = (await db.select().from(chats)
 			.where(eq(chats.id, Number(chatId))))[0];
@@ -29,10 +31,19 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 
 		const prompt = PromptTemplate.fromTemplate(TEMPLATE);
 
-		const LLM = new ChatOpenAI({
-			modelName: chat?.model || model,
-			openAIApiKey: openAIKey
-		});
+		let LLM : ChatGooglePaLM | ChatOpenAI;
+
+		if(chat?.llm === 'googlepalm') {
+			LLM = new ChatGooglePaLM({
+				modelName: chat?.model || model,
+				apiKey: user.googleAIKey
+			});
+		} else {
+			LLM = new ChatOpenAI({
+				modelName: chat?.model || model,
+				openAIApiKey: user.openAIKey
+			});
+		}
 
 		const outputParser = new BytesOutputParser();
 
@@ -55,6 +66,8 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 		apiKey: user?.openAIKey
 	});
 	const openai = new OAA(configuration);
-	const res = await openai.listModels();
-	return res.data;
+	const openaiModels = await openai.listModels();
+	const googleModels = await axios.get('https://generativelanguage.googleapis.com/v1beta2/models?key=' + user?.googleAIKey);
+
+	return { openAIModels: openaiModels.data, googleModels: googleModels.data };
 };

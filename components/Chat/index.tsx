@@ -68,7 +68,7 @@ export default function Chat({ id }: TChatProps) {
 
 	useEffect(()=>{
 		if(user?.username && userLoading === false) {
-			if(!user.openAIKey) {
+			if(!user.openAIKey && !user.googleAIKey) {
 				toast(errors.NO_KEY, 'error', 4000);
 			}
 		}
@@ -91,7 +91,7 @@ export default function Chat({ id }: TChatProps) {
 			</div>
 
 			<div className='mt-2'>
-				<MessageBox input={input} handleInputChange={handleInputChange} allowSubmit={!!user?.openAIKey} handleSubmit={handleSubmit} isLoading={isLoading}/>
+				<MessageBox input={input} handleInputChange={handleInputChange} allowSubmit={!!(user?.openAIKey || user?.googleAIKey)} handleSubmit={handleSubmit} isLoading={isLoading}/>
 			</div>
 		</div>
 	</div>;

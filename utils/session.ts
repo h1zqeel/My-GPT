@@ -30,6 +30,7 @@ export const generateSession = async(user: TUser, { userSessionId, redirect, url
 		name: user.name,
 		email: user.email,
 		openAIKey: user.openAIKey,
+		googleAIKey: user.googleAIKey,
 		providers: user.providers
 	};
 
