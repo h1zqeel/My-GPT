@@ -3,6 +3,10 @@ import { chats, messages as messagesModel } from '@/db/schema';
 // vercel edge api
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
+import { ChatOpenAI } from 'langchain/chat_models/openai';
+import { BytesOutputParser } from 'langchain/schema/output_parser';
+import { PromptTemplate } from 'langchain/prompts';
+
 // openai node api
 import { Configuration as CFG, OpenAIApi as OAA } from 'openai';
 import { TUser } from '@/types/User';
@@ -22,10 +26,7 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 			.orderBy(sql`${messagesModel.id} ASC`);
 
 		const messagesForOpenAI : any = messages.map(message=>{
-			return {
-				role: message.role,
-				content: message.content
-			};
+			return `${message.role}: ${message.content}`;
 		});
 		console.log({ messagesForOpenAI });
 		// TODO: Add a way to change the temperature
@@ -36,7 +37,27 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 			messages: [{ 'role': 'system', 'content': chat?.systemMessage }, ...messagesForOpenAI, { 'role': 'user', 'content': message }]
 		});
 
-		const stream = OpenAIStream(response);
+		const TEMPLATE = `${chat?.systemMessage}.
+			
+			Current conversation:
+			{chat_history}
+
+			User: {input}
+			AI:`;
+		const prompt = PromptTemplate.fromTemplate(TEMPLATE);
+		const MODEL = new ChatOpenAI({
+			modelName: chat?.model || model
+		});
+
+		const outputParser = new BytesOutputParser();
+
+		const chain = prompt.pipe(MODEL).pipe(outputParser);
+
+		const stream = await chain.stream({
+			chat_history: messagesForOpenAI.join('\n'),
+			input: message
+		});
+
 
 		return new StreamingTextResponse(stream);
 	} catch (error : any) {
