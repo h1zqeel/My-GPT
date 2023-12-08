@@ -1,8 +1,6 @@
 import db from '@/db/connection';
 import { chats, messages as messagesModel } from '@/db/schema';
-// vercel edge api
-import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
-import { OpenAIStream, StreamingTextResponse } from 'ai';
+import { StreamingTextResponse } from 'ai';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { BytesOutputParser } from 'langchain/schema/output_parser';
 import { PromptTemplate } from 'langchain/prompts';
@@ -13,11 +11,6 @@ import { TUser } from '@/types/User';
 import { eq, sql } from 'drizzle-orm';
 
 export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatId } : {message: string, openAIKey?: string, model?: string, chatId: number | string}) =>  {
-	const configuration = new Configuration({
-		apiKey: openAIKey
-	});
-	const openai = new OpenAIApi(configuration);
-
 	try {
 		const chat = (await db.select().from(chats)
 			.where(eq(chats.id, Number(chatId))))[0];
@@ -28,36 +21,28 @@ export const askGPT = async({ message, openAIKey, model = 'gpt-3.5-turbo', chatI
 		const messagesForOpenAI : any = messages.map(message=>{
 			return `${message.role}: ${message.content}`;
 		});
-		console.log({ messagesForOpenAI });
-		// TODO: Add a way to change the temperature
-		// TODO: Add a way to change the max_tokens
-		const response = await openai.createChatCompletion({
-			model: chat?.model || model,
-			stream: true,
-			messages: [{ 'role': 'system', 'content': chat?.systemMessage }, ...messagesForOpenAI, { 'role': 'user', 'content': message }]
-		});
 
-		const TEMPLATE = `${chat?.systemMessage}.
-			
-			Current conversation:
-			{chat_history}
+		const TEMPLATE = `{systemMessage}.
+			Current Conversation: {chatHistory}
+			user: {input}
+			assistant:`;
 
-			User: {input}
-			AI:`;
 		const prompt = PromptTemplate.fromTemplate(TEMPLATE);
-		const MODEL = new ChatOpenAI({
-			modelName: chat?.model || model
+
+		const LLM = new ChatOpenAI({
+			modelName: chat?.model || model,
+			openAIApiKey: openAIKey
 		});
 
 		const outputParser = new BytesOutputParser();
 
-		const chain = prompt.pipe(MODEL).pipe(outputParser);
+		const chain = prompt.pipe(LLM).pipe(outputParser);
 
 		const stream = await chain.stream({
-			chat_history: messagesForOpenAI.join('\n'),
+			systemMessage: chat?.systemMessage || 'Helpful AI Assitant',
+			chatHistory: messagesForOpenAI.join('\n'),
 			input: message
 		});
-
 
 		return new StreamingTextResponse(stream);
 	} catch (error : any) {
