@@ -67,7 +67,7 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 	});
 	const openai = new OAA(configuration);
 	const openaiModels = await openai.listModels();
-	const googleModels = await axios.get('http://generativelanguage.googleapis.com/v1beta2/models?key=' + user?.googleAIKey);
+	const googleModels = await axios.get('https://generativelanguage.googleapis.com/v1beta2/models?key=' + user?.googleAIKey);
 
 	return { openAIModels: openaiModels.data, googleModels: googleModels.data };
 };

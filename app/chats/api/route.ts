@@ -6,9 +6,6 @@ import { errors } from '@/constants';
 import { eq, sql } from 'drizzle-orm';
 import { getChats, invalidateChatsCache } from '@/utils/chat';
 
-export const runtime = 'edge';
-export const preferredRegion = 'fra1';
-
 export async function POST(req: NextRequest) {
 	const user = await getUserSession({ req });
 	const { name, systemMessage, model } = await req.json();
