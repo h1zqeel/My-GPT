@@ -66,15 +66,8 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 		apiKey: user?.openAIKey
 	});
 	const openai = new OAA(configuration);
-	let openaiModels : any = [];
-	let googleModels : any = [];
-	try {
-		openaiModels = await openai.listModels();
-	} catch (error) {}
-
-	try {
-		googleModels = await axios.get('https://generativelanguage.googleapis.com/v1beta2/models?key=' + user?.googleAIKey);
-	} catch (error) {}
+	const openaiModels = await openai.listModels();
+	const googleModels = await axios.get('https://generativelanguage.googleapis.com/v1beta2/models?key=' + user?.googleAIKey);
 
 	return { openAIModels: openaiModels.data, googleModels: googleModels.data };
 };
