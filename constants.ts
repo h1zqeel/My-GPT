@@ -34,6 +34,6 @@ export const gptModels = [
 	{ value: 'gpt-4', name: 'GPT 4', llm: 'openai' },
 	{ value: 'gpt-4-32k', name: 'GPT 4 32k', llm: 'openai' },
 	{ value: 'gpt-4-1106-preview', name: 'GPT 4 Turbo Preview', llm: 'openai' },
-	{ value: 'models/chat-bison-001', name: 'PalM Chat Bison 001', llm: 'googlepalm' },
+	{ value: 'models/chat-bison-001', name: 'PaLM 2', llm: 'googlepalm' },
 	{ value: 'models/gemini-pro', name: 'Gemini Pro', llm: 'googlegemini' }
 ];
