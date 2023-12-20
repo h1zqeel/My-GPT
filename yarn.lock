@@ -1977,10 +1977,10 @@ drizzle-kit@^0.19.13:
     minimatch "^7.4.3"
     zod "^3.20.2"
 
-drizzle-orm@^0.28.6:
-  version "0.28.6"
-  resolved "https://registry.yarnpkg.com/drizzle-orm/-/drizzle-orm-0.28.6.tgz#9c28ace432e826e3c21ea923530df0d1e76810be"
-  integrity sha512-yBe+F9htrlYER7uXgDJUQsTHFoIrI5yMm5A0bg0GiZ/kY5jNXTWoEy4KQtg35cE27sw1VbgzoMWHAgCckUUUww==
+drizzle-orm@^0.29.1:
+  version "0.29.1"
+  resolved "https://registry.yarnpkg.com/drizzle-orm/-/drizzle-orm-0.29.1.tgz#0c93efed19718a851d97d23d9ff2dd8b788faf2d"
+  integrity sha512-yItc4unfHnk8XkDD3/bdC63vdboTY7e7I03lCF1OJYABXSIfQYU9BFTQJXMMovVeb3T1/OJWwfW/70T1XPnuUA==
 
 duplexify@^4.0.0:
   version "4.1.2"
