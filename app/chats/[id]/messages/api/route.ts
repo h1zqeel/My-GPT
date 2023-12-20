@@ -13,7 +13,7 @@ interface RequestContext {
 }
 
 export const runtime = 'edge';
-export const preferredRegion = 'fra1';
+export const preferredRegion = 'bom1';
 
 const router = createEdgeRouter<NextRequest, RequestContext>();
 
@@ -58,7 +58,7 @@ router
 			return NextResponse.json(
 				{
 					ok: false,
-					error: errors.OPEN_AI.CONTENT_ROLE_REQUIRED
+					error: errors.AI.CONTENT_ROLE_REQUIRED
 				},
 				{ status: 400 }
 			);

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createEdgeRouter } from 'next-connect';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
-import { askGPT } from '@/utils/openai';
+import { askAI } from '@/utils/ai';
 import { getUserSession } from '@/utils/session';
 import { errors } from '@/constants';
 interface RequestContext {
@@ -9,9 +9,6 @@ interface RequestContext {
 		id: number | string;
 	};
 }
-
-export const runtime = 'edge';
-export const preferredRegion = 'fra1';
 
 const router = createEdgeRouter<NextRequest, RequestContext>();
 
@@ -26,13 +23,13 @@ router
 			return NextResponse.json(
 				{
 					ok: false,
-					error: errors.OPEN_AI.PROMPT_REQUIRED
+					error: errors.AI.PROMPT_REQUIRED
 				},
 				{ status: 400 }
 			);
 		}
 
-		const gptResponse = await askGPT({ chatId, message: prompt, openAIKey: user?.openAIKey });
+		const gptResponse = await askAI({ chatId, message: prompt, user: user! });
 
 		return gptResponse;
 	})
