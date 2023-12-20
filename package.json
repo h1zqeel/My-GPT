@@ -69,7 +69,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
-    "drizzle-kit": "^0.19.13"
+    "drizzle-kit": "^0.20.7"
   },
   "trigger.dev": {
     "endpointId": "mygpt-Es4P"
