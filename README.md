@@ -15,14 +15,19 @@ email me at: hizqeeljaved2013@gmail.com
 ### To access the Application
 https://my-gpt.is-an.app
 ### Description of the Application:
-- A Simple ChatGPT Client
-- Create a GPT BOT with your own System Message that can use one of the following models:
- 	- `gpt-3.5-turbo`
-	- `gpt-3.5-turbo-16k`
-	- `gpt-4`
-	- `gpt-4-32k`
+- A Simple LLM Client (For OpenAI & Google based LLM)
+- Create a LLM BOT with your own System Message that can use one of the following models:
+ 	- `GPT 3.5 Turbo`
+	- `GPT 3.5 Turbo 16k`
+	- `GPT 4`
+	- `GPT 4 32k`
+	- `Google PaLM 2`
+	- `Google Gemini Pro`
 - To be able to create GPT-4 Chats you need to add a API Key that has Permission to use GPT-4 Models
-- Generate your Open AI API Keys [here](https://platform.openai.com/account/api-keys)
+- To access Google LLMs you need to add Google AI API Key
+- Generate your API Keys
+  - Open AI API Key [here](https://platform.openai.com/account/api-keys)
+  - Google AI API Key [here](https://makersuite.google.com/app/apikey)
 
 ### Local Setup
 
