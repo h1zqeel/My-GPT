@@ -88,7 +88,7 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 				'https://generativelanguage.googleapis.com/v1beta2/models?key=' + user?.googleAIKey
 			);
 
-			const gemeniModels = await axios.get(
+			const geminiModels = await axios.get(
 				'https://generativelanguage.googleapis.com/v1/models?key=' + user?.googleAIKey
 			);
 
@@ -96,7 +96,7 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 				data: {
 					models: [
 						...palmModels.data.models,
-						...gemeniModels.data.models
+						...geminiModels.data.models
 					]
 				}
 			};
