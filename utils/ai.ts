@@ -21,7 +21,7 @@ export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : 
 			.where(eq(messagesModel.chatId, Number(chatId)))
 			.orderBy(sql`${messagesModel.id} ASC`);
 
-		const messagesForOpenAI : any = messages.map(message=>{
+		const messagesForLLM : any = messages.map(message=>{
 			return `${message.role}: ${message.content}`;
 		});
 
@@ -57,7 +57,7 @@ export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : 
 
 		const stream = await chain.stream({
 			systemMessage: chat?.systemMessage || 'Helpful AI Assitant',
-			chatHistory: messagesForOpenAI.join('\n'),
+			chatHistory: messagesForLLM.join('\n'),
 			input: message
 		});
 
