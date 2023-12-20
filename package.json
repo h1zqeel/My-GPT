@@ -18,6 +18,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@google-ai/generativelanguage": "^1.1.0",
+    "@langchain/google-genai": "^0.0.5",
     "@mui/icons-material": "^5.14.15",
     "@mui/material": "^5.14.17",
     "@neondatabase/serverless": "^0.6.0",

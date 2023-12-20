@@ -3,6 +3,7 @@ import { chats, messages as messagesModel } from '@/db/schema';
 import { StreamingTextResponse } from 'ai';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { ChatGooglePaLM } from 'langchain/chat_models/googlepalm';
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { BytesOutputParser } from 'langchain/schema/output_parser';
 import { PromptTemplate } from 'langchain/prompts';
 
@@ -31,12 +32,17 @@ export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : 
 
 		const prompt = PromptTemplate.fromTemplate(TEMPLATE);
 
-		let LLM : ChatGooglePaLM | ChatOpenAI;
+		let LLM : any;
 
 		if(chat?.llm === 'googlepalm') {
 			LLM = new ChatGooglePaLM({
 				modelName: chat?.model || model,
 				apiKey: user.googleAIKey
+			});
+		} else if(chat?.llm === 'googlegemini') {
+			LLM = new ChatGoogleGenerativeAI({
+				modelName: chat?.model || model,
+				apiKey: 'AIzaSyCGq4Y29LGV-RKmWf3vwTLiuLGS0O3e7Hw'
 			});
 		} else {
 			LLM = new ChatOpenAI({
@@ -68,7 +74,7 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 	const openai = new OAA(configuration);
 	const errors: any = [];
 	let openaiModels: any = { data: [] };
-	let googleModels = { data: { models: [] } };
+	let googleModels: any = { data: { models: [] } };
 
 	try {
 		openaiModels = await openai.listModels();
@@ -78,9 +84,23 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 
 	try {
 		if (user?.googleAIKey) {
-			googleModels = await axios.get(
+			const palmModels = await axios.get(
 				'https://generativelanguage.googleapis.com/v1beta2/models?key=' + user?.googleAIKey
 			);
+
+			const gemeniModels = await axios.get(
+				'https://generativelanguage.googleapis.com/v1/models?key=' + user?.googleAIKey
+			);
+
+			googleModels = {
+				data: {
+					models: [
+						...palmModels.data.models,
+						...gemeniModels.data.models
+					]
+				}
+			};
+
 		}
 	} catch (e: any) {
 		errors.push(e);
