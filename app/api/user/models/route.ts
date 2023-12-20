@@ -21,7 +21,10 @@ export async function GET(req: NextRequest) {
 		console.log({ error: e });
 		return NextResponse.json({
 			ok: false,
-			error: parseOpenAIError(e.response?.status)
+			error: parseOpenAIError(e.response?.status),
+			fullError: e,
+			message: e.message,
+			data: e.response?.data
 		}, { status: e.response?.status ?? 500 });
 	}
 }
