@@ -84,6 +84,9 @@ export const signUpNewUser = async({ email, name } : {email: string, name: strin
 			providers: [newProvider]
 		};
 		await db.insert(users).values(user);
+
+		user = (await db.select().from(users)
+			.where(eq(users.providers, [newProvider])))[0];
 	}
 
 	return NextResponse.json({

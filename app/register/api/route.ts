@@ -15,10 +15,12 @@ export async function POST(request: Request) {
 
 	try{
 
-		await db.insert(users).values({
+		const user = await db.insert(users).values({
 			username,
 			password: hashedPassword
 		});
+
+		console.log({ user });
 	} catch(e: any) {
 		if(e.code === 'P2002') {
 			return NextResponse.json({ error: errors.DUPLICATE_USERNAME }, { status: 400 });
