@@ -42,7 +42,7 @@ export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : 
 		} else if(chat?.llm === 'googlegemini') {
 			LLM = new ChatGoogleGenerativeAI({
 				modelName: chat?.model || model,
-				apiKey: 'AIzaSyCGq4Y29LGV-RKmWf3vwTLiuLGS0O3e7Hw'
+				apiKey: user.googleAIKey
 			});
 		} else {
 			LLM = new ChatOpenAI({
