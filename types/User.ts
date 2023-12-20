@@ -3,6 +3,7 @@ export type TUser = {
 	username?: string,
 	name: string,
 	openAIKey: string,
+	googleAIKey: string,
 	email?: string,
 	providers?: any
 }

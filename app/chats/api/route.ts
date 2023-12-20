@@ -2,12 +2,12 @@ import db from '@/db/connection';
 import { chats as chatsModel } from '@/db/schema';
 import { getUserSession } from '@/utils/session';
 import { NextRequest, NextResponse } from 'next/server';
-import { errors } from '@/constants';
-import { eq, sql } from 'drizzle-orm';
+import { errors, gptModels } from '@/constants';
+import { eq } from 'drizzle-orm';
 import { getChats, invalidateChatsCache } from '@/utils/chat';
 
 export const runtime = 'edge';
-export const preferredRegion = 'fra1';
+export const preferredRegion = 'bom1';
 
 export async function POST(req: NextRequest) {
 	const user = await getUserSession({ req });
@@ -23,7 +23,8 @@ export async function POST(req: NextRequest) {
 		name,
 		creatorId: user?.id,
 		systemMessage,
-		model
+		model,
+		llm: gptModels.find(gptModel=>gptModel.value === model)?.llm
 	};
 
 	await db.insert(chatsModel).values(chat);
