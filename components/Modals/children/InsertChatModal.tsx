@@ -21,12 +21,6 @@ export const InsertChatModal = ({ props, handleClose } : TInsertChatModal) => {
 	const [preventChatCreation, setPreventChatCreation] = useState(false);
 	const dispatch = useAppDispatch();
 
-	useEffect(()=>{
-		if(!allowedEngines.includes(model)) {
-			setModel(allowedEngines[0]);
-		}
-	}, [allowedEngines]);
-
 	const handleChatCreation = async() => {
 		if(preventChatCreation) return;
 		setError('');

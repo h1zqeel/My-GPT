@@ -8,7 +8,6 @@ export const users = pgTable('users', {
 	email: varchar('email', { length: 256 }).unique(),
 	password: varchar('password', { length: 256 }),
 	openAIKey: varchar('openAIKey', { length: 256 }),
-	googleAIKey: varchar('googleAIKey', { length: 256 }),
 	providers: jsonb('providers')
 });
 
@@ -17,7 +16,6 @@ export const chats = pgTable('chats', {
 	name: varchar('name', { length: 256 }),
 	creatorId: integer('creatorId').references(() => users.id),
 	systemMessage: text('systemMessage').default('You are a helpful AI Assistant'),
-	llm: varchar('llm', { length: 256 }).default('openai'),
 	model: varchar('model', { length: 256 }).default('gpt-3.5-turbo'),
 	createdAt: date('createdAt').defaultNow(),
 	archived: boolean('archived').default(false)

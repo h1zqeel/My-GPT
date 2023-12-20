@@ -22,7 +22,6 @@ export default function Login()	{
 	const [email, setEmail] = useState('');
 
 	const [openAIKey, setOpenAIKey] = useState('');
-	const [googleAIKey, setGoogleAIKey] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [hasGoogle, setHasGoogle] = useState(false);
 	const [hasGithub, setHasGithub] = useState(false);
@@ -43,7 +42,6 @@ export default function Login()	{
 		setUsername(user?.username || '');
 		setName(user?.name || '');
 		setOpenAIKey(user?.openAIKey || '');
-		setGoogleAIKey(user?.googleAIKey || '');
 		setEmail(user?.email || '');
 		if(user?.providers) {
 			const google = user?.providers.find((provider : {name: string, email: string}) => provider.name === 'google');
@@ -71,8 +69,7 @@ export default function Login()	{
 				},
 				userId: user?.id,
 				name,
-				openAIKey,
-				googleAIKey
+				openAIKey
 			});
 			if (res.status === 200 && res.data.ok) {
 				await axios.post('login/api/refresh');
@@ -180,19 +177,6 @@ export default function Login()	{
 					variant="outlined"
 					value={openAIKey}
 					onChange={(e) => setOpenAIKey(e.target.value)}
-					size="small"
-				/>
-			</div>
-			<div>
-				<TextField
-					autoComplete='chrome-off'
-					type='text'
-					name='r-googleai-key'
-					id="outlined-basic"
-					label="Add your PaLM AI Key Here"
-					variant="outlined"
-					value={googleAIKey}
-					onChange={(e) => setGoogleAIKey(e.target.value)}
 					size="small"
 				/>
 			</div>
