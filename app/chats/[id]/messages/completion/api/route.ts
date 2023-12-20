@@ -23,7 +23,7 @@ router
 			return NextResponse.json(
 				{
 					ok: false,
-					error: errors.OPEN_AI.PROMPT_REQUIRED
+					error: errors.AI.PROMPT_REQUIRED
 				},
 				{ status: 400 }
 			);

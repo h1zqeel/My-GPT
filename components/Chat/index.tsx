@@ -22,7 +22,7 @@ export default function Chat({ id }: TChatProps) {
 		api: `/chats/${id}/messages/completion/api`,
 		onFinish: async function(prompt, completion) {
 			if(!completion.length) {
-				toast(errors.OPEN_AI.FAILED_REQUEST, 'error');
+				toast(errors.AI.FAILED_REQUEST, 'error');
 				return;
 			};
 			const messages = [
@@ -32,7 +32,7 @@ export default function Chat({ id }: TChatProps) {
 			await axios.post(`/chats/${id}/messages/api`, { messages });
 		},
 		onError: function() {
-			toast(errors.OPEN_AI.FAILED_REQUEST, 'error');
+			toast(errors.AI.FAILED_REQUEST, 'error');
 		}
 	});
 	const messagesEndRef : React.RefObject<HTMLDivElement> = createRef();

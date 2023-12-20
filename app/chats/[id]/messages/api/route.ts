@@ -55,7 +55,7 @@ router
 			return NextResponse.json(
 				{
 					ok: false,
-					error: errors.OPEN_AI.CONTENT_ROLE_REQUIRED
+					error: errors.AI.CONTENT_ROLE_REQUIRED
 				},
 				{ status: 400 }
 			);

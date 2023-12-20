@@ -10,10 +10,10 @@ export const errors = {
 	EMPTY_MESSAGE: 'Message cannot be empty',
 	INVALID_REQUEST: 'Invalid Request',
 	NO_CHAT: 'Chat not found',
-	OPEN_AI: {
+	AI: {
 		CONTENT_ROLE_REQUIRED: 'Content and Role is required',
 		PROMPT_REQUIRED: 'Prompt is required',
-		FAILED_REQUEST: 'Request Failed: Is your Open AI Key Valid ?'
+		FAILED_REQUEST: 'Request Failed: Is your API Key Valid ?'
 	},
 	GOOGLE: {
 		SIGN_IN: 'Google Sign In Failed, Please Try Again Later',
