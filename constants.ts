@@ -10,10 +10,10 @@ export const errors = {
 	EMPTY_MESSAGE: 'Message cannot be empty',
 	INVALID_REQUEST: 'Invalid Request',
 	NO_CHAT: 'Chat not found',
-	AI: {
+	OPEN_AI: {
 		CONTENT_ROLE_REQUIRED: 'Content and Role is required',
 		PROMPT_REQUIRED: 'Prompt is required',
-		FAILED_REQUEST: 'Request Failed: Is your API Key Valid ?'
+		FAILED_REQUEST: 'Request Failed: Is your Open AI Key Valid ?'
 	},
 	GOOGLE: {
 		SIGN_IN: 'Google Sign In Failed, Please Try Again Later',
@@ -29,11 +29,10 @@ export const successes ={
 };
 
 export const gptModels = [
-	{ value: 'gpt-3.5-turbo', name: 'GPT 3.5 Turbo', llm: 'openai' },
-	{ value: 'gpt-3.5-turbo-16k', name: 'GPT 3.5 Turbo 16k', llm: 'openai' },
-	{ value: 'gpt-4', name: 'GPT 4', llm: 'openai' },
-	{ value: 'gpt-4-32k', name: 'GPT 4 32k', llm: 'openai' },
-	{ value: 'gpt-4-1106-preview', name: 'GPT 4 Turbo Preview', llm: 'openai' },
-	{ value: 'models/chat-bison-001', name: 'PalM Chat Bison 001', llm: 'googlepalm' },
-	{ value: 'models/gemini-pro', name: 'Gemini Pro', llm: 'googlegemini' }
+	{ value: 'gpt-3.5-turbo', name: 'GPT 3.5 Turbo' },
+	{ value: 'gpt-3.5-turbo-16k', name: 'GPT 3.5 Turbo 16k' },
+	{ value: 'gpt-4', name: 'GPT 4' },
+	{ value: 'gpt-4-32k', name: 'GPT 4 32k' },
+	{ value: 'gpt-4-1106-preview', name: 'GPT 4 Turbo' },
+	{ value: 'gpt-4-vision-preview', name: 'GPT 4 Vision Preview' }
 ];

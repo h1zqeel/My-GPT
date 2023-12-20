@@ -22,7 +22,7 @@ export default function Chat({ id }: TChatProps) {
 		api: `/chats/${id}/messages/completion/api`,
 		onFinish: async function(prompt, completion) {
 			if(!completion.length) {
-				toast(errors.AI.FAILED_REQUEST, 'error');
+				toast(errors.OPEN_AI.FAILED_REQUEST, 'error');
 				return;
 			};
 			const messages = [
@@ -32,7 +32,7 @@ export default function Chat({ id }: TChatProps) {
 			await axios.post(`/chats/${id}/messages/api`, { messages });
 		},
 		onError: function() {
-			toast(errors.AI.FAILED_REQUEST, 'error');
+			toast(errors.OPEN_AI.FAILED_REQUEST, 'error');
 		}
 	});
 	const messagesEndRef : React.RefObject<HTMLDivElement> = createRef();
@@ -68,7 +68,7 @@ export default function Chat({ id }: TChatProps) {
 
 	useEffect(()=>{
 		if(user?.username && userLoading === false) {
-			if(!user.openAIKey && !user.googleAIKey) {
+			if(!user.openAIKey) {
 				toast(errors.NO_KEY, 'error', 4000);
 			}
 		}
@@ -91,7 +91,7 @@ export default function Chat({ id }: TChatProps) {
 			</div>
 
 			<div className='mt-2'>
-				<MessageBox input={input} handleInputChange={handleInputChange} allowSubmit={!!(user?.openAIKey || user?.googleAIKey)} handleSubmit={handleSubmit} isLoading={isLoading}/>
+				<MessageBox input={input} handleInputChange={handleInputChange} allowSubmit={!!user?.openAIKey} handleSubmit={handleSubmit} isLoading={isLoading}/>
 			</div>
 		</div>
 	</div>;
