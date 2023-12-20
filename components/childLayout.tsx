@@ -44,10 +44,10 @@ const ChildLayout = ({ children } : any) => {
 	}, []);
 	return (
 		<>
-			<NextTopLoader
+			{/* <NextTopLoader
 				color="#ffff"
 				easing="ease-in-out"
-			/>
+			/> */}
 			{domLoaded && <ThemeProvider theme={darkTheme}>
 				<CssBaseline />
 				{children}
