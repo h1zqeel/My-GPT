@@ -84,7 +84,7 @@ export const signUpNewUser = async({ email, name } : {email: string, name: strin
 			providers: [newProvider]
 		};
 		await db.insert(users).values(user);
-		user = await (await db.select().from(users)
+		user = (await db.select().from(users)
 			.where(eq(users.email, email)))[0];
 	}
 
