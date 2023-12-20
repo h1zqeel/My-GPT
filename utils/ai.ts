@@ -66,8 +66,29 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 		apiKey: user?.openAIKey
 	});
 	const openai = new OAA(configuration);
-	const openaiModels = await openai.listModels();
-	const googleModels = await axios.get('https://generativelanguage.googleapis.com/v1beta2/models?key=' + user?.googleAIKey);
+	const errors: any = [];
+	let openaiModels: any = { data: [] };
+	let googleModels = { data: { models: [] } };
+
+	try {
+		openaiModels = await openai.listModels();
+	} catch (e: any) {
+		errors.push(e);
+	}
+
+	try {
+		if (user?.googleAIKey) {
+			googleModels = await axios.get(
+				'https://generativelanguage.googleapis.com/v1beta2/models?key=' + user?.googleAIKey
+			);
+		}
+	} catch (e: any) {
+		errors.push(e);
+	}
+
+	if (errors.length === 2) {
+		throw errors[0];
+	}
 
 	return { openAIModels: openaiModels.data, googleModels: googleModels.data };
 };
