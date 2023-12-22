@@ -7,9 +7,19 @@ import { errors } from '@/constants';
 import { getUserSession } from '@/utils/session';
 import { signToken } from '@/utils/token';
 import { sql } from 'drizzle-orm';
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
+	const userSession = await getUserSession({ req });
 	const { searchParams } = new URL(req.url);
 	const userId = searchParams.get('userId');
+
+	if(!userSession) {
+		return NextResponse.redirect(new URL('/login', req.url));
+	}
+
+	if(userId && userSession.id !== parseInt(userId)) {
+		return NextResponse.redirect(new URL('/profile', req.url));
+	}
+
 	const callBackUrl = new URL('/login/api/github/callback', req.url).toString();
 	let state = null;
 
