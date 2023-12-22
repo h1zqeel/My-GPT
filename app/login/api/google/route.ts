@@ -14,12 +14,14 @@ export async function GET(req: NextRequest) {
 	const { searchParams } = new URL(req.url);
 	const userId = searchParams.get('userId');
 
-	if(!userSession) {
-		return NextResponse.redirect(new URL('/login', req.url));
-	}
+	if(userId) {
+		if(!userSession) {
+			return NextResponse.redirect(new URL('/login', req.url));
+		}
 
-	if(userId && userSession.id !== parseInt(userId)) {
-		return NextResponse.redirect(new URL('/profile', req.url));
+		if(userSession.id !== parseInt(userId)) {
+			return NextResponse.redirect(new URL('/profile', req.url));
+		}
 	}
 
 	const callBackUrl = new URL('/login/api/google/callback', req.url).toString();
