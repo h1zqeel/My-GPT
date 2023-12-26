@@ -106,6 +106,9 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 		errors.push(e);
 	}
 
+	if(errors.length) {
+		console.log(errors);
+	}
 	if (errors.length === 2) {
 		throw errors[0];
 	}
