@@ -13,7 +13,7 @@ interface RequestContext {
 }
 
 export const runtime = 'edge';
-export const preferredRegion = 'bom1';
+export const preferredRegion = 'fra1';
 
 const router = createEdgeRouter<NextRequest, RequestContext>();
 

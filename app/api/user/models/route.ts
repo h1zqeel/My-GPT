@@ -6,6 +6,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { gptModels } from '@/constants';
 import { parseOpenAIError } from '@/utils/helpers';
 
+export const preferredRegion = 'bom1';
+
 export async function GET(req: NextRequest) {
 	try{
 		const user = await getUserSession({ req });
