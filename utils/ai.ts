@@ -105,6 +105,8 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 	} catch (e: any) {
 		errors.push(e);
 	}
+	console.log('LOGSS::Models', openaiModels, googleModels);
+	console.log('LOGSS::Models::ERRORS', errors);
 
 	if (errors.length === 2) {
 		throw errors[0];
