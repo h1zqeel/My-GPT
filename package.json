@@ -34,7 +34,7 @@
     "@vercel/kv": "^1.0.0",
     "add": "^2.0.6",
     "ai": "^2.2.20",
-    "autoprefixer": "10.4.15",
+    "autoprefixer": "10.4.16",
     "axios": "^1.6.0",
     "bcrypt": "^5.1.0",
     "dotenv": "^16.3.1",
