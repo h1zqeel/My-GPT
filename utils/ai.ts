@@ -78,13 +78,15 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 	let googleModels: any = { data: { models: [] } };
 
 	try {
-		openaiModels = await openai.listModels();
+		if(user?.openAIKey && user?.openAIKey.length) {
+			openaiModels = await openai.listModels();
+		}
 	} catch (e: any) {
 		throw new Error(parseOpenAIError(e.response?.status));
 	}
 
 	try {
-		if (user?.googleAIKey) {
+		if (user?.googleAIKey && user?.googleAIKey.length) {
 			const palmModels = await axios.get(
 				'https://generativelanguage.googleapis.com/v1beta2/models?key=' + user?.googleAIKey
 			);

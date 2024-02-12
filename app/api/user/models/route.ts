@@ -11,7 +11,9 @@ export async function GET(req: NextRequest) {
 		const { openAIModels: { data: openAImodels }, googleModels: { models: googleModels } } = await getAllowedModels({ user });
 		const allowedUserModels = [_.map(openAImodels, 'id'), _.map(googleModels, 'name')].flat();
 		const supportedModels = _.map(gptModels, 'value');
-
+		if(allowedUserModels.length < 1) {
+			throw new Error('No Models Available, Did you add a Valid OpenAI or GoogleAI Key ?');
+		}
 		return NextResponse.json({
 			ok: true,
 			models: _.intersection(allowedUserModels, supportedModels)
