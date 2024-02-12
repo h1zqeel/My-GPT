@@ -79,7 +79,7 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 	try {
 		openaiModels = await openai.listModels();
 	} catch (e: any) {
-		errors.push(e);
+		throw e;
 	}
 
 	try {
@@ -103,7 +103,7 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 
 		}
 	} catch (e: any) {
-		errors.push(e);
+		throw e;
 	}
 
 	if (errors.length === 2) {
