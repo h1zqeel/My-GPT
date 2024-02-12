@@ -4,7 +4,7 @@ import { getAllowedModels } from '@/utils/ai';
 import { getUserSession } from '@/utils/session';
 import { NextRequest, NextResponse } from 'next/server';
 import { gptModels } from '@/constants';
-import { parseOpenAIError } from '@/utils/helpers';
+import { parseGoogleError, parseOpenAIError } from '@/utils/helpers';
 
 export async function GET(req: NextRequest) {
 	try{
@@ -18,11 +18,10 @@ export async function GET(req: NextRequest) {
 			models: _.intersection(allowedUserModels, supportedModels)
 		});
 	} catch(e : any) {
-		console.log(e);
 		return NextResponse.json({
 			ok: false,
 			e,
-			error: parseOpenAIError(e.response?.status)
+			error: e.type && e.type === 'google' ?   parseGoogleError(e.response?.status ?? 400) : parseOpenAIError(e.response?.status)
 		}, { status: e.response?.status ?? 500 });
 	}
 }

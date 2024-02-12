@@ -79,6 +79,7 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 	try {
 		openaiModels = await openai.listModels();
 	} catch (e: any) {
+		e.type = 'openai';
 		throw e;
 	}
 
@@ -103,6 +104,7 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 
 		}
 	} catch (e: any) {
+		e.type = 'google';
 		throw e;
 	}
 
