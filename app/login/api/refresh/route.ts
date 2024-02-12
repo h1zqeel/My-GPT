@@ -7,7 +7,7 @@ import { errors } from '@/constants';
 import { eq } from 'drizzle-orm';
 
 export const runtime = 'edge';
-export const preferredRegion = 'bom1';
+export const preferredRegion = 'syd1';
 
 export async function POST(req: NextRequest) {
 	const sessionId = req.cookies.get(process.env.TOKEN_NAME)?.value as string;
