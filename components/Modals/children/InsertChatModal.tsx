@@ -118,7 +118,7 @@ export const InsertChatModal = ({ props, handleClose } : TInsertChatModal) => {
 					backgroundColor: 'gray !important',
 					color: '#000 !important'
 				}
-			}} variant='outlined' disabled={(fetchingEngines || preventChatCreation || loading)} className='float-right' onClick={handleChatCreation}>Create</Button>}
+			}} variant='outlined' disabled={(fetchingEngines || preventChatCreation || loading || !allowedEngines.length)} className='float-right' onClick={handleChatCreation}>Create</Button>}
 			<div className='text-xs mt-5 text-red-500'>{ error }</div>
 		</>}
 	</>;
