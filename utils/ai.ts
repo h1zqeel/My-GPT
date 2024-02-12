@@ -12,6 +12,7 @@ import { Configuration as CFG, OpenAIApi as OAA } from 'openai';
 import { TUser } from '@/types/User';
 import { eq, sql } from 'drizzle-orm';
 import axios from 'axios';
+import { parseGoogleError, parseOpenAIError } from './helpers';
 
 export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : {message: string, user: TUser, model?: string, chatId: number | string}) =>  {
 	try {
@@ -77,13 +78,15 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 	let googleModels: any = { data: { models: [] } };
 
 	try {
-		openaiModels = await openai.listModels();
+		if(user?.openAIKey && user?.openAIKey.length) {
+			openaiModels = await openai.listModels();
+		}
 	} catch (e: any) {
-		errors.push(e);
+		throw new Error(parseOpenAIError(e.response?.status));
 	}
 
 	try {
-		if (user?.googleAIKey) {
+		if (user?.googleAIKey && user?.googleAIKey.length) {
 			const palmModels = await axios.get(
 				'https://generativelanguage.googleapis.com/v1beta2/models?key=' + user?.googleAIKey
 			);
@@ -103,11 +106,7 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 
 		}
 	} catch (e: any) {
-		errors.push(e);
-	}
-
-	if (errors.length === 2) {
-		throw errors[0];
+		throw new Error (parseGoogleError(e.response?.status));
 	}
 
 	return { openAIModels: openaiModels.data, googleModels: googleModels.data };
