@@ -11,8 +11,16 @@ import { parseOpenAIError } from '@/utils/helpers';
 import { toast } from '@/utils/toast';
 
 export const InsertChatModal = ({ props, handleClose } : TInsertChatModal) => {
-	const [message, setMessage] = useState('');
-	const [name, setName] = useState('');
+	const [message, setMessage] = useState(
+		props?.chatId
+			? ''
+			: 'You are a helpful AI assistant. Your job is to assist users by providing accurate information, answering questions, offering guidance, and helping with various tasks. Your goal is to make the user\'s experience smooth, efficient, and productive. Feel free to rely on me for any assistance you need!'
+	);
+	const [name, setName] = useState(
+		props?.chatId
+			? ''
+			: 'Helpful AI Assitant'
+	);
 	const [error, setError] = useState('');
 	const [model, setModel] = useState(gptModels[0].value);
 	const [loading, setLoading] = useState(!!props?.chatId);
