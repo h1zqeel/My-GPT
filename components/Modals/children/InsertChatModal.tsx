@@ -76,7 +76,8 @@ export const InsertChatModal = ({ props, handleClose } : TInsertChatModal) => {
 		} catch(e : any) {
 			setAllowedEngines([]);
 			setPreventChatCreation(true);
-			setError(e.response?.error);
+			console.log(e.response.data.error, 'hello');
+			setError(e.response!.data.error);
 			setFetchingEngines(false);
 		}
 	};
