@@ -7,14 +7,13 @@ import { TextareaAutosize } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '@/redux/hooks';
 import { getChats } from '@/redux/features/chatsSlice';
-import { parseOpenAIError } from '@/utils/helpers';
 import { toast } from '@/utils/toast';
 
 export const InsertChatModal = ({ props, handleClose } : TInsertChatModal) => {
 	const [message, setMessage] = useState(
 		props?.chatId
 			? ''
-			: 'You are a helpful AI assistant. Your job is to assist users by providing accurate information, answering questions, offering guidance, and helping with various tasks. Your goal is to make the user\'s experience smooth, efficient, and productive. Feel free to rely on me for any assistance you need!'
+			: 'You are a helpful AI assistant. Your job is to assist users by providing accurate information, answering questions, offering guidance, and helping with various tasks.'
 	);
 	const [name, setName] = useState(
 		props?.chatId
