@@ -106,9 +106,5 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 		throw e;
 	}
 
-	if (errors.length === 2) {
-		throw errors[0];
-	}
-
 	return { openAIModels: openaiModels.data, googleModels: googleModels.data };
 };
