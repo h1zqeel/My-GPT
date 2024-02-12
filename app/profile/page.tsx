@@ -189,7 +189,7 @@ export default function Login()	{
 					type='text'
 					name='r-googleai-key'
 					id="outlined-basic"
-					label="Add your PaLM AI Key Here"
+					label="Add your Google AI Key Here"
 					variant="outlined"
 					value={googleAIKey}
 					onChange={(e) => setGoogleAIKey(e.target.value)}

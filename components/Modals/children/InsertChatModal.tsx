@@ -119,7 +119,17 @@ export const InsertChatModal = ({ props, handleClose } : TInsertChatModal) => {
 					color: '#000 !important'
 				}
 			}} variant='outlined' disabled={(fetchingEngines || preventChatCreation || loading || !allowedEngines.length)} className='float-right' onClick={handleChatCreation}>Create</Button>}
-			<div className='text-xs mt-5 text-red-500'>{ error }</div>
+			<div className='text-xs mt-5 text-red-500'>
+				{!!error.length && <br /> }
+				{ error }
+				{
+					!!error.length &&
+						<>
+							<br/>
+							<a href='/profile' className='text-blue-500'>Click Here to Edit API Keys</a>
+						</>
+				}
+			</div>
 		</>}
 	</>;
 };
