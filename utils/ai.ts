@@ -12,6 +12,7 @@ import { Configuration as CFG, OpenAIApi as OAA } from 'openai';
 import { TUser } from '@/types/User';
 import { eq, sql } from 'drizzle-orm';
 import axios from 'axios';
+import { parseGoogleError, parseOpenAIError } from './helpers';
 
 export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : {message: string, user: TUser, model?: string, chatId: number | string}) =>  {
 	try {
@@ -79,8 +80,7 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 	try {
 		openaiModels = await openai.listModels();
 	} catch (e: any) {
-		e.type = 'openai';
-		throw e;
+		throw new Error(parseOpenAIError(e.response?.status));
 	}
 
 	try {
@@ -104,8 +104,7 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 
 		}
 	} catch (e: any) {
-		e.type = 'google';
-		throw e;
+		throw new Error (parseGoogleError(e.response?.status));
 	}
 
 	return { openAIModels: openaiModels.data, googleModels: googleModels.data };

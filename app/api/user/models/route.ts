@@ -3,8 +3,7 @@ import _ from 'lodash';
 import { getAllowedModels } from '@/utils/ai';
 import { getUserSession } from '@/utils/session';
 import { NextRequest, NextResponse } from 'next/server';
-import { gptModels } from '@/constants';
-import { parseGoogleError, parseOpenAIError } from '@/utils/helpers';
+import { errors, gptModels } from '@/constants';
 
 export async function GET(req: NextRequest) {
 	try{
@@ -21,7 +20,7 @@ export async function GET(req: NextRequest) {
 		return NextResponse.json({
 			ok: false,
 			e,
-			error: e.type && e.type === 'google' ?   parseGoogleError(e.response?.status ?? 400) : parseOpenAIError(e.response?.status)
+			error: e.message ?? errors.DEFAULT
 		}, { status: e.response?.status ?? 500 });
 	}
 }
