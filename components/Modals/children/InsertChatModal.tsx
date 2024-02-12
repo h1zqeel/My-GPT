@@ -19,7 +19,7 @@ export const InsertChatModal = ({ props, handleClose } : TInsertChatModal) => {
 	const [name, setName] = useState(
 		props?.chatId
 			? ''
-			: 'Helpful AI Assitant'
+			: 'Helpful AI Assistant'
 	);
 	const [error, setError] = useState('');
 	const [model, setModel] = useState(gptModels[0].value);
