@@ -105,7 +105,9 @@ export const InsertChatModal = ({ props, handleClose } : TInsertChatModal) => {
 	return <>
 		<p className='text-2xl p-1 mb-2'>{props?.chatId ? 'System Message' : 'New Chat'}</p>
 		{props?.chatId && loading ? <> <center><CircularProgress size={25}/> </center></> : <>
+			<InputLabel id="demo-simple-select-label">Name</InputLabel>
 			<TextareaAutosize onKeyDown={handleKeyPress} disabled={!!props?.chatId} className="bg-transparent p-1 m-0 w-full resize-none focus:ring-0 focus-visible:ring-0 outline-0 focus-visible:outline-0 focus-visible:outline-none" placeholder='Enter a Name' value={name} onChange={(e)=>setName(e.target.value)} maxRows={1}/>
+			<InputLabel id="demo-simple-select-label">System Message</InputLabel>
 			<TextareaAutosize onKeyDown={handleKeyPress} disabled={!!props?.chatId} className="bg-transparent p-1 m-0 w-full resize-none focus:ring-0 focus-visible:ring-0 outline-0 focus-visible:outline-0 focus-visible:outline-none" placeholder='Type a System Message' value={message} onChange={(e)=>setMessage(e.target.value)} maxRows={6}/>
 			{!!allowedEngines.length && <div className='mt-2'>
 				<InputLabel id="demo-simple-select-label">Model</InputLabel>
