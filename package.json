@@ -36,7 +36,7 @@
     "ai": "^2.2.20",
     "autoprefixer": "10.4.17",
     "axios": "^1.6.7",
-    "bcrypt": "^5.1.0",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.29.2",
     "encoding": "^0.1.13",
@@ -68,7 +68,7 @@
     "yarn": "^1.22.19"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
+    "@types/bcrypt": "^5.0.2",
     "drizzle-kit": "^0.20.8"
   },
   "trigger.dev": {
