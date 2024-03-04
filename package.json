@@ -33,7 +33,7 @@
     "@vercel/analytics": "^1.1.1",
     "@vercel/kv": "^1.0.0",
     "add": "^2.0.6",
-    "ai": "^2.2.20",
+    "ai": "^3.0.5",
     "autoprefixer": "10.4.17",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
