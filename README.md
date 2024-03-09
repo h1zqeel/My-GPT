@@ -15,7 +15,7 @@ email me at: hizqeeljaved2013@gmail.com
 ### To access the Application
 https://my-gpt.is-an.app
 ### Description of the Application:
-- A Simple LLM Client For OpenAI (GPT), Google based LLMs (PaLM & Gemeni), Anthropic LLMs (Claude)
+- A Simple LLM Client For OpenAI (GPT), Google based LLMs (PaLM & Gemini), Anthropic LLMs (Claude)
 - Create a LLM BOT with your own System Message that can use one of the following models:
  	- `GPT 3.5 Turbo`
 	- `GPT 3.5 Turbo 16k`
