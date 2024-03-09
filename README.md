@@ -15,7 +15,7 @@ email me at: hizqeeljaved2013@gmail.com
 ### To access the Application
 https://my-gpt.is-an.app
 ### Description of the Application:
-- A Simple LLM Client (For OpenAI, Google based LLMs, Claude LLMs)
+- A Simple LLM Client (For OpenAI (GPT), Google based LLMs (PaLM & Gemeni), Anthropic LLMs (Claude))
 - Create a LLM BOT with your own System Message that can use one of the following models:
  	- `GPT 3.5 Turbo`
 	- `GPT 3.5 Turbo 16k`
@@ -23,14 +23,17 @@ https://my-gpt.is-an.app
 	- `GPT 4 32k`
 	- `Google PaLM 2`
 	- `Google Gemini Pro`
-	-
+	- `Claude 2`
+	- `Claude 2.1`
+	- `Claude 3 Sonnet`
+	- `Claude 3 Opus`
 - To be able to create GPT-4 Chats you need to add a API Key that has Permission to use GPT-4 Models
 - To access Google LLMs you need to add Google AI API Key
 - To access Claude Chats you need to add Anthropic API Key
 - Generate your API Keys
   - Open AI API Key [here](https://platform.openai.com/account/api-keys)
   - Google AI API Key [here](https://makersuite.google.com/app/apikey)
-  - Anthropic API Key [here](something.google)
+  - Anthropic API Key [here](https://console.anthropic.com/settings/keys)
 
 ### Local Setup
 
