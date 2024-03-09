@@ -23,6 +23,7 @@ export default function Login()	{
 
 	const [openAIKey, setOpenAIKey] = useState('');
 	const [googleAIKey, setGoogleAIKey] = useState('');
+	const [anthropicAIKey, setAnthropicAIKey] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [hasGoogle, setHasGoogle] = useState(false);
 	const [hasGithub, setHasGithub] = useState(false);
@@ -44,6 +45,7 @@ export default function Login()	{
 		setName(user?.name || '');
 		setOpenAIKey(user?.openAIKey || '');
 		setGoogleAIKey(user?.googleAIKey || '');
+		setAnthropicAIKey(user?.anthropicAIKey || '');
 		setEmail(user?.email || '');
 		if(user?.providers) {
 			const google = user?.providers.find((provider : {name: string, email: string}) => provider.name === 'google');
@@ -72,7 +74,8 @@ export default function Login()	{
 				userId: user?.id,
 				name,
 				openAIKey,
-				googleAIKey
+				googleAIKey,
+				anthropicAIKey
 			});
 			if (res.status === 200 && res.data.ok) {
 				await axios.post('login/api/refresh');
@@ -135,6 +138,7 @@ export default function Login()	{
 			<h1 className="text-3xl text-bold">Settings</h1>
 			<div>
 				<TextField
+					sx={{ width:'400px' }}
 					name='r-name'
 					id="r-name"
 					label="Name"
@@ -146,6 +150,7 @@ export default function Login()	{
 			</div>
 			<div>
 				<TextField
+					sx={{ width:'400px' }}
 					type='text'
 					name='r-username'
 					id="r-username"
@@ -159,6 +164,7 @@ export default function Login()	{
 			</div>
 			<div>
 				<TextField
+					sx={{ width:'400px' }}
 					type='text'
 					name='r-email'
 					id="r-email"
@@ -172,6 +178,7 @@ export default function Login()	{
 			</div>
 			<div>
 				<TextField
+					sx={{ width:'400px' }}
 					autoComplete='chrome-off'
 					type='text'
 					name='r-openai-key'
@@ -185,6 +192,7 @@ export default function Login()	{
 			</div>
 			<div>
 				<TextField
+					sx={{ width:'400px' }}
 					autoComplete='chrome-off'
 					type='text'
 					name='r-googleai-key'
@@ -197,7 +205,22 @@ export default function Login()	{
 				/>
 			</div>
 			<div>
+				<TextField
+					sx={{ width:'400px' }}
+					autoComplete='chrome-off'
+					type='text'
+					name='r-anthropicai-key'
+					id="outlined-basic"
+					label="Add your Anthropic (Claude) AI Key Here"
+					variant="outlined"
+					value={anthropicAIKey}
+					onChange={(e) => setAnthropicAIKey(e.target.value)}
+					size="small"
+				/>
+			</div>
+			<div>
 				<Button
+					sx={{ width:'150px' }}
 					className="bg-primary hover:bg-secondary hover:text-white"
 					variant="contained"
 					size="small"
@@ -209,22 +232,22 @@ export default function Login()	{
 			</div>
 
 			{hasGithub ?
-				<div className='w-64'>
+				<div className='w-[400px]'>
 					<GithubLoginButton className='w-64 text-center' onClick={unlinkGithubAccount} disabled={githubLoading}><span className='flex flex-row justify-start ml-2'>{githubLoading ? 'Unlinking Account...' : 'Unlink Account'}</span></GithubLoginButton>
 				</div>
 				:
-				<div className='w-64'>
+				<div className='w-[400px]'>
 					<Link href={`/login/api/github?userId=${user?.id}`}>
 						<GithubLoginButton disabled={githubLoading} className='w-64 text-center'><span className='flex flex-row justify-start ml-2'>{githubLoading ? 'Please Wait...' : 'Link Account'}</span></GithubLoginButton>
 					</Link>
 				</div>}
 
 			{hasGoogle?
-				<div className='w-64'>
+				<div className='w-[400px]'>
 					<GoogleLoginButton className='w-64 text-center' onClick={unlinkGoogleAccount} disabled={googleLoading}><span className='flex flex-row justify-start ml-2'>{googleLoading ? 'Unlinking Account...' : 'Unlink Account'}</span></GoogleLoginButton>
 				</div>
 				:
-				<div className='w-64'>
+				<div className='w-[400px]'>
 					<Link href={`/login/api/google?userId=${user?.id}`} onClick={()=>setGoogleLoading(true)}>
 						<GoogleLoginButton disabled={googleLoading} className='w-64 text-center'><span className='flex flex-row justify-start ml-2'>{googleLoading ? 'Please Wait...' : 'Link Account'}</span></GoogleLoginButton>
 					</Link>

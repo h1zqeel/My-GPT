@@ -4,6 +4,7 @@ import { StreamingTextResponse } from 'ai';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { ChatGooglePaLM } from 'langchain/chat_models/googlepalm';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
+import { ChatAnthropic } from '@langchain/anthropic';
 import { BytesOutputParser } from 'langchain/schema/output_parser';
 import { PromptTemplate } from 'langchain/prompts';
 
@@ -45,6 +46,11 @@ export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : 
 				modelName: chat?.model || model,
 				apiKey: user.googleAIKey
 			});
+		} else if(chat?.llm === 'claude') {
+			LLM = new ChatAnthropic({
+				modelName: chat?.model || model,
+				anthropicApiKey: user.anthropicAIKey
+			});
 		} else {
 			LLM = new ChatOpenAI({
 				modelName: chat?.model || model,
@@ -73,9 +79,10 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 		apiKey: user?.openAIKey
 	});
 	const openai = new OAA(configuration);
-	const errors: any = [];
+
 	let openaiModels: any = { data: [] };
 	let googleModels: any = { data: { models: [] } };
+	let claudeModels: any = [];
 
 	try {
 		if(user?.openAIKey && user?.openAIKey.length) {
@@ -109,5 +116,15 @@ export const getAllowedModels = async({ user }: {user: TUser | null}) => {
 		throw new Error (parseGoogleError(e.response?.status));
 	}
 
-	return { openAIModels: openaiModels.data, googleModels: googleModels.data };
+	if(user?.anthropicAIKey && user?.anthropicAIKey.length) {
+		claudeModels = [
+			{ id: 'claude-2.0', name: 'Claude 2' },
+			{ id: 'claude-2.1', name: 'Claude 2.1' },
+			{ id: 'claude-3-sonnet-20240229', name: 'Claude 3 Sonnet' },
+			{ id: 'claude-3-opus-20240229', name: 'Claude 3 Opus' }
+		];
+	}
+
+
+	return { openAIModels: openaiModels.data, googleModels: googleModels.data, claudeModels };
 };

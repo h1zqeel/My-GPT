@@ -1,5 +1,5 @@
 export const errors = {
-	NO_KEY: 'OpenAI Key not found, please add it in Settings Page',
+	NO_KEY: 'API Key not found, please add it in Settings Page',
 	DEFAULT: 'Something went wrong, please try again later',
 	DUPLICATE_USERNAME: 'Username already exists',
 	USERNAME_PASSWORD_EMPTY: 'Username or Password cannot be Empty',
@@ -35,5 +35,9 @@ export const gptModels = [
 	{ value: 'gpt-4-32k', name: 'GPT 4 32k', llm: 'openai' },
 	{ value: 'gpt-4-1106-preview', name: 'GPT 4 Turbo Preview', llm: 'openai' },
 	{ value: 'models/chat-bison-001', name: 'PaLM 2', llm: 'googlepalm' },
-	{ value: 'models/gemini-pro', name: 'Gemini Pro', llm: 'googlegemini' }
+	{ value: 'models/gemini-pro', name: 'Gemini Pro', llm: 'googlegemini' },
+	{ value: 'claude-2.0', name: 'Claude 2', llm: 'claude' },
+	{ value: 'claude-2.1', name: 'Claude 2.1', llm: 'claude' },
+	{ value: 'claude-3-sonnet-20240229', name: 'Claude 3 Sonnet', llm: 'claude' },
+	{ value: 'claude-3-opus-20240229', name: 'Claude 3 Opus', llm: 'claude' }
 ];
