@@ -21,6 +21,8 @@ https://my-gpt.is-an.app
 	- `GPT 3.5 Turbo 16k`
 	- `GPT 4`
 	- `GPT 4 32k`
+	- `GPT 4 (1106) Turbo Preview`
+	- `GPT 4 (0125) Turbo Preview`
 	- `Google PaLM 2`
 	- `Google Gemini Pro`
 	- `Claude 2`
