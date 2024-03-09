@@ -9,6 +9,7 @@ export const users = pgTable('users', {
 	password: varchar('password', { length: 256 }),
 	openAIKey: varchar('openAIKey', { length: 256 }),
 	googleAIKey: varchar('googleAIKey', { length: 256 }),
+	anthropicAIKey: varchar('anthropicAIKey', { length: 256 }),
 	providers: jsonb('providers')
 });
 

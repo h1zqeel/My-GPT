@@ -43,6 +43,13 @@
       "when": 1702051183642,
       "tag": "0005_blue_dormammu",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1709982587489,
+      "tag": "0006_wooden_iron_fist",
+      "breakpoints": true
     }
   ]
 }
