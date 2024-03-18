@@ -44,7 +44,7 @@
     "eslint": "8.57.0",
     "eslint-config-next": "^14.0.3",
     "google-auth-library": "^9.4.1",
-    "jose": "^4.14.4",
+    "jose": "^5.2.3",
     "langchain": "^0.0.203",
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.43",
