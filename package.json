@@ -38,7 +38,7 @@
     "autoprefixer": "10.4.17",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.5",
     "drizzle-orm": "^0.29.2",
     "encoding": "^0.1.13",
     "eslint": "8.57.0",
