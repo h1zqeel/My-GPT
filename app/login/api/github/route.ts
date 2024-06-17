@@ -14,11 +14,11 @@ export async function GET(req: NextRequest) {
 
 	if(userId) {
 		if(!userSession) {
-			return NextResponse.redirect(new URL('/login', req.url));
+			return NextResponse.redirect(new URL('/login?error=Bad Request', req.url));
 		}
 
 		if(userSession.id !== parseInt(userId)) {
-			return NextResponse.redirect(new URL('/profile', req.url));
+			return NextResponse.redirect(new URL('/profile?error=Bad Request', req.url));
 		}
 	}
 
