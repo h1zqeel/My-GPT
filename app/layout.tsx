@@ -1,6 +1,6 @@
 import './globals.css';
 import ChildLayout from '@/components/childLayout';
-import { Ubuntu } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { ReduxProvider } from '@/redux/provider';
 import { SessionProvider } from './provider';
@@ -10,9 +10,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 config.autoAddCss = false;
 
-const ubuntu = Ubuntu({
-	weight: ['400', '700'],
-	variable: '--font-ubuntu',
+const poppins = Poppins({
+	weight: ['400', '500', '600', '700'],
+	variable: '--font-poppins',
 	preload: false
 });
 
@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 	return (
-		<html lang="en" className={ubuntu.className} style={ubuntu.style}>
+		<html lang="en" className={poppins.className} style={poppins.style}>
 			<body className='bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-600 via-gray-800 to-black'>
 				<ReduxProvider>
 					<SessionProvider>
