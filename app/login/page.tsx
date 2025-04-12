@@ -103,16 +103,17 @@ export default function Login()	{
 					/>
 				</div>
 				<div className='flex flex-row justify-center space-x-10'>
-					<RegisterButton />
-					<Button
-						className="bg-primary hover:bg-secondary hover:text-white"
+					<div><RegisterButton /></div>
+					<div><Button
+						color="inherit" 
+						className="bg-primary hover:bg-secondary hover:text-white "
 						variant="contained"
 						size="small"
 						type='submit'
 						disabled={loading}
 					>
 						{loading ? <CircularProgress size={25} /> : 'Login'}
-					</Button>
+					</Button></div>
 				</div>
 				<div className='flex flex-row justify-center space-x-3'>
 					<div className='flex flex-col'>

@@ -117,8 +117,8 @@ export default function Login()	{
 					/>
 				</div>
 				<div className='flex flex-row justify-center space-x-4'>
-					<LoginButton />
-					<Button
+					<div><LoginButton /></div>
+					<div><Button
 						className="bg-primary hover:bg-secondary hover:text-white"
 						variant="contained"
 						size="small"
@@ -126,7 +126,7 @@ export default function Login()	{
 						type='submit'
 					>
 						{loading ? <CircularProgress size={25}/> : 'Register'}
-					</Button>
+					</Button></div>
 				</div>
 				<div>{error}</div>
 				<div className='flex flex-row justify-center space-x-3'>

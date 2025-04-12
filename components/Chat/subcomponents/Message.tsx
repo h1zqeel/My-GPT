@@ -19,10 +19,10 @@ export default function Message({ message, skeleton }: { message?: TMessage, ske
 		</SkeletonTheme>;
 	}
 
-	return <div className='px-2 lg:px-auto'><div key='' className=' mt-2 rounded-e-2xl rounded-bl-lg rounded-tl-md shadow-lg text-white bg-[conic-gradient(at_top_left,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-sky-900 px-2 lg:px-8 py-5 flex md:flex-row flex-row w-fit max-w-[100%] overflow-clip'>
+	return <div className='px-2 lg:px-auto'><div key='' className='mt-2 flex md:flex-row w-fit max-w-full overflow-clip rounded-e-2xl rounded-bl-lg rounded-tl-md shadow-lg text-white px-2 lg:px-8 py-5 bg-linear-to-br from-gray-700 via-gray-900 to-sky-900 bg-[length:200%_200%] motion-safe:animate-[gradient-x_12s_ease_infinite]'>
 		<div className='mr-4 bold'><b>{message?.role === 'user' ? <FontAwesomeIcon icon={faUser}/> : <FontAwesomeIcon icon={faRobot}/>}</b></div>
-		<div className='overflow-x-scroll' style={{
+		<div className='overflow-x-scroll max-w-[100wh]' style={{
 			width: '20%!important'
-		}}><ReactMarkdown className='max-w-[100wh]'>{message?.content ?? ''}</ReactMarkdown></div>
+		}}><ReactMarkdown>{message?.content ?? ''}</ReactMarkdown></div>
 	</div> </div>;
 }

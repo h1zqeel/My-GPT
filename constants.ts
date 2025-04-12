@@ -35,8 +35,12 @@ export const gptModels = [
 	{ value: 'gpt-4-32k', name: 'GPT 4 32k', llm: 'openai' },
 	{ value: 'gpt-4-1106-preview', name: 'GPT 4 (1106) Turbo Preview', llm: 'openai' },
 	{ value: 'gpt-4-0125-preview', name: 'GPT 4 (0125) Turbo Preview', llm: 'openai' },
-	{ value: 'models/chat-bison-001', name: 'PaLM 2', llm: 'googlepalm' },
-	{ value: 'models/gemini-pro', name: 'Gemini Pro', llm: 'googlegemini' },
+	// { value: 'models/chat-bison-001', name: 'PaLM 2', llm: 'googlepalm' }, deprecated
+	// { value: 'models/gemini-1.0-pro-vision-latest', name: 'Gemini 1.0 Pro Vision', llm: 'googlegemini' }, deprecated
+	{ value: 'models/gemini-1.5-pro', name: 'Gemini 1.5 Pro', llm: 'googlegemini' },
+	{ value: 'models/gemini-1.5-flash', name: 'Gemini 1.5 Flash', llm: 'googlegemini' },
+	{ value: 'models/gemini-1.5-flash-8b', name: 'Gemini 1.5 Flash-8B', llm: 'googlegemini' },
+	{ value: 'models/gemini-2.0-flash', name: 'Gemini 2.0 Flash', llm: 'googlegemini' },
 	{ value: 'claude-2.0', name: 'Claude 2', llm: 'claude' },
 	{ value: 'claude-2.1', name: 'Claude 2.1', llm: 'claude' },
 	{ value: 'claude-3-sonnet-20240229', name: 'Claude 3 Sonnet', llm: 'claude' },

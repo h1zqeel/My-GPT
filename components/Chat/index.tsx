@@ -8,7 +8,7 @@ import { setSelectedChat } from '@/redux/features/selectedChatSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { updateBotMessage, getMessagesForChat } from '@/redux/features/messagesSlice';
 import { TChatProps, TMessage } from '@/types/Chat';
-import { useCompletion } from 'ai/react';
+import { useCompletion } from '@ai-sdk/react';
 import { getSession } from '@/redux/features/sessionSlice';
 import { toast } from '@/utils/toast';
 import { errors } from '@/constants';
@@ -35,9 +35,9 @@ export default function Chat({ id }: TChatProps) {
 			toast(errors.AI.FAILED_REQUEST, 'error');
 		}
 	});
-	const messagesEndRef : React.RefObject<HTMLDivElement> = createRef();
+	const messagesEndRef : React.RefObject<HTMLDivElement | null> = createRef();
 
-	dispatch(setSelectedChat(parseInt(id, 10)));
+	// dispatch(setSelectedChat(parseInt(id, 10)));
 
 	const messages = useAppSelector(({ messagesReducer }) => messagesReducer.messages);
 	const messagesLoading = useAppSelector(({ messagesReducer }) => messagesReducer.loading);
@@ -98,8 +98,8 @@ export default function Chat({ id }: TChatProps) {
 	return <div className='relative'>
 		<div className='flex flex-col h-[calc(100dvh)] overflow-clip w-[100vw] lg:w-[100%] pt-20 md:pt-0 lg:pt-0'>
 			<div className={`grow justify-center ${messagesLoading?'overflow-clip': 'overflow-scroll'}`}>
-				{!messagesLoading && messages.map((message : TMessage) => {
-					return <div key={message.id} className=' lg:max-w-[80vw]'> <Message message={message} /> </div>;
+				{!messagesLoading && messages.map((message : TMessage, i) => {
+					return <div key={i} className=' lg:max-w-[80vw]'> <Message message={message} /> </div>;
 				})}
 				{messagesLoading && <div className=''>
 					{Array(10)
