@@ -2,7 +2,7 @@ import { drizzle } from 'drizzle-orm/neon-http';
 import { neon, neonConfig } from '@neondatabase/serverless';
 import ws from 'ws';
 
-let connectionString = process.env.DATABASE_URL!;
+const connectionString = process.env.DATABASE_URL!;
 
 if (process.env.NODE_ENV === 'development') {
 	neonConfig.fetchEndpoint = (host) => {
