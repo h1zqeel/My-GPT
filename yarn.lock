@@ -976,9 +976,9 @@
     react-is "^18.2.0"
 
 "@neondatabase/serverless@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@neondatabase/serverless/-/serverless-0.6.0.tgz#efe001f571e85af79c8042601ec694f96ca8fb17"
-  integrity sha512-qXxBRYN0m2v8kVQBfMxbzNGn2xFAhTXFibzQlE++NfJ56Shz3m7+MyBBtXDlEH+3Wfa6lToDXf1MElocY4sJ3w==
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@neondatabase/serverless/-/serverless-0.6.1.tgz#40479ae385a17a6771024c75c534ee161e0f891e"
+  integrity sha512-rZIyWf27WxH4eW0ZRDQT2PxUJH3AphNVEnO4x1AGjBW6XrguH3ChLokup0gNGrX8cxDbP0UyduI7qdy4OLos+A==
   dependencies:
     "@types/pg" "8.6.6"
 
@@ -2501,9 +2501,9 @@ drizzle-kit@^0.20.8:
     zod "^3.20.2"
 
 drizzle-orm@^0.29.2:
-  version "0.29.2"
-  resolved "https://registry.yarnpkg.com/drizzle-orm/-/drizzle-orm-0.29.2.tgz#0127e04172335fbab9748917222179405f9302b2"
-  integrity sha512-BhwCwuSQqUoLVc7wtgIkuWexY127Z9+yDbuXU7QWZbMC2XE48jecvAThW9apQaDoaxQmwQ+ObyPfPb4zL4Bgsw==
+  version "0.29.5"
+  resolved "https://registry.yarnpkg.com/drizzle-orm/-/drizzle-orm-0.29.5.tgz#b82bb6d67101fff9438dacd4b09e9cd23109f49c"
+  integrity sha512-jS3+uyzTz4P0Y2CICx8FmRQ1eplURPaIMWDn/yq6k4ShRFj9V7vlJk67lSf2kyYPzQ60GkkNGXcJcwrxZ6QCRw==
 
 duplexify@^4.0.0:
   version "4.1.2"
@@ -5517,7 +5517,7 @@ postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
-postgres@^3.4.3:
+postgres@3.4.3:
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/postgres/-/postgres-3.4.3.tgz#52a0712cd6c2dae5e9f8c35b5c7b33434caa66ed"
   integrity sha512-iHJn4+M9vbTdHSdDzNkC0crHq+1CUdFhx+YqCE+SqWxPjm+Zu63jq7yZborOBF64c8pc58O5uMudyL1FQcHacA==
