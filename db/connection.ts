@@ -1,6 +1,7 @@
 import { drizzle } from 'drizzle-orm/neon-http';
 import { neon, neonConfig } from '@neondatabase/serverless';
-import ws from 'ws';
+
+neonConfig.fetchConnectionCache = true;
 
 const connectionString = process.env.DATABASE_URL!;
 
@@ -14,9 +15,8 @@ if (process.env.NODE_ENV === 'development') {
 	neonConfig.useSecureWebSocket = connectionStringUrl.hostname !== 'db.localtest.me';
 	neonConfig.wsProxy = (host) => (host === 'db.localtest.me' ? `${host}:4444/v2` : `${host}/v2`);
 }
-neonConfig.webSocketConstructor = ws;
 
 const sql = neon(connectionString);
-const db = drizzle(sql);
+const db = drizzle(sql as any);
 
 export default db;
