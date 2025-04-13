@@ -13,7 +13,6 @@ export const colors = {
 	'surface-a-end': '#14233A',
 	'surface-b-start': '#101319',
 	'surface-b-end': '#1B1E26',
-
 	scrollbarTrack: '#1F222A',
 	scrollbarThumb: '#2F3745',
 };
