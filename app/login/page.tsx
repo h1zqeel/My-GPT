@@ -105,8 +105,7 @@ export default function Login()	{
 				<div className='flex flex-row justify-center space-x-10'>
 					<div><RegisterButton /></div>
 					<div><Button
-						color="inherit" 
-						className="bg-primary hover:bg-secondary hover:text-white "
+						color="primary"
 						variant="contained"
 						size="small"
 						type='submit'

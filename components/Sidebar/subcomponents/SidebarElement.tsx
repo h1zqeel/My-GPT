@@ -5,27 +5,74 @@ import { useAppSelector } from '@/redux/hooks';
 import { TChat } from '@/types/Chat';
 import { ChatIcon } from './chat/ChatIcon';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import { Button } from '@mui/material';
 
-const SidebarElement = ({ element, page, skeleton = false, subpage = 'messages' }:  {element?: TChat, page?: string, skeleton?: Boolean, subpage?: string}) => {
-	const selectedChatId = useAppSelector(({ selectedChatReducer }) => selectedChatReducer.chatId);
-	if(skeleton) {
+const SidebarElement = ({
+	element,
+	page,
+	skeleton = false,
+	subpage = 'messages',
+}: {
+	element?: TChat;
+	page?: string;
+	skeleton?: Boolean;
+	subpage?: string;
+}) => {
+	const selectedChatId = useAppSelector(
+		({ selectedChatReducer }) => selectedChatReducer.chatId
+	);
+	if (skeleton) {
 		return (
 			<SkeletonTheme baseColor="#202020" highlightColor="#444">
-				<div className='flex m-2 mb-4 mx-4'>
-					<Skeleton height={40} width={'100%'} containerClassName='flex-1'/>
+				<div className="flex m-2 mb-4 mx-4">
+					<Skeleton
+						height={40}
+						width={'100%'}
+						containerClassName="flex-1"
+					/>
 				</div>
 			</SkeletonTheme>
 		);
 	}
 	return (
-		<div className={`transition-colors duration-150 flex items-center justify-between m-2 rounded-md p-2 cursor-pointer hover:bg-secondary hover:text-black w-64 overflow-hidden ${element?.id === selectedChatId ? 'bg-primary text-black': ''}`}>
-			<div className='flex-grow'>
-				<Link href={`/${page}/${element?.id}/${subpage}`}>
-					<p>{element?.name}</p>
-				</Link>
-			</div>
-			{page === 'chats' && <ChatIcon chatId={element?.id}/>}
-		</div>
+		<Button
+			component={Link}
+			href={`/${page}/${element?.id}/${subpage}`}
+			fullWidth
+			disableRipple
+			sx={{
+				justifyContent: 'space-between',
+				m: 1,
+				p: 1,
+				width: '94%',
+				borderRadius: 2,
+				textTransform: 'none',
+				backgroundColor:
+					element?.id === selectedChatId
+						? 'primary.main'
+						: 'transparent',
+				color: 'text.primary',
+				'&:hover': {
+					backgroundColor:
+						element?.id === selectedChatId
+							? 'primary.main'
+							: 'secondary.main',
+					color: element?.id === selectedChatId ? 'text.primary' : 'text.secondary',
+				},
+			}}
+		>
+			<span
+				style={{
+					flexGrow: 1,
+					overflow: 'hidden',
+					whiteSpace: 'nowrap',
+					textOverflow: 'ellipsis',
+				}}
+			>
+				{element?.name}
+			</span>
+			{page === 'chats' && <ChatIcon chatId={element?.id} />}
+		</Button>
 	);
 };
 

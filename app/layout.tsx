@@ -28,7 +28,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className={poppins.className} style={poppins.style}>
-			<body className="min-h-screen bg-linear-to-br from-gray-700 via-gray-900 to-black bg-[length:200%_200%] animate-[gradient-bg_12s_ease_infinite] text-white">
+			<body className="min-h-screen bg-linear-to-br from-first-background to-second-background bg-[length:200%_200%] animate-[gradient-bg_12s_ease_infinite] text-text-primary">
 				<ReduxProvider>
 					<SessionProvider>
 						<ChildLayout>

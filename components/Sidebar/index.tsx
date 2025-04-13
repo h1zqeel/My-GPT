@@ -36,7 +36,7 @@ export default function Sidebar({ elements, allowClosage = true, ChildActionComp
 
 		</div>}
 		<div className={`h-fill transition-[width] duration-200 ease-in-out absolute z-50 lg:static  ${close? 'w-0 lg:w-[100%]' : 'w-[80vw] md:w-[40vw] lg:w-[100%]'}`}>
-			<div className='flex flex-col bg-gradient-to-b from-black via-gray-900 to-black shadow-md rounded-e-3xl overflow-hidden ease-in-out h-[calc(100dvh)]'>
+			<div className='flex flex-col bg-second-background shadow-lg overflow-hidden ease-in-out h-[calc(100dvh)]'>
 				{ChildActionComp && <div className='mt-2'>
 					<ChildActionComp />
 				</div>}

@@ -119,7 +119,7 @@ export default function Login()	{
 				<div className='flex flex-row justify-center space-x-4'>
 					<div><LoginButton /></div>
 					<div><Button
-						className="bg-primary hover:bg-secondary hover:text-white"
+						color='primary'
 						variant="contained"
 						size="small"
 						disabled={loading}

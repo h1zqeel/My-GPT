@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { colors } from '@/colors.js';
 
 const darkTheme = createTheme({
 	typography: {
@@ -12,25 +13,82 @@ const darkTheme = createTheme({
 	},
 	palette: {
 		mode: 'dark',
+		background: {
+			default: colors.firstBackground,
+			paper: colors.secondBackground
+		},
 		primary: {
-			main: '#FAFAF9'
+			main: colors.primary
 		},
 		secondary: {
-			main: '#E7E5E4'
-		}
+			main: colors.secondary
+		},
+		text: {
+			primary: colors.textPrimary,
+			secondary: colors.textSecondary,
+		},
+		surfaceA: {
+			main: colors['surface-a-start'],
+			dark: colors['surface-a-end'],
+		},
+		surfaceB: {
+			main: colors['surface-b-start'],
+			dark: colors['surface-b-end'],
+		},
+	},
+	shape: {
+		borderRadius: 20
 	},
 	components: {
 		MuiButton: {
 			styleOverrides: {
 				root: {
-					padding:'10px 20px',
+					padding: '10px 20px',
 					maxHeight: '35px',
-					backgroundColor: '#e9f2f9',
-					color: 'black',
+					borderRadius: '20px',
+				},
+
+				containedPrimary: {
+					backgroundColor: colors.primary,
+					color: colors.textPrimary,
 					'&:hover': {
-						color: 'white',
-						backgroundColor: 'black'
+						backgroundColor: colors.primaryHover,
+						color: colors.textPrimary
 					}
+				},
+
+				containedSecondary: {
+					backgroundColor: colors.secondary,
+					color: colors.textSecondary,
+					'&:hover': {
+						backgroundColor: colors.secondaryHover,
+						color: colors.textSecondary
+					}
+				}
+			}
+		},
+		MuiOutlinedInput: {
+			styleOverrides: {
+				root: {
+					borderRadius: '20px',
+				}
+			}
+		},
+		MuiInputLabel: {
+			styleOverrides: {
+				root: {
+					color: colors.textPrimary,
+					'&.Mui-focused': {
+						color: colors.primary
+					}
+				}
+			}
+		},
+		MuiCircularProgress: {
+			styleOverrides: {
+				circle: {
+					strokeLinecap: 'round',
+					stroke: colors.primary,
 				}
 			}
 		}

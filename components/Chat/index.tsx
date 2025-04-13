@@ -3,7 +3,7 @@
 import Message from './subcomponents/Message';
 import MessageBox from './subcomponents/MessageBox';
 import axios from 'axios';
-import { createRef, useEffect, useMemo } from 'react';
+import { createRef, useEffect, useMemo, useState } from 'react';
 import { setSelectedChat } from '@/redux/features/selectedChatSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { updateBotMessage, getMessagesForChat } from '@/redux/features/messagesSlice';
@@ -18,6 +18,7 @@ export default function Chat({ id }: TChatProps) {
 	const dispatch = useAppDispatch();
 	const router =	useRouter();
 	const { user, loading: userLoading } = useAppSelector(({ sessionReducer }) => sessionReducer);
+	const [exitingChat, setExistingChat] = useState<number | null>(null);
 	const { completion, input, handleInputChange, handleSubmit, isLoading } = useCompletion({
 		api: `/chats/${id}/messages/completion/api`,
 		onFinish: async function(prompt, completion) {
@@ -37,7 +38,8 @@ export default function Chat({ id }: TChatProps) {
 	});
 	const messagesEndRef : React.RefObject<HTMLDivElement | null> = createRef();
 
-	// dispatch(setSelectedChat(parseInt(id, 10)));
+	if(!exitingChat)
+		setExistingChat(parseInt(id, 10));
 
 	const messages = useAppSelector(({ messagesReducer }) => messagesReducer.messages);
 	const messagesLoading = useAppSelector(({ messagesReducer }) => messagesReducer.loading);
@@ -53,6 +55,12 @@ export default function Chat({ id }: TChatProps) {
 	useEffect(() => {
 		messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
 	}, [messages]);
+
+	useEffect(() => {
+		if (exitingChat !== null) {
+			dispatch(setSelectedChat(exitingChat));
+		}
+	}, [exitingChat]);
 
 	useEffect(()=>{
 		if(completion.length > 1) {
