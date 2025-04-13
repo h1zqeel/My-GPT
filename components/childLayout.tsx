@@ -9,19 +9,19 @@ import { colors, lightColors } from '@/colors.js';
 
 const darkTheme = createTheme({
 	typography: {
-		fontFamily: '\'Poppins\', sans-serif'
+		fontFamily: "'Poppins', sans-serif",
 	},
 	palette: {
 		mode: 'dark',
 		background: {
 			default: colors.firstBackground,
-			paper: colors.secondBackground
+			paper: colors.secondBackground,
 		},
 		primary: {
-			main: colors.primary
+			main: colors.primary,
 		},
 		secondary: {
-			main: colors.secondary
+			main: colors.secondary,
 		},
 		text: {
 			primary: colors.textPrimary,
@@ -37,9 +37,31 @@ const darkTheme = createTheme({
 		},
 	},
 	shape: {
-		borderRadius: 20
+		borderRadius: 20,
 	},
 	components: {
+		MuiCssBaseline: {
+			styleOverrides: {
+				':root': {
+					'--firstBackground': colors.firstBackground,
+					'--secondBackground': colors.secondBackground,
+					'--primary': colors.primary,
+					'--primaryHover': colors.primaryHover,
+					'--secondary': colors.secondary,
+					'--secondaryHover': colors.secondaryHover,
+					'--textPrimary': colors.textPrimary,
+					'--textSecondary': colors.textSecondary,
+					'--textMuted': colors.textMuted,
+					'--border': colors.border,
+					'--surface-a-start': colors['surface-a-start'],
+					'--surface-a-end': colors['surface-a-end'],
+					'--surface-b-start': colors['surface-b-start'],
+					'--surface-b-end': colors['surface-b-end'],
+					'--scrollbarTrack': colors.scrollbarTrack,
+					'--scrollbarThumb': colors.scrollbarThumb,
+				},
+			},
+		},
 		MuiButton: {
 			styleOverrides: {
 				root: {
@@ -53,8 +75,8 @@ const darkTheme = createTheme({
 					color: colors.textPrimary,
 					'&:hover': {
 						backgroundColor: colors.primaryHover,
-						color: colors.textPrimary
-					}
+						color: colors.textPrimary,
+					},
 				},
 
 				containedSecondary: {
@@ -62,54 +84,54 @@ const darkTheme = createTheme({
 					color: colors.textSecondary,
 					'&:hover': {
 						backgroundColor: colors.secondaryHover,
-						color: colors.textSecondary
-					}
-				}
-			}
+						color: colors.textSecondary,
+					},
+				},
+			},
 		},
 		MuiOutlinedInput: {
 			styleOverrides: {
 				root: {
 					borderRadius: '20px',
-				}
-			}
+				},
+			},
 		},
 		MuiInputLabel: {
 			styleOverrides: {
 				root: {
 					color: colors.textPrimary,
 					'&.Mui-focused': {
-						color: colors.primary
-					}
-				}
-			}
+						color: colors.primary,
+					},
+				},
+			},
 		},
 		MuiCircularProgress: {
 			styleOverrides: {
 				circle: {
 					strokeLinecap: 'round',
 					stroke: colors.primary,
-				}
-			}
-		}
-	}
+				},
+			},
+		},
+	},
 });
 
 const lightTheme = createTheme({
 	typography: {
-		fontFamily: '\'Poppins\', sans-serif'
+		fontFamily: "'Poppins', sans-serif",
 	},
 	palette: {
 		mode: 'light',
 		background: {
 			default: lightColors.firstBackground,
-			paper: lightColors.secondBackground
+			paper: lightColors.secondBackground,
 		},
 		primary: {
-			main: lightColors.primary
+			main: lightColors.primary,
 		},
 		secondary: {
-			main: lightColors.secondary
+			main: lightColors.secondary,
 		},
 		text: {
 			primary: lightColors.textPrimary,
@@ -122,6 +144,83 @@ const lightTheme = createTheme({
 		surfaceB: {
 			main: lightColors['surface-b-start'],
 			dark: lightColors['surface-b-end'],
+		},
+	},
+	shape: {
+		borderRadius: 20,
+	},
+	components: {
+		MuiCssBaseline: {
+			styleOverrides: {
+				':root': {
+					'--firstBackground': lightColors.firstBackground,
+					'--secondBackground': lightColors.secondBackground,
+					'--primary': lightColors.primary,
+					'--primaryHover': lightColors.primaryHover,
+					'--secondary': lightColors.secondary,
+					'--secondaryHover': lightColors.secondaryHover,
+					'--textPrimary': lightColors.textPrimary,
+					'--textSecondary': lightColors.textSecondary,
+					'--textMuted': lightColors.textMuted,
+					'--border': lightColors.border,
+					'--surface-a-start': lightColors['surface-a-start'],
+					'--surface-a-end': lightColors['surface-a-end'],
+					'--surface-b-start': lightColors['surface-b-start'],
+					'--surface-b-end': lightColors['surface-b-end'],
+					'--scrollbarTrack': lightColors.scrollbarTrack,
+					'--scrollbarThumb': lightColors.scrollbarThumb,
+				},
+			},
+		},
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					padding: '10px 20px',
+					maxHeight: '35px',
+					borderRadius: '20px',
+				},
+				containedPrimary: {
+					backgroundColor: lightColors.primary,
+					color: lightColors.textPrimary,
+					'&:hover': {
+						backgroundColor: lightColors.primaryHover,
+						color: lightColors.textPrimary,
+					},
+				},
+				containedSecondary: {
+					backgroundColor: lightColors.secondary,
+					color: lightColors.textSecondary,
+					'&:hover': {
+						backgroundColor: lightColors.secondaryHover,
+						color: lightColors.textSecondary,
+					},
+				},
+			},
+		},
+		MuiOutlinedInput: {
+			styleOverrides: {
+				root: {
+					borderRadius: '20px',
+				},
+			},
+		},
+		MuiInputLabel: {
+			styleOverrides: {
+				root: {
+					color: lightColors.textPrimary,
+					'&.Mui-focused': {
+						color: lightColors.primary,
+					},
+				},
+			},
+		},
+		MuiCircularProgress: {
+			styleOverrides: {
+				circle: {
+					strokeLinecap: 'round',
+					stroke: lightColors.primary,
+				},
+			},
 		},
 	},
 });
