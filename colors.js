@@ -9,7 +9,6 @@ export const colors = {
 	textSecondary: '#000000',
 	textMuted: '#C0C3CF',
 	border: '#2A2E38',
-
 	'surface-a-start': '#0E1A2B',
 	'surface-a-end': '#14233A',
 	'surface-b-start': '#101319',
