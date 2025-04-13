@@ -1,6 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@theme inline {
+  @keyframes gradient-bg {
+    0%,100% { background-position:   0% 50%; }
+    50%     { background-position: 100% 50%; }
+  }
+}
 
 * {
 	-ms-overflow-style: none !important;  /* IE and Edge */

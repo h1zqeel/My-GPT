@@ -117,16 +117,16 @@ export default function Login()	{
 					/>
 				</div>
 				<div className='flex flex-row justify-center space-x-4'>
-					<LoginButton />
-					<Button
-						className="bg-primary hover:bg-secondary hover:text-white"
+					<div><LoginButton /></div>
+					<div><Button
+						color='primary'
 						variant="contained"
 						size="small"
 						disabled={loading}
 						type='submit'
 					>
 						{loading ? <CircularProgress size={25}/> : 'Register'}
-					</Button>
+					</Button></div>
 				</div>
 				<div>{error}</div>
 				<div className='flex flex-row justify-center space-x-3'>

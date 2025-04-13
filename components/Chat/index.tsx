@@ -3,12 +3,12 @@
 import Message from './subcomponents/Message';
 import MessageBox from './subcomponents/MessageBox';
 import axios from 'axios';
-import { createRef, useEffect, useMemo } from 'react';
+import { createRef, useEffect, useMemo, useState } from 'react';
 import { setSelectedChat } from '@/redux/features/selectedChatSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { updateBotMessage, getMessagesForChat } from '@/redux/features/messagesSlice';
 import { TChatProps, TMessage } from '@/types/Chat';
-import { useCompletion } from 'ai/react';
+import { useCompletion } from '@ai-sdk/react';
 import { getSession } from '@/redux/features/sessionSlice';
 import { toast } from '@/utils/toast';
 import { errors } from '@/constants';
@@ -18,6 +18,7 @@ export default function Chat({ id }: TChatProps) {
 	const dispatch = useAppDispatch();
 	const router =	useRouter();
 	const { user, loading: userLoading } = useAppSelector(({ sessionReducer }) => sessionReducer);
+	const [exitingChat, setExistingChat] = useState<number | null>(null);
 	const { completion, input, handleInputChange, handleSubmit, isLoading } = useCompletion({
 		api: `/chats/${id}/messages/completion/api`,
 		onFinish: async function(prompt, completion) {
@@ -35,9 +36,11 @@ export default function Chat({ id }: TChatProps) {
 			toast(errors.AI.FAILED_REQUEST, 'error');
 		}
 	});
-	const messagesEndRef : React.RefObject<HTMLDivElement> = createRef();
+	const messagesEndRef : React.RefObject<HTMLDivElement | null> = createRef();
 
-	dispatch(setSelectedChat(parseInt(id, 10)));
+	if(!exitingChat) {
+		setExistingChat(parseInt(id, 10));
+	}
 
 	const messages = useAppSelector(({ messagesReducer }) => messagesReducer.messages);
 	const messagesLoading = useAppSelector(({ messagesReducer }) => messagesReducer.loading);
@@ -53,6 +56,12 @@ export default function Chat({ id }: TChatProps) {
 	useEffect(() => {
 		messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
 	}, [messages]);
+
+	useEffect(() => {
+		if (exitingChat !== null) {
+			dispatch(setSelectedChat(exitingChat));
+		}
+	}, [exitingChat]);
 
 	useEffect(()=>{
 		if(completion.length > 1) {
@@ -98,8 +107,8 @@ export default function Chat({ id }: TChatProps) {
 	return <div className='relative'>
 		<div className='flex flex-col h-[calc(100dvh)] overflow-clip w-[100vw] lg:w-[100%] pt-20 md:pt-0 lg:pt-0'>
 			<div className={`grow justify-center ${messagesLoading?'overflow-clip': 'overflow-scroll'}`}>
-				{!messagesLoading && messages.map((message : TMessage) => {
-					return <div key={message.id} className=' lg:max-w-[80vw]'> <Message message={message} /> </div>;
+				{!messagesLoading && messages.map((message : TMessage, i) => {
+					return <div key={message.id || i} className=' lg:max-w-[80vw]'> <Message message={message} /> </div>;
 				})}
 				{messagesLoading && <div className=''>
 					{Array(10)

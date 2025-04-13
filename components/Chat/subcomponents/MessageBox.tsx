@@ -1,6 +1,6 @@
 import { insertChat } from '@/redux/features/messagesSlice';
 import { useAppDispatch } from '@/redux/hooks';
-import { CircularProgress, TextareaAutosize, Tooltip } from '@mui/material';
+import { Box, CircularProgress, IconButton, TextareaAutosize, Tooltip } from '@mui/material';
 import { TChatMessageBoxProps } from '@/types/Chat';
 import { toast } from '@/utils/toast';
 import { errors } from '@/constants';
@@ -33,26 +33,70 @@ export default function MessageBox({ input, handleInputChange, handleSubmit, all
 		}
 	};
 
-	return <div className="bottom-0 left-0 w-[100%] px-4 pb-4 lg:px-24">
-		<form onSubmit={sendMessage}>
-			<div className={`flex flex-row w-full py-2 flex-grow relative rounded-md shadow-xs ${isLoading ? 'bg-secondary' : 'bg-primary'}`}>
-				<div className='w-[94%] flex flex-col justify-center'>
-					<TextareaAutosize onKeyDown={handleKeyPress} disabled={isLoading} className="bg-transparent text-black px-4 m-0 w-full resize-none focus:ring-0 focus-visible:ring-0 outline-0 focus-visible:outline-0 focus-visible:outline-none" placeholder={`${isLoading ? 'Your AI is Thinking!!' : 'Type a Message!!'}`} value={input} onChange={handleInputChange} maxRows={6}/>
-				</div>
-				<div className=''>
-					<button disabled={isLoading} type='submit'>
-						<div className='transition duration-100 ease-in-out mx-2 rounded-lg bg-black hover:text-white hover:opacity-[0.8] focus:bg-slate-200'>
-							<div>
-								{isLoading ?
-									<ThinkingIcon />
-									:
-									<SendIcon />
-								}
-							</div>
-						</div>
-					</button>
-				</div>
-			</div>
-		</form>
-	</div>;
+	return (
+		<div className="bottom-0 left-0 w-[100%] px-4 pb-4 lg:px-24">
+			<form onSubmit={sendMessage}>
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: 'row',
+						width: '100%',
+						flexGrow: 1,
+						position: 'relative',
+						borderRadius: '20px',
+						boxShadow: 1,
+						bgcolor: isLoading ? 'background.main' : 'background.paper'
+					}}
+				>
+					<Box
+						sx={{
+							width: '94%',
+							display: 'flex',
+							flexDirection: 'column',
+							justifyContent: 'center'
+						}}
+					>
+						<TextareaAutosize
+							onKeyDown={handleKeyPress}
+							disabled={isLoading}
+							placeholder={
+								isLoading
+									? 'Your AI is Thinking!!'
+									: 'Type a Message!!'
+							}
+							value={input}
+							onChange={handleInputChange}
+							maxRows={6}
+							style={{
+								background: 'transparent',
+								color: isLoading ? 'text.secondary' : 'text.primary',
+								paddingLeft: 16,
+								paddingRight: 16,
+								margin: 0,
+								width: '100%',
+								resize: 'none',
+								outline: 'none',
+								border: 'none'
+							}}
+						/>
+					</Box>
+					<IconButton
+						disabled={isLoading}
+						type="submit"
+						sx={{
+							mx: 0,
+							borderRadius: 2,
+							bgcolor: 'transparent',
+							'&:hover': {
+								opacity: 0.8,
+								color: '#fff'
+							}
+						}}
+					>
+						{isLoading ? <ThinkingIcon /> : <SendIcon />}
+					</IconButton>
+				</Box>
+			</form>
+		</div>
+	);
 }

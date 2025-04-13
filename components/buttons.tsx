@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 export const LoginButton = () => {
 	return (
-		<Button>
+		<Button color="secondary" variant="contained">
 			<Link href="/login">
 				Login
 			</Link>
@@ -20,7 +20,7 @@ export const LoginButton = () => {
 
 export const RegisterButton = () => {
 	return (
-		<Button>
+		<Button color="secondary" variant="contained">
 			<Link href="/register" >
 				Register
 			</Link>
@@ -38,7 +38,7 @@ export const LogoutButton = () => {
 		return router.push('/login');
 	};
 	return (
-		<Button onClick={signOut} disabled={loading}>
+		<Button onClick={signOut} disabled={loading} color="secondary">
 			{loading ? <CircularProgress size={25}/> :'Sign Out'}
 		</Button>
 	);

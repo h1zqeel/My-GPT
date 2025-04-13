@@ -1,15 +1,15 @@
 import db from '@/db/connection';
 import { chats, messages as messagesModel } from '@/db/schema';
-import { StreamingTextResponse } from 'ai';
-import { ChatOpenAI } from 'langchain/chat_models/openai';
-import { ChatGooglePaLM } from 'langchain/chat_models/googlepalm';
+import { LangChainAdapter } from 'ai';
+import { ChatOpenAI } from '@langchain/openai';
+// import { ChatGooglePaLM } from '@langchain/community/chat_models/googlepalm';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { ChatAnthropic } from '@langchain/anthropic';
-import { BytesOutputParser } from 'langchain/schema/output_parser';
-import { PromptTemplate } from 'langchain/prompts';
+import { StringOutputParser } from '@langchain/core/output_parsers';
+import { PromptTemplate } from '@langchain/core/prompts';
 
 // openai node api
-import { Configuration as CFG, OpenAIApi as OAA } from 'openai';
+import OpenAI from 'openai';
 import { TUser } from '@/types/User';
 import { eq, sql } from 'drizzle-orm';
 import axios from 'axios';
@@ -37,30 +37,28 @@ export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : 
 		let LLM : any;
 
 		if(chat?.llm === 'googlepalm') {
-			LLM = new ChatGooglePaLM({
-				modelName: chat?.model || model,
+			LLM = new ChatGoogleGenerativeAI({
+				model: chat?.model || model,
 				apiKey: user.googleAIKey
 			});
 		} else if(chat?.llm === 'googlegemini') {
 			LLM = new ChatGoogleGenerativeAI({
-				modelName: chat?.model || model,
+				model: chat?.model || model,
 				apiKey: user.googleAIKey
 			});
 		} else if(chat?.llm === 'claude') {
 			LLM = new ChatAnthropic({
-				modelName: chat?.model || model,
-				anthropicApiKey: user.anthropicAIKey
+				model: chat?.model || model,
+				apiKey: user.anthropicAIKey
 			});
 		} else {
 			LLM = new ChatOpenAI({
-				modelName: chat?.model || model,
-				openAIApiKey: user.openAIKey
+				model: chat?.model || model,
+				apiKey: user.openAIKey
 			});
 		}
 
-		const outputParser = new BytesOutputParser();
-
-		const chain = prompt.pipe(LLM).pipe(outputParser);
+		const chain = prompt.pipe(LLM).pipe(new StringOutputParser());
 
 		const stream = await chain.stream({
 			systemMessage: chat?.systemMessage || 'Helpful AI Assitant',
@@ -68,25 +66,22 @@ export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : 
 			input: message
 		});
 
-		return new StreamingTextResponse(stream);
+		return LangChainAdapter.toDataStreamResponse(stream);
 	} catch (error : any) {
 		throw error;
 	}
 };
 
 export const getAllowedModels = async({ user }: {user: TUser | null}) => {
-	const configuration = new CFG({
-		apiKey: user?.openAIKey
-	});
-	const openai = new OAA(configuration);
+	const openai = user?.openAIKey && user?.openAIKey.length ? new OpenAI({ apiKey: user.openAIKey }) : null;
 
 	let openaiModels: any = { data: [] };
 	let googleModels: any = { data: { models: [] } };
 	let claudeModels: any = [];
 
 	try {
-		if(user?.openAIKey && user?.openAIKey.length) {
-			openaiModels = await openai.listModels();
+		if(openai) {
+			openaiModels = await openai.models.list();
 		}
 	} catch (e: any) {
 		throw new Error(parseOpenAIError(e.response?.status));

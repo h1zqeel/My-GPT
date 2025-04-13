@@ -221,7 +221,6 @@ export default function Login()	{
 			<div>
 				<Button
 					sx={{ width:'150px' }}
-					className="bg-primary hover:bg-secondary hover:text-white"
 					variant="contained"
 					size="small"
 					onClick={updateProfile}

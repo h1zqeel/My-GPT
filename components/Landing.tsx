@@ -26,8 +26,8 @@ export const Landing = () => {
 	}
 	return <>
 		<div className='flex flex-row space-x-4'>
-			<LoginButton />
-			<RegisterButton />
+			<div><LoginButton /></div>
+			<div><RegisterButton /></div>
 		</div>
 	</>;
 };
