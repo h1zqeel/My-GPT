@@ -11,6 +11,7 @@ export const PopUpModal = ({ open, handleClose, Child, childProps } : TPopUpModa
 		bgcolor: 'background.paper',
 		border: '2px solid #000',
 		boxShadow: 24,
+		borderRadius: '20px',
 		p: 4
 	};
 	return <Modal
