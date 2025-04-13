@@ -107,8 +107,8 @@ export default function Chat({ id }: TChatProps) {
 	return <div className='relative'>
 		<div className='flex flex-col h-[calc(100dvh)] overflow-clip w-[100vw] lg:w-[100%] pt-20 md:pt-0 lg:pt-0'>
 			<div className={`grow justify-center ${messagesLoading?'overflow-clip': 'overflow-scroll'}`}>
-				{!messagesLoading && messages.map((message : TMessage) => {
-					return <div key={message.id} className=' lg:max-w-[80vw]'> <Message message={message} /> </div>;
+				{!messagesLoading && messages.map((message : TMessage, i) => {
+					return <div key={message.id || i} className=' lg:max-w-[80vw]'> <Message message={message} /> </div>;
 				})}
 				{messagesLoading && <div className=''>
 					{Array(10)
