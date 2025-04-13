@@ -5,7 +5,7 @@ import { useAppSelector } from '@/redux/hooks';
 import { TChat } from '@/types/Chat';
 import { ChatIcon } from './chat/ChatIcon';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { Button } from '@mui/material';
+import { Button, useTheme } from '@mui/material';
 
 const SidebarElement = ({
 	element,
@@ -18,12 +18,13 @@ const SidebarElement = ({
 	skeleton?: Boolean;
 	subpage?: string;
 }) => {
+	const theme = useTheme();
 	const selectedChatId = useAppSelector(
 		({ selectedChatReducer }) => selectedChatReducer.chatId
 	);
 	if (skeleton) {
 		return (
-			<SkeletonTheme baseColor="#202020" highlightColor="#444">
+			<SkeletonTheme baseColor={theme.palette.surfaceB.main} highlightColor={theme.palette.surfaceB.main}>
 				<div className="flex m-2 mb-4 mx-4">
 					<Skeleton
 						height={40}

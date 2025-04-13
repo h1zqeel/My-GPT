@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { colors } from '@/colors.js';
+import { colors, lightColors } from '@/colors.js';
 
 const darkTheme = createTheme({
 	typography: {
@@ -93,6 +93,37 @@ const darkTheme = createTheme({
 			}
 		}
 	}
+});
+
+const lightTheme = createTheme({
+	typography: {
+		fontFamily: '\'Poppins\', sans-serif'
+	},
+	palette: {
+		mode: 'light',
+		background: {
+			default: lightColors.firstBackground,
+			paper: lightColors.secondBackground
+		},
+		primary: {
+			main: lightColors.primary
+		},
+		secondary: {
+			main: lightColors.secondary
+		},
+		text: {
+			primary: lightColors.textPrimary,
+			secondary: lightColors.textSecondary,
+		},
+		surfaceA: {
+			main: lightColors['surface-a-start'],
+			dark: lightColors['surface-a-end'],
+		},
+		surfaceB: {
+			main: lightColors['surface-b-start'],
+			dark: lightColors['surface-b-end'],
+		},
+	},
 });
 const ChildLayout = ({ children } : any) => {
 	const [domLoaded, setDomLoaded] = useState(false);
