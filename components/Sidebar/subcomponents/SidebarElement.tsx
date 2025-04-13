@@ -11,7 +11,7 @@ const SidebarElement = ({
 	element,
 	page,
 	skeleton = false,
-	subpage = 'messages',
+	subpage = 'messages'
 }: {
 	element?: TChat;
 	page?: string;
@@ -58,8 +58,8 @@ const SidebarElement = ({
 						element?.id === selectedChatId
 							? 'primary.main'
 							: 'secondary.main',
-					color: element?.id === selectedChatId ? 'text.primary' : 'text.secondary',
-				},
+					color: element?.id === selectedChatId ? 'text.primary' : 'text.secondary'
+				}
 			}}
 		>
 			<span
@@ -67,7 +67,7 @@ const SidebarElement = ({
 					flexGrow: 1,
 					overflow: 'hidden',
 					whiteSpace: 'nowrap',
-					textOverflow: 'ellipsis',
+					textOverflow: 'ellipsis'
 				}}
 			>
 				{element?.name}

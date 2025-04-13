@@ -11,14 +11,14 @@ function getRndInteger(min: number, max: number) {
 }
 export default function Message({
 	message,
-	skeleton,
+	skeleton
 }: {
 	message?: TMessage;
 	skeleton?: boolean;
 }) {
 	const [height] = useState(getRndInteger(60, 150));
 	const [width] = useState(getRndInteger(40, 99));
-	const theme = useTheme()
+	const theme = useTheme();
 	if (skeleton) {
 		return (
 			<SkeletonTheme
@@ -45,10 +45,10 @@ export default function Message({
 					rounded-e-2xl rounded-bl-lg rounded-tl-md shadow-lg
 					text-text-primary px-2 lg:px-8 py-5 bg-gradient-to-br
 					${
-						message?.role === 'user'
-							? 'from-surface-a-start to-surface-a-end'
-							: 'from-surface-b-start to-surface-b-end'
-					}
+		message?.role === 'user'
+			? 'from-surface-a-start to-surface-a-end'
+			: 'from-surface-b-start to-surface-b-end'
+		}
 				`}
 			>
 				<div className="mr-4 font-bold">

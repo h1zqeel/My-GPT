@@ -38,8 +38,9 @@ export default function Chat({ id }: TChatProps) {
 	});
 	const messagesEndRef : React.RefObject<HTMLDivElement | null> = createRef();
 
-	if(!exitingChat)
+	if(!exitingChat) {
 		setExistingChat(parseInt(id, 10));
+	}
 
 	const messages = useAppSelector(({ messagesReducer }) => messagesReducer.messages);
 	const messagesLoading = useAppSelector(({ messagesReducer }) => messagesReducer.loading);

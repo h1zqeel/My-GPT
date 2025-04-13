@@ -45,7 +45,7 @@ export default function MessageBox({ input, handleInputChange, handleSubmit, all
 						position: 'relative',
 						borderRadius: '20px',
 						boxShadow: 1,
-						bgcolor: isLoading ? 'background.main' : 'background.paper',
+						bgcolor: isLoading ? 'background.main' : 'background.paper'
 					}}
 				>
 					<Box
@@ -53,7 +53,7 @@ export default function MessageBox({ input, handleInputChange, handleSubmit, all
 							width: '94%',
 							display: 'flex',
 							flexDirection: 'column',
-							justifyContent: 'center',
+							justifyContent: 'center'
 						}}
 					>
 						<TextareaAutosize
@@ -76,7 +76,7 @@ export default function MessageBox({ input, handleInputChange, handleSubmit, all
 								width: '100%',
 								resize: 'none',
 								outline: 'none',
-								border: 'none',
+								border: 'none'
 							}}
 						/>
 					</Box>
@@ -89,8 +89,8 @@ export default function MessageBox({ input, handleInputChange, handleSubmit, all
 							bgcolor: 'transparent',
 							'&:hover': {
 								opacity: 0.8,
-								color: '#fff',
-							},
+								color: '#fff'
+							}
 						}}
 					>
 						{isLoading ? <ThinkingIcon /> : <SendIcon />}
