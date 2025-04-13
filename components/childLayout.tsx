@@ -3,9 +3,10 @@
 import NextTopLoader from 'nextjs-toploader';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { colors, lightColors } from '@/colors.js';
+import { useMediaQuery } from '@mui/material';
 
 const darkTheme = createTheme({
 	typography: {
@@ -226,7 +227,11 @@ const lightTheme = createTheme({
 });
 const ChildLayout = ({ children } : any) => {
 	const [domLoaded, setDomLoaded] = useState(false);
-
+	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+	const theme = useMemo(
+		() => (prefersDarkMode ? darkTheme : lightTheme),
+		[prefersDarkMode]
+	);
 	useEffect(() => {
 		setDomLoaded(true);
 	}, []);
@@ -236,7 +241,7 @@ const ChildLayout = ({ children } : any) => {
 				color="#ffff"
 				easing="ease-in-out"
 			/> */}
-			{domLoaded && <ThemeProvider theme={darkTheme}>
+			{domLoaded && <ThemeProvider theme={theme}>
 				<CssBaseline />
 				{children}
 			</ThemeProvider>}
