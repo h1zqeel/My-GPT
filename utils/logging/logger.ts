@@ -1,6 +1,4 @@
-// lib/logger.js
 import pino from 'pino';
-import path from 'path';
 
 const transport = pino.transport({
 	targets: [
@@ -10,7 +8,7 @@ const transport = pino.transport({
 			level: 'debug',
 		},
 		{
-			target: path.resolve('./transport.ts'),
+			target: './transport.ts',
 			level: 'info',
 		},
 	],
