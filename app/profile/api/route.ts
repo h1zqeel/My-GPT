@@ -3,6 +3,7 @@ import db from '@/db/connection';
 import { users } from '@/db/schema';
 import { errors } from '@/constants';
 import { eq } from 'drizzle-orm';
+import logger from '@/utils/logging/logger';
 
 export const runtime = 'edge';
 export const preferredRegion = 'syd1';
@@ -12,6 +13,7 @@ export async function PUT(request: Request) {
 	if(!userId) {
 		return NextResponse.json({ error: errors.NO_USER }, { status: 400 });
 	}
+	logger.info('Updating user', { userId, name, openAIKey, googleAIKey, anthropicAIKey });
 
 	try{
 		await db.update(users).set({ name, openAIKey, googleAIKey, anthropicAIKey })
