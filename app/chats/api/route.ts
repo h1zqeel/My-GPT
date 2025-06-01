@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { errors, gptModels } from '@/constants';
 import { eq } from 'drizzle-orm';
 import { getChats, invalidateChatsCache } from '@/utils/chat';
+import { auth0 } from '@/utils/auth';
 
 export const runtime = 'edge';
 export const preferredRegion = 'syd1';
@@ -21,14 +22,14 @@ export async function POST(req: NextRequest) {
 
 	const chat = {
 		name,
-		creatorId: user?.id,
+		creatorId: "user?.id",
 		systemMessage,
 		model,
 		llm: gptModels.find(gptModel=>gptModel.value === model)?.llm
 	};
 
 	await db.insert(chatsModel).values(chat);
-	await invalidateChatsCache(user?.id as number);
+	await invalidateChatsCache(user?.id.toString() as string);
 
 	return NextResponse.json(
 		{ ok: true, chat },
@@ -37,7 +38,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-	const user = await getUserSession({ req });
+	const session = await auth0.getSession(req);
+	const user = session?.user;
 	const { searchParams } = new URL(req.url);
 	const chatId = searchParams.get('id');
 
@@ -51,7 +53,7 @@ export async function GET(req: NextRequest) {
 		);
 	}
 
-	const chats = await getChats(user?.id as number);
+	const chats = await getChats(user?.sub as string);
 	return NextResponse.json(
 		{
 			ok: true,

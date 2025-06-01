@@ -19,8 +19,8 @@ export const getSession = createAsyncThunk(
 		if(state.sessionReducer.user && !refresh) {
 			return { user: state.sessionReducer.user };
 		}
-		const response = await axios.get('/api/auth');
-		return response.data;
+		// const response = await axios.get('/api/auth');
+		return null;
 	});
 export const session = createSlice({
 	name: 'session',

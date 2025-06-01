@@ -16,7 +16,7 @@ export const users = pgTable('users', {
 export const chats = pgTable('chats', {
 	id: serial('id'),
 	name: varchar('name', { length: 256 }),
-	creatorId: integer('creatorId').references(() => users.id),
+	creatorId: varchar('name', { length: 256 }),
 	systemMessage: text('systemMessage').default('You are a helpful AI Assistant'),
 	llm: varchar('llm', { length: 256 }).default('openai'),
 	model: varchar('model', { length: 256 }).default('gpt-3.5-turbo'),
