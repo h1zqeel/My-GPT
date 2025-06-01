@@ -11,7 +11,8 @@ export const runtime = 'edge';
 export const preferredRegion = 'syd1';
 
 export async function POST(req: NextRequest) {
-	const user = await getUserSession({ req });
+	const session = await auth0.getSession(req);
+	const user = session?.user;
 	const { name, systemMessage, model } = await req.json();
 	if(!user) {
 		return NextResponse.json(
@@ -22,14 +23,16 @@ export async function POST(req: NextRequest) {
 
 	const chat = {
 		name,
-		creatorId: "user?.id",
+		creatorId: user.sub,
 		systemMessage,
 		model,
 		llm: gptModels.find(gptModel=>gptModel.value === model)?.llm
 	};
 
+	console.log('Creating chat', chat);
+
 	await db.insert(chatsModel).values(chat);
-	await invalidateChatsCache(user?.id.toString() as string);
+	await invalidateChatsCache(user?.sub.toString() as string);
 
 	return NextResponse.json(
 		{ ok: true, chat },

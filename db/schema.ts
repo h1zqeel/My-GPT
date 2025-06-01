@@ -3,20 +3,16 @@ import { pgTable, serial, index, text, varchar, integer, date, boolean, pgEnum, 
 
 export const users = pgTable('users', {
 	id: serial('id'),
-	name: text('name'),
-	username: varchar('username', { length: 256 }).unique(),
-	email: varchar('email', { length: 256 }).unique(),
-	password: varchar('password', { length: 256 }),
+	userSub: varchar('userSub', { length: 256 }).unique(),
 	openAIKey: varchar('openAIKey', { length: 256 }),
 	googleAIKey: varchar('googleAIKey', { length: 256 }),
 	anthropicAIKey: varchar('anthropicAIKey', { length: 256 }),
-	providers: jsonb('providers')
 });
 
 export const chats = pgTable('chats', {
 	id: serial('id'),
 	name: varchar('name', { length: 256 }),
-	creatorId: varchar('name', { length: 256 }),
+	creatorId: varchar('creatorId', { length: 256 }),
 	systemMessage: text('systemMessage').default('You are a helpful AI Assistant'),
 	llm: varchar('llm', { length: 256 }).default('openai'),
 	model: varchar('model', { length: 256 }).default('gpt-3.5-turbo'),

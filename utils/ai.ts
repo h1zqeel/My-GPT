@@ -72,7 +72,7 @@ export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : 
 	}
 };
 
-export const getAllowedModels = async({ user }: {user: TUser | null}) => {
+export const getAllowedModels = async({ user }: {user: Partial<TUser> | null}) => {
 	const openai = user?.openAIKey && user?.openAIKey.length ? new OpenAI({ apiKey: user.openAIKey }) : null;
 
 	let openaiModels: any = { data: [] };

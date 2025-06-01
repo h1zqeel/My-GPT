@@ -1,4 +1,6 @@
 {
+  "id": "4352b890-4910-4213-855d-4903499d4c52",
+  "prevId": "fe358506-4c56-4cba-8ae4-6b40cc212af2",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -20,7 +22,7 @@
         },
         "creatorId": {
           "name": "creatorId",
-          "type": "integer",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": false
         },
@@ -62,6 +64,7 @@
       },
       "indexes": {
         "creatorId_idx": {
+          "name": "creatorId_idx",
           "columns": [
             {
               "expression": "creatorId",
@@ -70,33 +73,18 @@
               "nulls": "last"
             }
           ],
-          "with": {},
-          "name": "creatorId_idx",
           "isUnique": false,
+          "concurrently": false,
           "method": "btree",
-          "concurrently": false
+          "with": {}
         }
       },
-      "foreignKeys": {
-        "chats_creatorId_users_id_fk": {
-          "name": "chats_creatorId_users_id_fk",
-          "tableFrom": "chats",
-          "columnsFrom": [
-            "creatorId"
-          ],
-          "tableTo": "users",
-          "columnsTo": [
-            "id"
-          ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.messages": {
       "name": "messages",
@@ -123,6 +111,7 @@
         "role": {
           "name": "role",
           "type": "role",
+          "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
           "default": "'user'"
@@ -144,6 +133,7 @@
       },
       "indexes": {
         "chatId_idx": {
+          "name": "chatId_idx",
           "columns": [
             {
               "expression": "chatId",
@@ -152,33 +142,32 @@
               "nulls": "last"
             }
           ],
-          "with": {},
-          "name": "chatId_idx",
           "isUnique": false,
+          "concurrently": false,
           "method": "btree",
-          "concurrently": false
+          "with": {}
         }
       },
       "foreignKeys": {
         "messages_chatId_chats_id_fk": {
           "name": "messages_chatId_chats_id_fk",
           "tableFrom": "messages",
+          "tableTo": "chats",
           "columnsFrom": [
             "chatId"
           ],
-          "tableTo": "chats",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.users": {
       "name": "users",
@@ -190,26 +179,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "username": {
-          "name": "username",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "email": {
-          "name": "email",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "password": {
-          "name": "password",
+        "userSub": {
+          "name": "userSub",
           "type": "varchar(256)",
           "primaryKey": false,
           "notNull": false
@@ -226,9 +197,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "providers": {
-          "name": "providers",
-          "type": "jsonb",
+        "anthropicAIKey": {
+          "name": "anthropicAIKey",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": false
         }
@@ -237,24 +208,17 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "users_username_unique": {
-          "name": "users_username_unique",
+        "users_userSub_unique": {
+          "name": "users_userSub_unique",
+          "nullsNotDistinct": false,
           "columns": [
-            "username"
-          ],
-          "nullsNotDistinct": false
-        },
-        "users_email_unique": {
-          "name": "users_email_unique",
-          "columns": [
-            "email"
-          ],
-          "nullsNotDistinct": false
+            "userSub"
+          ]
         }
       },
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     }
   },
   "enums": {
@@ -269,15 +233,13 @@
     }
   },
   "schemas": {},
-  "_meta": {
-    "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "id": "b89dcdae-69f1-43a8-8191-cd6a8b19b54f",
-  "prevId": "e48dd5d3-4e59-4a17-bb5e-92e1e2183b3d",
   "sequences": {},
+  "roles": {},
   "policies": {},
   "views": {},
-  "roles": {}
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
 }
