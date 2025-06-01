@@ -55,6 +55,17 @@
     formdata-node "^4.3.2"
     node-fetch "^2.6.7"
 
+"@auth0/nextjs-auth0@^4.6.0":
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/@auth0/nextjs-auth0/-/nextjs-auth0-4.6.0.tgz#c2856057d7e8b82156dfa162f73bd0a21d7f95c8"
+  integrity sha512-HK+fcUW6P8/qUDQfOfntftMg6yzeZLtyfTxL/lyeOub1o/xTL9SZ2fF39nH0H6w1loB5SCAbyN1vD8xxBwINqQ==
+  dependencies:
+    "@edge-runtime/cookies" "^5.0.1"
+    "@panva/hkdf" "^1.2.1"
+    jose "^5.9.6"
+    oauth4webapi "^3.1.2"
+    swr "^2.2.5"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.26.2":
   version "7.26.2"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.26.2.tgz#4b5fab97d33338eff916235055f0ebc21e573a85"
@@ -146,6 +157,11 @@
   version "0.10.2"
   resolved "https://registry.yarnpkg.com/@drizzle-team/brocli/-/brocli-0.10.2.tgz#9757c006a43daaa6f45512e6cf5fabed36fb9da7"
   integrity sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w==
+
+"@edge-runtime/cookies@^5.0.1":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@edge-runtime/cookies/-/cookies-5.0.2.tgz#c1ddd8cc740bdd5fcd9b482eddb33f4c096d4d2a"
+  integrity sha512-Sd8LcWpZk/SWEeKGE8LT6gMm5MGfX/wm+GPnh1eBEtCpya3vYqn37wYknwAHw92ONoyyREl1hJwxV/Qx2DWNOg==
 
 "@electric-sql/client@1.0.0-beta.1":
   version "1.0.0-beta.1"
@@ -1300,6 +1316,11 @@
   version "1.25.1"
   resolved "https://registry.yarnpkg.com/@opentelemetry/semantic-conventions/-/semantic-conventions-1.25.1.tgz#0deecb386197c5e9c2c28f2f89f51fb8ae9f145e"
   integrity sha512-ZDjMJJQRlyk8A1KZFCc+bCbsyrn1wTwdNt56F7twdfUfnHUZUq77/WfONCj8p72NZOyP7pNTdUWSTYC3GTbuuQ==
+
+"@panva/hkdf@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@panva/hkdf/-/hkdf-1.2.1.tgz#cb0d111ef700136f4580349ff0226bf25c853f23"
+  integrity sha512-6oclG6Y3PiDFcoyk8srjLfVKyMfVCKJ27JwNPViuXziFpmdz+MZnZN/aKY0JGXgYuO/VghU0jcOAZgWXZ1Dmrw==
 
 "@petamoriken/float16@^3.8.7":
   version "3.9.2"
@@ -4132,7 +4153,7 @@ jiti@^2.4.2:
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-2.4.2.tgz#d19b7732ebb6116b06e2038da74a55366faef560"
   integrity sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==
 
-jose@^5.4.0:
+jose@^5.4.0, jose@^5.9.6:
   version "5.10.0"
   resolved "https://registry.yarnpkg.com/jose/-/jose-5.10.0.tgz#c37346a099d6467c401351a9a0c2161e0f52c4be"
   integrity sha512-s+3Al/p9g32Iq+oqXxkW//7jk2Vig6FF1CFqzVXoTUXt2qz89YWbL+OwS17NFYEvxC35n0FKeGO2LGYSxeM2Gg==
@@ -4951,6 +4972,11 @@ nprogress@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/nprogress/-/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
   integrity sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==
+
+oauth4webapi@^3.1.2:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.5.1.tgz#93154323df5c2e09bf8884c26693596eaaafc17a"
+  integrity sha512-txg/jZQwcbaF7PMJgY7aoxc9QuCxHVFMiEkDIJ60DwDz3PbtXPQnrzo+3X4IRYGChIwWLabRBRpf1k9hO9+xrQ==
 
 object-assign@^4.1.1:
   version "4.1.1"
