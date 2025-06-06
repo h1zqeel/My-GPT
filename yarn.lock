@@ -55,10 +55,10 @@
     formdata-node "^4.3.2"
     node-fetch "^2.6.7"
 
-"@auth0/nextjs-auth0@^4.6.0":
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/@auth0/nextjs-auth0/-/nextjs-auth0-4.6.0.tgz#c2856057d7e8b82156dfa162f73bd0a21d7f95c8"
-  integrity sha512-HK+fcUW6P8/qUDQfOfntftMg6yzeZLtyfTxL/lyeOub1o/xTL9SZ2fF39nH0H6w1loB5SCAbyN1vD8xxBwINqQ==
+"@auth0/nextjs-auth0@^4.6.1":
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/@auth0/nextjs-auth0/-/nextjs-auth0-4.6.1.tgz#4b964d91db1441ce80b43ca8a189b048d2bb23fb"
+  integrity sha512-eSYLCPBzROheJL0gdI0hHCbV468yqyz/sBcuag7cm3dx6LMhRzzFmComPs8p+Y7OCblzblGfk/Hju8A1BkjZxw==
   dependencies:
     "@edge-runtime/cookies" "^5.0.1"
     "@panva/hkdf" "^1.2.1"
