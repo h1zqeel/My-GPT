@@ -1,10 +1,8 @@
 {
-  "version": "5",
-  "dialect": "pg",
-  "id": "6f4c36b4-7301-44e6-aef9-566236105f9c",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
   "tables": {
-    "chats": {
+    "public.chats": {
       "name": "chats",
       "schema": "",
       "columns": {
@@ -60,21 +58,24 @@
         "chats_creatorId_users_id_fk": {
           "name": "chats_creatorId_users_id_fk",
           "tableFrom": "chats",
-          "tableTo": "users",
           "columnsFrom": [
             "creatorId"
           ],
+          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "messages": {
+    "public.messages": {
       "name": "messages",
       "schema": "",
       "columns": {
@@ -123,21 +124,24 @@
         "messages_chatId_chats_id_fk": {
           "name": "messages_chatId_chats_id_fk",
           "tableFrom": "messages",
-          "tableTo": "chats",
           "columnsFrom": [
             "chatId"
           ],
+          "tableTo": "chats",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "users": {
+    "public.users": {
       "name": "users",
       "schema": "",
       "columns": {
@@ -190,29 +194,33 @@
       "uniqueConstraints": {
         "users_username_unique": {
           "name": "users_username_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "username"
-          ]
+          ],
+          "nullsNotDistinct": false
         },
         "users_email_unique": {
           "name": "users_email_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "email"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
-      }
+      },
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     }
   },
   "enums": {
-    "role": {
+    "public.role": {
       "name": "role",
-      "values": {
-        "user": "user",
-        "assistant": "assistant",
-        "system": "system"
-      }
+      "schema": "public",
+      "values": [
+        "user",
+        "assistant",
+        "system"
+      ]
     }
   },
   "schemas": {},
@@ -220,5 +228,11 @@
     "schemas": {},
     "tables": {},
     "columns": {}
-  }
+  },
+  "id": "6f4c36b4-7301-44e6-aef9-566236105f9c",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "sequences": {},
+  "policies": {},
+  "views": {},
+  "roles": {}
 }

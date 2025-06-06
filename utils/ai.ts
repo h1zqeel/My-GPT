@@ -10,12 +10,14 @@ import { PromptTemplate } from '@langchain/core/prompts';
 
 // openai node api
 import OpenAI from 'openai';
-import { TUser } from '@/types/User';
 import { eq, sql } from 'drizzle-orm';
 import axios from 'axios';
 import { parseGoogleError, parseOpenAIError } from './helpers';
+import { TUser } from '@/types/User';
 
-export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : {message: string, user: TUser, model?: string, chatId: number | string}) =>  {
+export const askAI = async ({ message, user, model = 'gpt-3.5-turbo', chatId }: {
+	message: string, user: TUser, model?: string, chatId: number | string
+}) => {
 	try {
 		const chat = (await db.select().from(chats)
 			.where(eq(chats.id, Number(chatId))))[0];
@@ -67,7 +69,8 @@ export const askAI = async({ message, user, model = 'gpt-3.5-turbo', chatId } : 
 		});
 
 		return LangChainAdapter.toDataStreamResponse(stream);
-	} catch (error : any) {
+	} catch (error: any) {
+		console.error('Error in askAI:', error);
 		throw error;
 	}
 };

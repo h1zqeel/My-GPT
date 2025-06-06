@@ -1,0 +1,1 @@
+CREATE INDEX "creatorId_idx" ON "chats" USING btree ("creatorId");

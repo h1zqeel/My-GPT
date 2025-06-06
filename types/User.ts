@@ -1,10 +1,7 @@
-export type TUser = {
-	id: number,
-	username?: string,
-	name: string,
-	openAIKey: string,
-	googleAIKey: string,
-	anthropicAIKey: string,
-	email?: string,
-	providers?: any
+import { User } from '@auth0/nextjs-auth0/types';
+
+export interface TUser extends User {
+	openAIKey: string;
+	googleAIKey: string;
+	anthropicAIKey: string;
 }

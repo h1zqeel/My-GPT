@@ -8,10 +8,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate": "npx drizzle-kit generate:pg",
-    "migrate": "npx -y tsx db/migrate.ts"
+    "generate": "npx drizzle-kit generate",
+    "migrate": "npx -y tsx db/migrate.ts",
+    "format": "npx prettier --write ."
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^4.6.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
