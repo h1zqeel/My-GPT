@@ -27,7 +27,7 @@ export const RegisterButton = () => {
 export const LogoutButton = () => {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-	const signOut = async () => {
+	const signOut = async() => {
 		return router.push('/auth/logout');
 	};
 	return (
@@ -40,7 +40,7 @@ export const LogoutButton = () => {
 export const LogoutIcon = () => {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-	const signOut = async () => {
+	const signOut = async() => {
 		return router.push('/auth/logout');
 	};
 	return loading ? (

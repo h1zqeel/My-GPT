@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {
 	LoginButton,
 	LogoutButton,
-	RegisterButton,
+	RegisterButton
 } from '@/components/buttons';
 
 import { useUser } from '@auth0/nextjs-auth0';

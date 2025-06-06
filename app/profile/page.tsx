@@ -43,18 +43,18 @@ export default function Login() {
 		setEmail(user?.email || '');
 	}, [user]);
 
-	const updateProfile = async () => {
+	const updateProfile = async() => {
 		setLoading(true);
 
 		try {
 			const res = await axios.put('/profile/api', {
 				headers: {
-					'Content-Type': 'application/json',
+					'Content-Type': 'application/json'
 				},
 				name,
 				openAIKey,
 				googleAIKey,
-				anthropicAIKey,
+				anthropicAIKey
 			});
 			if (res.status === 200 && res.data.ok) {
 				dispatch(getSession(true));

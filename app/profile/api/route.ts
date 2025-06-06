@@ -18,11 +18,11 @@ export async function PUT(request: NextRequest) {
 				userSub: user?.sub ?? '',
 				openAIKey,
 				googleAIKey,
-				anthropicAIKey,
+				anthropicAIKey
 			})
 			.onConflictDoUpdate({
 				target: users.userSub,
-				set: { openAIKey, googleAIKey, anthropicAIKey },
+				set: { openAIKey, googleAIKey, anthropicAIKey }
 			});
 	} catch (e: any) {
 		return NextResponse.json({ error: errors.DEFAULT }, { status: 500 });
@@ -32,6 +32,6 @@ export async function PUT(request: NextRequest) {
 		ok: true,
 		openAIKey,
 		googleAIKey,
-		anthropicAIKey,
+		anthropicAIKey
 	});
 }

@@ -8,7 +8,7 @@ import { setSelectedChat } from '@/redux/features/selectedChatSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import {
 	updateBotMessage,
-	getMessagesForChat,
+	getMessagesForChat
 } from '@/redux/features/messagesSlice';
 import { TChatProps, TMessage } from '@/types/Chat';
 import { useCompletion } from '@ai-sdk/react';
@@ -27,20 +27,20 @@ export default function Chat({ id }: TChatProps) {
 	const { completion, input, handleInputChange, handleSubmit, isLoading } =
 		useCompletion({
 			api: `/chats/${id}/messages/completion/api`,
-			onFinish: async function (prompt, completion) {
+			onFinish: async function(prompt, completion) {
 				if (!completion.length) {
 					toast(errors.AI.FAILED_REQUEST, 'error');
 					return;
 				}
 				const messages = [
 					{ content: prompt, role: 'user' },
-					{ content: completion, role: 'assistant' },
+					{ content: completion, role: 'assistant' }
 				];
 				await axios.post(`/chats/${id}/messages/api`, { messages });
 			},
-			onError: function () {
+			onError: function() {
 				toast(errors.AI.FAILED_REQUEST, 'error');
-			},
+			}
 		});
 	const messagesEndRef: React.RefObject<HTMLDivElement | null> = createRef();
 
