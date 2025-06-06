@@ -4,8 +4,11 @@ import { chats } from '@/db/schema';
 import { NextRequest, NextResponse } from 'next/server';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
 import { errors } from '@/constants';
-import { getUserSession } from '@/utils/session';
 import { invalidateChatsCache } from '@/utils/chat';
+import { getUserSession } from '@/utils/user';
+
+export const runtime = 'edge';
+export const preferredRegion = 'syd1';
 
 export async function DELETE(
 	request: NextRequest,
@@ -17,7 +20,7 @@ export async function DELETE(
 	const guard = await chatBelongsToUser(request, { id: chatId });
 	if (guard) return guard;
 
-	const user = await getUserSession({ req: request });
+	const user = await getUserSession();
 	if (!chatId) {
 		return NextResponse.json(
 			{ ok: false, error: errors.INVALID_REQUEST },
@@ -28,9 +31,9 @@ export async function DELETE(
 	await db
 		.update(chats)
 		.set({ archived: true })
-		.where(sql`${chats.id} = ${chatId} AND ${chats.creatorId} = ${user?.id}`);
+		.where(sql`${chats.id} = ${chatId} AND ${chats.creatorId} = ${user?.sub}`);
 
-	await invalidateChatsCache(user?.id as number);
+	await invalidateChatsCache(user?.sub as string);
 
 	return NextResponse.json({ ok: true }, { status: 200 });
 }

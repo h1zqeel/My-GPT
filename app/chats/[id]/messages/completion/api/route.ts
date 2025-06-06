@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { chatBelongsToUser } from '@/utils/customMiddlewares';
 import { askAI } from '@/utils/ai';
-import { getUserSession } from '@/utils/session';
+import { getUserSession } from '@/utils/user';
 import { errors } from '@/constants';
+
 
 export async function POST(
 	request: NextRequest,
@@ -22,7 +23,7 @@ export async function POST(
 		);
 	}
 
-	const user = await getUserSession({ req: request });
+	const user = await getUserSession();
 	const gptResponse = await askAI({ chatId, message: prompt, user: user! });
 
 	return gptResponse;

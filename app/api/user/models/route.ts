@@ -1,13 +1,17 @@
 import _ from 'lodash';
 
 import { getAllowedModels } from '@/utils/ai';
-import { getUserSession } from '@/utils/session';
+import { getUserSession } from '@/utils/user';
 import { NextRequest, NextResponse } from 'next/server';
 import { errors, gptModels } from '@/constants';
 
+export const runtime = 'edge';
+export const preferredRegion = 'syd1';
+
 export async function GET(req: NextRequest) {
 	try{
-		const user = await getUserSession({ req });
+		const user = await getUserSession();
+
 		const { openAIModels, googleModels: { models: googleModels }, claudeModels } = await getAllowedModels({ user });
 		const allowedUserModels = [_.map(openAIModels, 'id'), _.map(googleModels, 'name'), _.map(claudeModels, 'id')].flat();
 		const supportedModels = _.map(gptModels, 'value');

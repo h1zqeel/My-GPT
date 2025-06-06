@@ -20,7 +20,7 @@ export const getSession = createAsyncThunk(
 			return { user: state.sessionReducer.user };
 		}
 		const response = await axios.get('/api/auth');
-		return response.data;
+	return response.data;
 	});
 export const session = createSlice({
 	name: 'session',
@@ -35,6 +35,8 @@ export const session = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(getSession.fulfilled, (state, action) => {
 			state.user = action.payload.user;
+			console.log(state.user, action.payload.user, 'setSession');
+
 			state.loading = false;
 		});
 		builder.addCase(getSession.pending, (state, action) => {

@@ -1,7 +1,6 @@
 
 import { cronTrigger } from '@trigger.dev/sdk';
 import { client } from '@/trigger';
-import { clearExpiredSessions } from '@/utils/session';
 
 client.defineJob({
 	id: 'clear-redis-sessions',
@@ -12,7 +11,7 @@ client.defineJob({
 		cron: '0 0 * * *'
 	}),
 	run: async(payload, io, ctx) => {
-		await clearExpiredSessions({ logger: io.logger });
+		console.log('...')
 	}
 });
 

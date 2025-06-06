@@ -1,6 +1,6 @@
 import db from '@/db/connection';
 import { chats as chatsModel } from '@/db/schema';
-import { getUserSession } from '@/utils/session';
+import { getUserSession } from '@/utils/user';
 import { NextRequest, NextResponse } from 'next/server';
 import { errors, gptModels } from '@/constants';
 import { eq } from 'drizzle-orm';
@@ -10,7 +10,7 @@ export const runtime = 'edge';
 export const preferredRegion = 'syd1';
 
 export async function POST(req: NextRequest) {
-	const user = await getUserSession({ req });
+	const user = await getUserSession();
 	const { name, systemMessage, model } = await req.json();
 	if(!user) {
 		return NextResponse.json(
@@ -21,14 +21,16 @@ export async function POST(req: NextRequest) {
 
 	const chat = {
 		name,
-		creatorId: user?.id,
+		creatorId: user.sub,
 		systemMessage,
 		model,
 		llm: gptModels.find(gptModel=>gptModel.value === model)?.llm
 	};
 
+	console.log('Creating chat', chat);
+
 	await db.insert(chatsModel).values(chat);
-	await invalidateChatsCache(user?.id as number);
+	await invalidateChatsCache(user?.sub.toString() as string);
 
 	return NextResponse.json(
 		{ ok: true, chat },
@@ -37,7 +39,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-	const user = await getUserSession({ req });
+	const user = await getUserSession();
 	const { searchParams } = new URL(req.url);
 	const chatId = searchParams.get('id');
 
@@ -51,7 +53,7 @@ export async function GET(req: NextRequest) {
 		);
 	}
 
-	const chats = await getChats(user?.id as number);
+	const chats = await getChats(user?.sub as string);
 	return NextResponse.json(
 		{
 			ok: true,

@@ -1,15 +1,19 @@
 import db from '@/db/connection';
-import { getUserSession } from '@/utils/session';
+import { getUserSession } from '@/utils/user';
 import { sql } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const runtime = 'edge';
+export const preferredRegion = 'syd1';
+
 export async function GET(req: NextRequest) {
-	const sessionId = req.cookies.get(process.env.TOKEN_NAME)?.value;
+	const user = await getUserSession();
 	await db.execute(sql`SELECT 1;`);
-	if(sessionId) {
-		const session = await getUserSession({ sessionId });
-		return NextResponse.json({ user: session });
-	} else {
-		return NextResponse.redirect(new URL('/login', req.url));
-	}
+
+	return NextResponse.json(
+		{
+			user
+		},
+		{ status: 200 }
+	);
 }
