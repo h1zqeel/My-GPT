@@ -1,18 +1,16 @@
 import db from '@/db/connection';
 import { chats as chatsModel } from '@/db/schema';
-import { getUserSession } from '@/utils/session';
+import { getUserSession } from '@/utils/user';
 import { NextRequest, NextResponse } from 'next/server';
 import { errors, gptModels } from '@/constants';
 import { eq } from 'drizzle-orm';
 import { getChats, invalidateChatsCache } from '@/utils/chat';
-import { auth0 } from '@/utils/auth';
 
 export const runtime = 'edge';
 export const preferredRegion = 'syd1';
 
 export async function POST(req: NextRequest) {
-	const session = await auth0.getSession(req);
-	const user = session?.user;
+	const user = await getUserSession();
 	const { name, systemMessage, model } = await req.json();
 	if(!user) {
 		return NextResponse.json(
@@ -41,8 +39,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-	const session = await auth0.getSession(req);
-	const user = session?.user;
+	const user = await getUserSession();
 	const { searchParams } = new URL(req.url);
 	const chatId = searchParams.get('id');
 

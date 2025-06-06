@@ -2,20 +2,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import db from '@/db/connection';
 import { users } from '@/db/schema';
 import { errors } from '@/constants';
-import { auth0 } from '@/utils/auth';
+import { getUserSession } from '@/utils/user';
 
 export const runtime = 'edge';
 export const preferredRegion = 'syd1';
 
 export async function PUT(request: NextRequest) {
-	const session = await auth0.getSession(request);
+	const user = await getUserSession();
 	const { openAIKey, googleAIKey, anthropicAIKey } = await request.json();
 
 	try {
 		await db
 			.insert(users)
 			.values({
-				userSub: session?.user?.sub ?? '',
+				userSub: user?.sub ?? '',
 				openAIKey,
 				googleAIKey,
 				anthropicAIKey,

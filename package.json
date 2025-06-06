@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate": "npx drizzle-kit generate",
-    "migrate": "npx -y tsx db/migrate.ts"
+    "migrate": "npx -y tsx db/migrate.ts",
+    "format": "npx prettier --write ."
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^4.6.0",
