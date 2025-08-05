@@ -55,14 +55,14 @@
     formdata-node "^4.3.2"
     node-fetch "^2.6.7"
 
-"@auth0/nextjs-auth0@^4.6.0":
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/@auth0/nextjs-auth0/-/nextjs-auth0-4.6.0.tgz#c2856057d7e8b82156dfa162f73bd0a21d7f95c8"
-  integrity sha512-HK+fcUW6P8/qUDQfOfntftMg6yzeZLtyfTxL/lyeOub1o/xTL9SZ2fF39nH0H6w1loB5SCAbyN1vD8xxBwINqQ==
+"@auth0/nextjs-auth0@^4.9.0":
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/@auth0/nextjs-auth0/-/nextjs-auth0-4.9.0.tgz#ae57c33dc38f6ee411375d057d987b011a911c87"
+  integrity sha512-z53aI+5h7CYRDYXe/iiPzEFg32PWRiKzdSemjyHLnmeQQgiZ3Va7ZYrUWggNCgtzm314sHsipzyyafiNgSNUrQ==
   dependencies:
     "@edge-runtime/cookies" "^5.0.1"
     "@panva/hkdf" "^1.2.1"
-    jose "^5.9.6"
+    jose "^6.0.11"
     oauth4webapi "^3.1.2"
     swr "^2.2.5"
 
@@ -4153,15 +4153,15 @@ jiti@^2.4.2:
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-2.4.2.tgz#d19b7732ebb6116b06e2038da74a55366faef560"
   integrity sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==
 
-jose@^5.4.0, jose@^5.9.6:
+jose@^5.4.0:
   version "5.10.0"
   resolved "https://registry.yarnpkg.com/jose/-/jose-5.10.0.tgz#c37346a099d6467c401351a9a0c2161e0f52c4be"
   integrity sha512-s+3Al/p9g32Iq+oqXxkW//7jk2Vig6FF1CFqzVXoTUXt2qz89YWbL+OwS17NFYEvxC35n0FKeGO2LGYSxeM2Gg==
 
-jose@^6.0.10:
-  version "6.0.10"
-  resolved "https://registry.yarnpkg.com/jose/-/jose-6.0.10.tgz#52d96e1a671b4c02e13b71e0d35abea2e774712b"
-  integrity sha512-skIAxZqcMkOrSwjJvplIPYrlXGpxTPnro2/QWTDCxAdWQrSTV5/KqspMWmi5WAx5+ULswASJiZ0a+1B/Lxt9cw==
+jose@^6.0.10, jose@^6.0.11:
+  version "6.0.12"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-6.0.12.tgz#56253d94d46bd784addc4bde3691c323552fe7e4"
+  integrity sha512-T8xypXs8CpmiIi78k0E+Lk7T2zlK4zDyg+o1CZ4AkOHgDg98ogdP2BeZ61lTFKFyoEwJ9RgAgN+SdM3iPgNonQ==
 
 js-tiktoken@^1.0.12:
   version "1.0.19"
