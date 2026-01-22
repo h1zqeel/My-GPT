@@ -50,7 +50,7 @@
     "google-auth-library": "^9.15.1",
     "jose": "^6.0.10",
     "langchain": "^0.3.21",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "moment-timezone": "^0.5.48",
     "next": "15.3.0",
     "next-connect": "^1.0.0",
